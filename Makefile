@@ -1,18 +1,21 @@
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-SRCS = 	main.c
-HEAD = includes
-LFLAGS = -Llibft -lft -lreadline
-OBJS = $(SRCS:.c=.o)
-NAME = minishell
-AR = ar rcs
-RM = rm -f
+CC		=	cc
+CFLAGS	=	-Wall -Wextra -Werror -I$(HEAD)
+SRCS	=	$(shell find ./src -type f -name '*.c')
+HEAD	=	includes
+CLIBS	=	-Llibft -lft -lreadline
+OBJS	=	$(SRCS:.c=.o)
+NAME	=	minishell
+AR		=	ar rcs
+RM		=	rm -f
 
 all: $(NAME)
 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
 $(NAME): $(OBJS)
 	make -C libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(HEAD) $(LFLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(CLIBS)
 
 fclean: clean
 	make fclean -C libft
