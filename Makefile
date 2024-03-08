@@ -1,6 +1,7 @@
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -I$(HEAD)
-SRCS	=	$(shell find ./src -type f -name '*.c')
+SRCS	=	src/lexer/token_utils.c src/lexer/tokenize.c src/lexer/has_valid_syntax.c \
+			src/lexer/free_tokens.c src/main.c
 HEAD	=	includes
 CLIBS	=	-Llibft -lft -lreadline
 OBJS	=	$(SRCS:.c=.o)
