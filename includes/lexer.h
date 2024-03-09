@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:54:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/09 22:32:16 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:51:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ typedef enum e_token_type
     T_REDIRECT_IN,
     T_HEREDOC,
     T_PIPE,
-	T_WORD
+	T_WORD,
+    T_AND,
+    T_OR
 }	t_token_type;
 
 typedef struct s_token
