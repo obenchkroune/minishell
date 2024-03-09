@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:55:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/08 10:55:37 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:54:41 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,16 @@ static bool	is_redirection_token(t_token_type type)
 
 static bool	check_redirection(t_token *token)
 {
-	return (is_redirection_token(token->type) && \
-		(!token->next || token->next->type != T_WORD));
+	if (is_redirection_token(token->type))
+		return (!token->next || token->next->type != T_WORD);
+	return (false);
 }
 
 static bool	check_pipe(t_token *token)
 {
-	return ((token->type == T_PIPE && (!token->next || !token->prev)));
+	if (token->type == T_PIPE)
+		return (!token->next || !token->prev);
+	return (false);
 }
 
 static bool	has_valid_quotes(t_token *tail)

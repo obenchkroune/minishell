@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:54:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/08 10:54:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:32:16 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef enum e_token_type
     T_REDIRECT_IN,
     T_HEREDOC,
     T_PIPE,
-    T_ENV_VAR,
 	T_WORD
 }	t_token_type;
 
