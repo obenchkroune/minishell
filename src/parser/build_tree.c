@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.c                                         :+:      :+:    :+:   */
+/*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 23:21:19 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/09 23:49:20 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/15 08:08:25 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/15 08:08:41 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "lexer.h"
 
-// t_pipeline	*parse_pipeline(t_token *tokens)
-// {
-// 	t_pipeline	*pipeline;
 
-// 	pipeline = NULL;
-// }
+

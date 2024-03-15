@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_utils.c                                       :+:      :+:    :+:   */
+/*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 23:23:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/09 23:24:02 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/15 08:08:14 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/15 08:44:29 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_pipeline	*create_pipeline();
-void		add_pipeline(t_pipeline **pipeline, t_pipeline *node);
+t_node	*create_pipe_node(t_node *left, t_node *right)
+{
+	//
+}
+
+t_node	*create_cmd_node(t_node *left, t_node *right)
+{
+	//
+}
+
+t_node	*create_redir_node(t_node *left, t_node *right)
+{
+	//
+}
+
+t_node	*create_list_node(t_node *left, t_node *right)
+{
+	//
+}
+

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/09 23:13:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/15 07:58:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 # define PARSER_H
 
-typedef struct s_io_redirections
-{
-	char	*input;
-	char	*output;
-	int		input_fd;
-	int		output_fd;
-}	t_io_redirections;
+# include <stdlib.h>
+# include "lexer.h"
 
-typedef struct s_pipeline
+typedef enum e_node_type
 {
-	char				*executable;
-	char				**args;
-	t_io_redirections	*io_redirections;
-	struct s_pipeline	*left;
-	struct s_pipeline	*right;
-}	t_pipeline;
+	N_PIPE,
+	N_REDIR,
+	N_EXEC,
+	N_LIST,
+}	t_node_type;
+
+typedef struct s_node
+{
+	enum e_node_type	type;
+	struct s_ast		*left;
+	struct s_ast		*right;
+}	t_node;
 
 #endif
