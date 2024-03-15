@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 03:12:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/15 08:31:28 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/15 03:09:36 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/15 08:13:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-t_tok	*tokenize(char *input)
+void	panic(const char *msg)
 {
-	t_tok	*tokens;
-	t_tok	*next_token;
-
-	tokens = NULL;
-	next_token = get_next_token(input);
-	while (next_token)
+	if (msg != NULL)
 	{
-		append_token(&tokens, next_token);
-		next_token = get_next_token(NULL);
+		write(2, msg, ft_strlen(msg));
+		write(2, "\n", 1);
 	}
-	return (tokens);
+	exit(1);
 }

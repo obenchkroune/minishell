@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   cleanup_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 10:49:51 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/08 10:55:57 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/15 08:18:10 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/15 08:19:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	free_tokens(t_token *token)
+void	free_tokens(t_tok *tokens)
 {
-	t_token	*temp;
+	t_tok	*temp;
 
-	while (token)
+	while (tokens)
 	{
-		temp = token->next;
-		if (token->type == T_WORD || token->type == T_ENV_VAR)
-			free(token->value);
-		free(token);
-		token = temp;
+		temp = tokens->next;
+		free(tokens->value);
+		free(tokens);
+		tokens = temp;
 	}
 }
+
