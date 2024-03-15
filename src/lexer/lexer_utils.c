@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:52:13 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/15 08:29:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/15 09:00:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static char	*increment_ptr(char **input, t_tok_type type)
 			while (**input != '\0' && !ft_strchr(SYMBOLS WHITESPACE, **input))
 				*input += 1;
 	}
-	else if (type == T_HEREDOC || type == T_APPEND || \
-		type == T_OR || type == T_AND)
+	else if (
+		type == T_HEREDOC || type == T_APPEND || type == T_OR || type == T_AND)
 		*input += 2;
 	else
 		*input += 1;
