@@ -1,5 +1,5 @@
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -I$(HEAD)
+CFLAGS	=	-Wall -Wextra -Werror -I$(HEAD) -fsanitize=address -g
 SRCS	=	$(shell find ./src -type f -name '*.c')
 HEAD	=	includes
 CLIBS	=	-Llibft -lft -lreadline
