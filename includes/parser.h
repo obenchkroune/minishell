@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 08:58:32 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/17 09:47:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ typedef struct s_pipe
 typedef struct s_redir
 {
 	t_node_type	type;
+	char		*file;
 	t_node		*cmd;
-
 }	t_redir;
 
 void	panic(const char *msg);
 t_node	*create_pipe(t_node *left, t_node *right);
 t_node	*create_exec(char *path, char **argv);
+t_node	*create_redir(t_node *cmd, char *file);
 t_node	*parse_tree(t_tok **tokens);
 
 

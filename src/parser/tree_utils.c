@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:08:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 08:50:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/17 09:47:43 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,15 @@ t_node	*create_exec(char *path, char **argv)
 	return ((t_node *)exec);
 }
 
+t_node	*create_redir(t_node *cmd, char *file)
+{
+	t_redir	*node;
+
+	node = malloc(sizeof(t_redir));
+	if (!node)
+		panic("malloc");
+	node->cmd = cmd;
+	node->file = file;
+	node->type = N_REDIR;
+	return ((t_node *)node);
+}

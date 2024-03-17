@@ -6,22 +6,41 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:08:25 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 09:11:19 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/17 09:51:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "lexer.h"
 
+t_node	*parse_redir(t_node *cmd, t_tok **tokens)
+{
+	while (*tokens && (*tokens)->type == T_REDIR_OUT)
+	{
+		*tokens = (*tokens)->next;
+		if ((*tokens)->type != T_WORD)
+			panic("syntax error!");
+		cmd = create_redir(cmd, (*tokens)->value);
+		*tokens = (*tokens)->next;
+	}
+	return (cmd);
+}
+
 t_node	*parse_exec(t_tok **tokens)
 {
 	t_node	*node;
 
 	if (!*tokens || (*tokens)->type != T_WORD)
-		printf("Syntax error\n");
+		panic("Syntax error");
 	node = create_exec(NULL, NULL);
-	while (*tokens && (*tokens)->type == T_WORD)
+	node = parse_redir(node, tokens);
+	while (1)
+	{
+		if (!(*tokens)->next || (*tokens)->type != T_WORD)
+			break ;
 		*tokens = (*tokens)->next;
+	}
+	node = parse_redir(node, tokens);
 	return (node);
 }
 
