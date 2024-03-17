@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:11:22 by yaharkat          #+#    #+#             */
-/*   Updated: 2023/12/02 09:33:11 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/03/17 09:04:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdio.h>
 # define HEX "0123456789abcdef"
 # define MHEX "0123456789ABCDEF"
-# define SIZE_MAX 18446744073709551615UL
+// # define SIZE_MAX 18446744073709551615UL
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
