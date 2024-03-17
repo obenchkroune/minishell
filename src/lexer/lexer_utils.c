@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:52:13 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/15 09:00:21 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/17 09:10:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ t_tok	*get_next_token(char *input)
 	if (*input_ptr == '\0')
 		return (NULL);
 	type = get_tok_type(input_ptr);
+	if (type == T_EOL)
+		return (NULL);
 	value = increment_ptr(&input_ptr, type);
 	return (create_token(value, type));
 }
