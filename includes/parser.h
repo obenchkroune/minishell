@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 09:47:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/18 04:10:39 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_node_type
 	N_REDIR,
 	N_EXEC,
 	N_LIST,
+	N_EOL
 }	t_node_type;
 
 typedef struct s_node

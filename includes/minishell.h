@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 08:58:19 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/18 04:05:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <libft.h>
+#include <sys/wait.h>
 #include "parser.h"
 #include "lexer.h"
 

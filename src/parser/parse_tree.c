@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:08:25 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 09:51:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/18 04:13:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_node	*parse_redir(t_node *cmd, t_tok **tokens)
 	while (*tokens && (*tokens)->type == T_REDIR_OUT)
 	{
 		*tokens = (*tokens)->next;
-		if ((*tokens)->type != T_WORD)
+		if (!*tokens || (*tokens)->type != T_WORD)
 			panic("syntax error!");
 		cmd = create_redir(cmd, (*tokens)->value);
 		*tokens = (*tokens)->next;
@@ -30,14 +30,12 @@ t_node	*parse_exec(t_tok **tokens)
 {
 	t_node	*node;
 
-	if (!*tokens || (*tokens)->type != T_WORD)
+	if (!*tokens)
 		panic("Syntax error");
 	node = create_exec(NULL, NULL);
 	node = parse_redir(node, tokens);
-	while (1)
+	while (*tokens && (*tokens)->type != T_WORD)
 	{
-		if (!(*tokens)->next || (*tokens)->type != T_WORD)
-			break ;
 		*tokens = (*tokens)->next;
 	}
 	node = parse_redir(node, tokens);
