@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:54:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 09:05:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/19 05:28:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 # define LEXER_H
 
-# define MAX_ARGS 10
 # define WHITESPACE " \t\v\r\n"
 # define SYMBOLS "()|<>;&"
 
 # include <libft.h>
 # include <stdbool.h>
 
-typedef enum e_tok_type
+typedef enum e_token_type
 {
-	T_EOL,
-	T_WORD,
+	T_COMMAND,
 	T_REDIR_IN,
 	T_REDIR_OUT,
 	T_APPEND,
@@ -35,21 +33,18 @@ typedef enum e_tok_type
 	T_OR,
 	T_SEMICOL,
 	T_PIPE,
-}	t_tok_type;
+}	t_token_type;
 
-typedef struct s_tok
+typedef struct s_token
 {
-	enum e_tok_type	type;
-	char			*value;
-	struct s_tok	*next;
-	struct s_tok	*prev;
-}	t_tok;
+	enum e_token_type	type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
 
+void	skip_whitespace(char **str);
 void	panic(const char *msg);
-t_tok	*get_next_token(char *input);
-void	append_token(t_tok **head, t_tok *node);
-t_tok	*create_token(char *value, t_tok_type type);
-t_tok	*tokenize(char *input);
-void	free_tokens(t_tok *tok);
+t_token	*tokenize(char *input);
 
 #endif

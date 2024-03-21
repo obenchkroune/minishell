@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   parse_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 08:18:10 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/15 08:56:00 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/19 04:45:14 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/19 05:15:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "parser.h"
 
-void	free_tokens(t_tok *tokens)
+t_node
+	*parse_pipe(t_token **token)
 {
-	t_tok	*temp;
+	t_node	*node;
 
-	while (tokens)
+	node = parse_command(token);
+	if (*token && (*token)->type == T_PIPE)
 	{
-		temp = tokens->next;
-		free(tokens->value);
-		free(tokens);
-		tokens = temp;
+		*token = (*token)->next;
+		node = create_meta(N_PIPE, node, parse_pipe(token));
 	}
+	return (node);
 }
+

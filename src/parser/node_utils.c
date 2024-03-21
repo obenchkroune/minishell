@@ -1,52 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_utils.c                                       :+:      :+:    :+:   */
+/*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:08:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/17 09:47:43 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/20 01:13:11 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_node	*create_pipe(t_node *left, t_node *right)
+t_node	*create_meta(t_node_type type, t_node *left, t_node *right)
 {
-	t_pipe	*pipe;
+	t_meta	*node;
 
-	pipe = malloc(sizeof(t_pipe));
-	if (!pipe)
+	node = malloc(sizeof(t_meta));
+	if (!node)
 		panic("malloc");
-	pipe->left = left;
-	pipe->right = right;
-	pipe->type = N_PIPE;
-	return ((t_node *)pipe);
+	node->left = left;
+	node->right = right;
+	node->type = type;
+	return ((t_node *)node);
 }
 
-t_node	*create_exec(char *path, char **argv)
+t_node	*create_command(char *path, char **argv)
 {
-	t_exec	*exec;
+	t_cmd	*command;
 
-	exec = malloc(sizeof(t_exec));
-	if (!exec)
+	command = malloc(sizeof(t_cmd));
+	if (!command)
 		panic("malloc");
-	exec->type = N_EXEC;
-	exec->path = path;
-	exec->argv = argv;
-	return ((t_node *)exec);
+	command->type = N_CMD;
+	command->path = path;
+	command->argv = argv;
+	return ((t_node *)command);
 }
 
-t_node	*create_redir(t_node *cmd, char *file)
+t_node	*create_redir(t_node *cmd, t_token *token)
 {
 	t_redir	*node;
 
 	node = malloc(sizeof(t_redir));
 	if (!node)
 		panic("malloc");
-	node->cmd = cmd;
-	node->file = file;
+	node->next = cmd;
+	node->file = ft_strtrim(token->value, " <>");
+	node->token_type = token->type;
 	node->type = N_REDIR;
 	return ((t_node *)node);
 }

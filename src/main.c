@@ -1,32 +1,39 @@
 #include "minishell.h"
 
-void print_tree(t_node *root, int level)
+void
+	print_tree(t_node *root, int level)
 {
+	t_meta	*meta;
+	t_redir	*redir;
+
 	for (int i = 0; i < level; i++)
 		printf("  ");
 	switch (root->type)
 	{
+		case N_CMD:
+			printf("cmd\n");
+			break;
 		case N_PIPE:
-			printf("N_PIPE\n");
-			print_tree(((t_pipe *)root)->left, level + 1);
-			print_tree(((t_pipe *)root)->right, level + 1);
-			break ;
-		case N_EXEC:
-			printf("N_EXEC\n");
+			printf("pipe\n");
+			meta = (t_meta *)root;
+			print_tree(meta->left, level + 1);
+			print_tree(meta->right, level + 1);
 			break ;
 		case N_REDIR:
-			printf("N_REDIR (%s)\n", ((t_redir *)root)->file);
-			print_tree(((t_redir *)root)->cmd, level + 1);
-		default:
+			redir = (t_redir *)root;
+			printf("redir (%s)\n", redir->file);
+			print_tree(redir->next, level + 1);
 			break ;
+		default:
+			printf("not implemented\n");
 	}
 }
 
-int	main(int argc, char const *argv[], char **envp)
+int
+	main(int argc, char const *argv[], char **envp)
 {
 	char	*input;
-	t_tok	*tokens;
-	pid_t	pid;
+	t_token	*tokens;
 
 	(void)argc;
 	(void)argv;
@@ -37,21 +44,13 @@ int	main(int argc, char const *argv[], char **envp)
 		if (!input)
 			break ;
 		tokens = tokenize(input);
-		// t_tok *temp = tokens;
-		// while (temp)
+		// while (tokens)
 		// {
-		// 	printf("%s (%d)\n", temp->value, temp->type);
-		// 	temp = temp->next;
+		// 	printf("%s (%d)\n", tokens->value, tokens->type);
+		// 	tokens = tokens->next;
 		// }
-		pid = fork();
-		if (pid == 0)
-		{
-			t_node *tree = parse_tree(&tokens);
-			print_tree(tree, 0);
-			exit(0);
-		}
-		wait(0);
-		free_tokens(tokens);
+		t_node *node = parse(tokens);
+		print_tree(node, 0);
 		free(input);
 	}
 	return (0);
