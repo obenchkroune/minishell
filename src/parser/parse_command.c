@@ -6,15 +6,14 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 03:09:05 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/21 00:05:15 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/21 03:49:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "lexer.h"
 
-static int
-	get_argc(char *cmd)
+static int	get_argc(char *cmd)
 {
 	int		argc;
 	char	*pair_quote;
@@ -42,8 +41,7 @@ static int
 	return (argc);
 }
 
-static char
-	*get_next_arg(char **s)
+static char	*get_next_arg(char **s)
 {
 	char	*cmd;
 	char	*start;
@@ -67,8 +65,7 @@ static char
 	return (arg);
 }
 
-static char
-	**parse_argv(char *cmd)
+static char	**parse_argv(char *cmd)
 {
 	char	**argv;
 	int		argc;
@@ -87,8 +84,7 @@ static char
 	return (argv);
 }
 
-t_node
-	*parse_command(t_token **token)
+t_node	*parse_command(t_token **token)
 {
 	t_cmd	*node;
 

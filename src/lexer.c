@@ -6,14 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 07:52:13 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/20 03:00:19 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/21 03:51:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-char
-	*get_command(char *s)
+char	*get_command(char *s)
 {
 	char	*start;
 
@@ -23,8 +22,7 @@ char
 	return ft_substr(start, 0, s - start);
 }
 
-t_token
-	*create_token(char *value, t_token_type type)
+t_token	*create_token(char *value, t_token_type type)
 {
 	t_token	*token;
 
@@ -37,8 +35,7 @@ t_token
 	return (token);
 }
 
-char
-	*get_next_word(char *s)
+char	*get_next_word(char *s)
 {
 	char	*start;
 
@@ -49,8 +46,7 @@ char
 	return (ft_substr(start, 0, start - s));
 }
 
-t_token
-	*get_token(char *s)
+t_token	*get_token(char *s)
 {
 	if (*s == '\0')
 		return (NULL);
@@ -78,8 +74,7 @@ t_token
 		return (create_token(get_command(s), T_COMMAND));
 }
 
-void
-	append_token(t_token **head, t_token *node)
+void	append_token(t_token **head, t_token *node)
 {
 	t_token	*tail;
 
@@ -98,8 +93,7 @@ void
 	}
 }
 
-t_token
-	*tokenize(char *input)
+t_token	*tokenize(char *input)
 {
 	t_token	*tokens;
 	t_token	*curr_token;

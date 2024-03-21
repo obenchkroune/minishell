@@ -1,7 +1,6 @@
 #include "minishell.h"
 
-void
-	print_tree(t_node *root, int level)
+void	print_tree(t_node *root, int level)
 {
 	t_meta	*meta;
 	t_redir	*redir;
@@ -29,8 +28,7 @@ void
 	}
 }
 
-int
-	main(int argc, char const *argv[], char **envp)
+int	main(int argc, char const *argv[], char **envp)
 {
 	char	*input;
 	t_token	*tokens;

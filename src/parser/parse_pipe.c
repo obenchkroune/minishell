@@ -6,14 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 04:45:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/19 05:15:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/21 03:50:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_node
-	*parse_pipe(t_token **token)
+t_node	*parse_pipe(t_token **token)
 {
 	t_node	*node;
 
