@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	is_io_token(t_token_type type)
+static bool	is_io_token(t_token_type type)
 {
 	return (type == T_APPEND || type == T_HEREDOC || type == T_IN || type == T_OUT);
 }
@@ -25,23 +25,21 @@ void	append_io(t_io **root, t_io *io)
 	io->prev = tail;
 }
 
-t_io	*parse_io(t_lexer *l)
+t_io	*parse_io(t_lexer *lexer)
 {
-	t_token	*token;
-	t_io	*io;
+	t_token			*token;
+	t_token_type	type;
+	t_io			*io;
 
-	token = peek(l);
+	type = peek(lexer);
 	io = NULL;
-	if (!token || !is_io_token(token->type))
-	{
-		// free(token);
+	if (!is_io_token(type))
 		return (NULL);
-	}
-	token = get_next_token(l);
-	while (token && is_io_token(token->type))
+	while (is_io_token(peek(lexer)))
 	{
-		append_io(&io, create_io(token->value, -1, token->type));
-		// free(token);
+		token = get_next_token(lexer);
+		append_io(&io, create_io_node(token->value, -1, token->type));
+		free(token);
 	}
 	return (io);
 }

@@ -27,7 +27,7 @@ t_cmd	*create_cmd(char *path, char **argv)
 	return (cmd);
 }
 
-t_io	*create_io(char *file, int fd, t_token_type type)
+t_io	*create_io_node(char *file, int fd, t_token_type type)
 {
 	t_io	*io;
 

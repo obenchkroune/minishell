@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_node	*create_pipe(t_node *left, t_node *right)
+t_node	*create_pipe_node(t_node *left, t_node *right)
 {
 	t_node	*node;
 
@@ -12,19 +12,17 @@ t_node	*create_pipe(t_node *left, t_node *right)
 
 t_node	*parse_pipe(t_lexer *lexer)
 {
-	t_token	*token;
-	t_node	*node;
-	t_io	*io;
+	t_token			*token;
+	t_node			*node;
+	t_token_type	type;
 
-	io = parse_io(lexer);
-	token = get_next_token(lexer);
-	node = create_node(N_CMD, parse_cmd(token), io);
-	// free(token);
-	token = get_next_token(lexer);
-	if (token && token->type == T_PIPE)
+	node = create_cmd_node(lexer);
+	type = peek(lexer);
+	if (type == T_PIPE)
 	{
-		node = create_pipe(node, parse_pipe(lexer));
-		// free(token);
+		token = get_next_token(lexer);
+		node = create_pipe_node(node, parse_pipe(lexer));
+		free(token);
 	}
 	return (node);
 }

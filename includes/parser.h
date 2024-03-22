@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/22 01:50:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/22 03:20:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,14 @@ typedef struct s_env
 }	t_env;
 
 t_node	*parse_input(char *input);
-t_cmd	*parse_cmd(t_token *token);
-t_node	*create_pipe(t_node *left, t_node *right);
 t_node	*parse_pipe(t_lexer *lexer);
 t_io	*parse_io(t_lexer *l);
-
-t_io	*create_io(char *file, int fd, t_token_type type);
 t_cmd	*create_cmd(char *path, char **argv);
+void	append_io(t_io **root, t_io *io);
+
+t_node	*create_pipe_node(t_node *left, t_node *right);
+t_node	*create_cmd_node(t_lexer *lexer);
+t_io	*create_io_node(char *file, int fd, t_token_type type);
 t_node	*create_node(t_node_type type, t_cmd *cmd, t_io *io);
 
 #endif

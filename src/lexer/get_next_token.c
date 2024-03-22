@@ -32,6 +32,8 @@ static char	*get_next_word(t_lexer *l)
 	while (ft_isspace(l->input[l->cur]))
 		l->cur++;
 	start = l->cur;
+	if (ft_strchr("<>|&", l->input[start]) || l->input[start] == '\0')
+		panic("syntax error");
 	if (ft_strchr("'\"", l->input[l->cur]))
 	{
 		l->cur++;
@@ -41,7 +43,7 @@ static char	*get_next_word(t_lexer *l)
 		l->cur = pair_quote - l->input + 1;
 		return (ft_substr(l->input, start, l->cur - start));
 	}
-	while (l->input[l->cur] && !ft_strchr("<>|&", l->input[l->cur]))
+	while (l->input[l->cur] && !ft_strchr("<>|& \t", l->input[l->cur]))
 		l->cur++;
 	return (ft_substr(l->input, start, l->cur - start));
 }

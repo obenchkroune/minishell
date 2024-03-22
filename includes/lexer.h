@@ -28,7 +28,7 @@ typedef struct s_token
 	char			*value;
 }	t_token;
 
-t_token	*get_next_token(t_lexer *l);
-t_token	*peek(t_lexer *l);
+t_token			*get_next_token(t_lexer *l);
+t_token_type	peek(t_lexer *lexer);
 
 #endif
