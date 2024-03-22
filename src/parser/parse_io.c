@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_io.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 04:12:57 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/22 04:18:26 by obenchkr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static bool	is_io_token(t_token_type type)
 {
-	return (type == T_APPEND || type == T_HEREDOC || type == T_IN || type == T_OUT);
+	return (type == T_APPEND || type == T_HEREDOC || type == T_IN
+		|| type == T_OUT);
 }
 
 void	append_io(t_io **root, t_io *io)

@@ -26,6 +26,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
+	size_t			idx;
 }	t_token;
 
 t_token			*get_next_token(t_lexer *l);

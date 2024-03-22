@@ -1,11 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 04:13:01 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/22 04:46:59 by obenchkr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	get_argc(char *cmd)
 {
 	int		argc;
 	char	*quote;
+	char	*start;
 
 	argc = 0;
+	start = cmd;
 	while (*cmd)
 	{
 		while (ft_isspace(*cmd))
@@ -14,14 +28,12 @@ static int	get_argc(char *cmd)
 		{
 			quote = ft_strchr(cmd + 1, *cmd);
 			if (!quote)
-				panic("syntax error: unclosed quote");
+				syntax_error("unclosed quote", start, cmd - start);
 			cmd = quote + 1;
 		}
 		else
-		{
 			while (*cmd && !ft_isspace(*cmd))
 				cmd++;
-		}
 		argc++;
 		while (ft_isspace(*cmd))
 			cmd++;
@@ -42,8 +54,6 @@ static char	*get_next_arg(char **cmd)
 	if (ft_strchr("'\"", *start))
 	{
 		quote = ft_strchr(start + 1, *start);
-		if (!quote)
-			panic("syntax error: unclosed quote");
 		*cmd = quote + 1;
 		return (ft_substr(start, 1, quote - start - 1));
 	}
@@ -93,7 +103,7 @@ t_node	*create_cmd_node(t_lexer *lexer)
 	append_io(&io, parse_io(lexer));
 	token = get_next_token(lexer);
 	if (!token || token->type != T_CMD)
-		panic("syntax error");
+		syntax_error("unexpected syntax", token->value, token->idx);
 	node = create_node(N_CMD, parse_cmd(token), NULL);
 	free(token);
 	append_io(&io, parse_io(lexer));

@@ -1,6 +1,5 @@
 #include "debug.h"
 
-
 void	print_io(t_io *io, int level)
 {
 	while (io)

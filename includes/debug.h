@@ -2,6 +2,8 @@
 
 # define _DEBUG_H
 
+# include <stdbool.h>
+# include <stdio.h>
 # include "parser.h"
 # include "lexer.h"
 
