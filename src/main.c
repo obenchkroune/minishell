@@ -11,15 +11,18 @@ int main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		input = readline("minishell$ ");
-		pid_t pid = fork();
-		if (pid == 0)
+		if (!is_empty(input))
 		{
-			t_node *node = parse_input(input);
-			print_tree(node, 0);
-			free(input);
-			exit(0);
+			pid_t pid = fork();
+			if (pid == 0)
+			{
+				t_node *node = parse_input(input);
+				print_tree(node, 0);
+				free(input);
+				exit(0);
+			}
+			wait(NULL);
 		}
-		wait(NULL);
 		free(input);
 	}
 	return EXIT_SUCCESS;

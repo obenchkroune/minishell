@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/22 04:48:19 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/22 04:53:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,11 @@ void	panic(char *msg)
 int	ft_isspace(int c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
+}
+
+bool	is_empty(char *str)
+{
+	while (str && ft_isspace(*str))
+		str++;
+	return (ft_strlen(str) == 0);
 }

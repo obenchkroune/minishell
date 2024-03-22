@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/22 04:33:43 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/22 04:53:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@
 void	panic(char *msg);
 void	syntax_error(char *msg, char *cmd, size_t pos);
 int		ft_isspace(int c);
+bool	is_empty(char *str);
 
 #endif
