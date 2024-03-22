@@ -1,55 +1,74 @@
 #include "minishell.h"
 
-void	print_tree(t_node *root, int level)
-{
-	t_meta	*meta;
-	t_redir	*redir;
+t_token	*get_next_token(t_lexer *l);
 
-	for (int i = 0; i < level; i++)
-		printf("  ");
-	switch (root->type)
+void	print_io(t_io *io, int level)
+{
+	while (io)
 	{
-		case N_CMD:
-			printf("cmd\n");
-			break;
-		case N_PIPE:
-			printf("pipe\n");
-			meta = (t_meta *)root;
-			print_tree(meta->left, level + 1);
-			print_tree(meta->right, level + 1);
-			break ;
-		case N_REDIR:
-			redir = (t_redir *)root;
-			printf("redir (%s)\n", redir->file);
-			print_tree(redir->next, level + 1);
-			break ;
-		default:
-			printf("not implemented\n");
+		for (int i = 0; i < level; i++)
+			printf("  ");
+		printf("io: %s\n", io->file);
+		io = io->next;
 	}
 }
 
-int	main(int argc, char const *argv[], char **envp)
+void	print_cmd(t_cmd *cmd, int level)
+{
+	int	j;
+
+	j = 0;
+	for (int i = 0; i < level; i++)
+		printf("  ");
+	printf("path: %s\n", cmd->path);
+	while (cmd->argv[j])
+	{
+		for (int i = 0; i < level; i++)
+			printf("  ");
+		printf("argv[%d]: %s\n", j, cmd->argv[j]);
+		j++;
+	}
+}
+
+void	print_tree(t_node *root, int level)
+{
+	if (!root)
+		return ;
+	for (int i = 0; i < level; i++)
+		printf("  ");
+	if (root->type == N_CMD)
+	{
+		printf("=> N_CMD\n");
+		print_cmd(root->cmd, level);
+		print_io(root->io, level);
+	}
+	else if (root->type == N_PIPE)
+		printf("=> N_PIPE\n");
+	else if (root->type == N_AND)
+		printf("=> N_AND\n");
+	else if (root->type == N_OR)
+		printf("=> N_OR\n");
+	else
+		printf("!! unknown\n");
+	print_tree(root->left, level + 1);
+	print_tree(root->right, level + 1);
+}
+
+
+int main(int argc, char *argv[], char *envp[])
 {
 	char	*input;
-	t_token	*tokens;
+	// t_node	*parsed;
 
 	(void)argc;
 	(void)argv;
-	(void)envp; // for now
-	while (1)
+	(void)envp;
+	while (true)
 	{
 		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		tokens = tokenize(input);
-		// while (tokens)
-		// {
-		// 	printf("%s (%d)\n", tokens->value, tokens->type);
-		// 	tokens = tokens->next;
-		// }
-		t_node *node = parse(tokens);
+		t_node *node = parse_input(input);
 		print_tree(node, 0);
 		free(input);
 	}
-	return (0);
+	return EXIT_SUCCESS;
 }
