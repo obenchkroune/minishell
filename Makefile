@@ -1,5 +1,7 @@
+DEBUG	=	-g3 -fsanitize=address
+
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -I$(HEAD) -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I$(HEAD) $(DEBUG)
 SRCS	=	$(shell find ./src -type f -name '*.c')
 HEAD	=	includes
 CLIBS	=	-Llibft -lft -lreadline
