@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   cleanup_btree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 18:25:29 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/25 06:26:03 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/22 22:20:36 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/25 22:59:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+static void	free_cmd(t_cmd *cmd)
 {
-	char	*dst;
-	size_t	size;
+	if (!cmd)
+		return ;
+	free_tab(cmd->argv);
+	free(cmd->path);
+	free(cmd);
+}
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		s1 = ft_strdup("");
-	if (!s2)
-		s2 = ft_strdup("");
-	size = ft_strlen(s1) + ft_strlen(s2);
-	dst = (char *)malloc(sizeof(char) * (size + 1));
-	if (!dst)
-		return (NULL);
-	dst[0] = '\0';
-	ft_strlcat(dst, s1, (size + 1));
-	ft_strlcat(dst, s2, (size + 1));
-	return (dst);
+static void	free_io(t_io *io)
+{
+	if (!io)
+		return ;
+	free(io->file);
+	free_io(io->next);
+	free(io);
+}
+
+void	free_btree(t_node *root)
+{
+	if (!root)
+		return ;
+	free_cmd(root->cmd);
+	free_io(root->io);
+	free_btree(root->left);
+	free_btree(root->right);
 }

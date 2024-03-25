@@ -1,82 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_token.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/25 05:32:57 by obenchkr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static t_token	*create_token(t_token_type type, char *value)
+t_tok_kind	peek_kind(t_lexer *lexer)
+{
+	char	*curr;
+
+	curr = &lexer->val[lexer->i];
+	if (*curr == '\0')
+		return (T_EOL);
+	else if (ft_strncmp(">>", curr, 2) == 0)
+		return (T_DGREAT);
+	else if (ft_strncmp("<<", curr, 2) == 0)
+		return (T_DLESS);
+	else if (*curr == '>')
+		return (T_GREAT);
+	else if (*curr == '<')
+		return (T_LESS);
+	else if (*curr == '|')
+		return (T_PIPE);
+	else
+		return (T_WORD);
+}
+
+char	*get_next_word(t_lexer *lexer)
+{
+	size_t	start;
+
+	start = lexer->i;
+	if (ft_strchr("'\"", lexer->val[lexer->i]))
+		return (get_quoted_word(lexer));
+	while (is_word_char(lexer->val[lexer->i]))
+		lexer->i++;
+	return (ft_substr(lexer->val, start, lexer->i - start));
+}
+
+void	advance_index(t_lexer *lexer, t_token *token)
+{
+	if (token->kind == T_WORD)
+		token->value = get_next_word(lexer);
+	else if (token->kind == T_DGREAT || token->kind == T_DLESS)
+		lexer->i += 2;
+	else
+		lexer->i += 1;
+}
+
+t_token	*get_next_token(t_lexer *lexer)
 {
 	t_token	*token;
 
+	if (lexer->val[lexer->i] == '\0')
+		return (NULL);
 	token = malloc(sizeof(t_token));
 	if (!token)
 		panic("malloc");
-	token->type = type;
-	token->value = value;
+	while (ft_isspace(lexer->val[lexer->i]))
+		lexer->i++;
+	token->kind = peek_kind(lexer);
+	token->value = NULL;
+	advance_index(lexer, token);
 	return (token);
 }
 
-static t_token	*cmd_token(t_lexer *l)
+t_token	*tokenize(char *input)
 {
-	size_t	start;
-	size_t	len;
+	t_token	*token;
+	t_token	*head;
+	t_lexer	lexer;
 
-	start = l->cur;
-	while (!ft_strchr("<>|&", l->input[l->cur]))
-		l->cur++;
-	len = l->cur - start;
-	return (create_token(T_CMD, ft_substr(l->input, start, len)));
-}
-
-static char	*get_next_word(t_lexer *l)
-{
-	char	*pair_quote;
-	size_t	start;
-
-	while (ft_isspace(l->input[l->cur]))
-		l->cur++;
-	start = l->cur;
-	if (ft_strchr("<>|&", l->input[start]) || l->input[start] == '\0')
-		panic("syntax error");
-	if (ft_strchr("'\"", l->input[l->cur]))
+	lexer.i = 0;
+	lexer.val = input;
+	token = get_next_token(&lexer);
+	head = token;
+	while (peek_kind(&lexer) != T_EOL)
 	{
-		l->cur++;
-		pair_quote = ft_strchr(l->input + l->cur, l->input[l->cur - 1]);
-		if (!pair_quote)
-			panic("syntax error: unclosed quote");
-		l->cur = pair_quote - l->input + 1;
-		return (ft_substr(l->input, start, l->cur - start));
+		token->next = get_next_token(&lexer);
+		token->next->prev = token;
+		token = token->next;
 	}
-	while (l->input[l->cur] && !ft_strchr("<>|& \t", l->input[l->cur]))
-		l->cur++;
-	return (ft_substr(l->input, start, l->cur - start));
-}
-
-static t_token	*meta_token(t_lexer *l)
-{
-	char	*current;
-
-	current = &l->input[l->cur];
-	if (ft_strncmp(current, ">>", 2) == 0)
-		return (l->cur += 2, create_token(T_APPEND, get_next_word(l)));
-	else if (ft_strncmp(current, "<<", 2) == 0)
-		return (l->cur += 2, create_token(T_HEREDOC, get_next_word(l)));
-	else if (ft_strncmp(current, "||", 2) == 0)
-		return (l->cur += 2, create_token(T_OR, NULL));
-	else if (ft_strncmp(current, "&&", 2) == 0)
-		return (l->cur += 2, create_token(T_AND, NULL));
-	else if (*current == '>')
-		return (l->cur++, create_token(T_OUT, get_next_word(l)));
-	else if (*current == '|')
-		return (l->cur++, create_token(T_PIPE, NULL));
-	else if (*current == '<')
-		return (l->cur++, create_token(T_IN, get_next_word(l)));
-	return (NULL);
-}
-
-t_token	*get_next_token(t_lexer *l)
-{
-	while (ft_isspace(l->input[l->cur]))
-		l->cur++;
-	if (l->input[l->cur] == '\0')
-		return (NULL);
-	if (ft_strchr("<>|&", l->input[l->cur]))
-		return (meta_token(l));
-	return (cmd_token(l));
+	token->next = NULL;
+	return (head);
 }
