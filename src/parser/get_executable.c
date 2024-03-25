@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:50:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 22:58:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:02:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_executable(char *cmd)
 
 	i = 0;
 	result = NULL;
-	path = ft_split(get_env("PATH"), ':');
+	path = ft_split(get_env("PATH")->value, ':');
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
 	{

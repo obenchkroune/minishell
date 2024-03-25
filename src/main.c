@@ -2,6 +2,39 @@
 
 t_shell *shell;
 
+void	print_argv(char **argv);
+void	print_tree(t_node *root, int level);
+void	print_tab(char **tab);
+
+int main(int argc, char **argv, char **envp)
+{
+	char	*input;
+
+	(void)argc;
+	(void)argv;
+	init_shell(envp);
+	while (true)
+	{
+		input = readline("minishell$ ");
+		if (!is_empty(input))
+		{
+			t_node	*node = parse_input(input);
+			print_tree(node, 1);
+			// execution
+			free_tree(node);
+			system("leaks minishell");
+			free(input);
+		}
+	}
+	cleanup_shell();
+	return (EXIT_SUCCESS);
+}
+
+/*
+---------------------------
+Testing functions
+---------------------------
+*/
 void	print_argv(char **argv)
 {
 	while (*argv)
@@ -34,26 +67,11 @@ void	print_tree(t_node *root, int level)
 	print_tree(root->right, level + 1);
 }
 
-int main(int argc, char **argv, char **envp)
+void	print_tab(char **tab)
 {
-	char	*input;
-
-	(void)argc;
-	(void)argv;
-	init_shell(envp);
-	while (true)
+	while (tab && *tab)
 	{
-		input = readline("minishell$ ");
-		if (!is_empty(input))
-		{
-			t_node	*node = parse_input(input);
-			print_tree(node, 1);
-			// execution
-			free_tree(node);
-			system("leaks minishell");
-			free(input);
-		}
+		printf("- %s\n", *tab);
+		tab++;
 	}
-	cleanup_shell();
-	return (EXIT_SUCCESS);
 }
