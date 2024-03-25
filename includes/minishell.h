@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 06:18:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:58:15 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ int		ft_isspace(int c);
 bool	is_empty(char *str);
 void	handle_sigint(int signal);
 void	init_shell(char **envp);
+void	cleanup_shell(void);
+void	free_tab(char **tab);
 
 #endif

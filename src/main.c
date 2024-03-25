@@ -2,8 +2,6 @@
 
 t_shell *shell;
 
-t_node	*parse_command(t_lexer *lexer);
-
 void	print_argv(char **argv)
 {
 	while (*argv)
@@ -46,12 +44,16 @@ int main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		input = readline("minishell$ ");
-		t_node	*node = parse_input(input);
-		print_tree(node, 1);
-		free(input);
-		system("leaks minishell");
+		if (!is_empty(input))
+		{
+			t_node	*node = parse_input(input);
+			print_tree(node, 1);
+			// execution
+			free_tree(node);
+			system("leaks minishell");
+			free(input);
+		}
 	}
-	free_env(shell->env);
-	free(shell);
-	return EXIT_SUCCESS;
+	cleanup_shell();
+	return (EXIT_SUCCESS);
 }

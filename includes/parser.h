@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 22:41:14 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:48:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ t_node	*parse_input(char *input);
 char	*get_executable(char *cmd);
 size_t	get_argc(t_token *token);
 char	**parse_argv(t_token **token);
+void	free_tree(t_node *node);
 
 #endif

@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup_btree.c                                    :+:      :+:    :+:   */
+/*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 22:20:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 22:59:18 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/25 22:47:42 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/25 22:55:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd *cmd)
 {
+	size_t	i;
+
 	if (!cmd)
 		return ;
-	free_tab(cmd->argv);
+	i = 0;
+	while (cmd->argv[i])
+	{
+		free(cmd->argv[i]);
+		i++;
+	}
+	free(cmd->argv);
 	free(cmd->path);
 	free(cmd);
 }
 
-static void	free_io(t_io *io)
+void	free_tree(t_node *node)
 {
-	if (!io)
+	if (!node)
 		return ;
-	free(io->file);
-	free_io(io->next);
-	free(io);
-}
-
-void	free_btree(t_node *root)
-{
-	if (!root)
-		return ;
-	free_cmd(root->cmd);
-	free_io(root->io);
-	free_btree(root->left);
-	free_btree(root->right);
+	free_tree(node->left);
+	free_tree(node->right);
+	free_cmd(node->cmd);
+	free(node->io);
+	free(node);
 }

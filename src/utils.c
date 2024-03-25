@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/23 02:12:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:58:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ bool	is_empty(char *str)
 	while (str && ft_isspace(*str))
 		str++;
 	return (ft_strlen(str) == 0);
+}
+
+void	free_tab(char **tab)
+{
+	size_t	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
