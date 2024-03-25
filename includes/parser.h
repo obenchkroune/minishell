@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/22 03:20:34 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:41:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 # include <stdlib.h>
 # include "lexer.h"
+# include "env.h"
 
 
 typedef enum e_redir_type
@@ -28,10 +29,9 @@ typedef enum e_redir_type
 
 typedef enum e_node_type
 {
-	N_PIPE,
+	N_PIPE = 0,
 	N_CMD,
-	N_AND,
-	N_OR
+	N_REDIR
 }	t_node_type;
 
 typedef struct s_cmd
@@ -42,7 +42,7 @@ typedef struct s_cmd
 
 typedef struct s_io
 {
-	t_token_type	type;
+	t_tok_kind	type;
 	char			*file;
 	int				fd;
 	struct s_io		*prev;
@@ -58,23 +58,12 @@ typedef struct s_node
 	struct s_node	*right;
 }	t_node;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-	struct s_env	*prev;
-}	t_env;
-
+t_node	*create_node(t_node_type type, t_node *left, t_node *right);
+t_node	*create_cmd_node(t_cmd *cmd);
+t_env	*parse_env(char **envp);
 t_node	*parse_input(char *input);
-t_node	*parse_pipe(t_lexer *lexer);
-t_io	*parse_io(t_lexer *l);
-t_cmd	*create_cmd(char *path, char **argv);
-void	append_io(t_io **root, t_io *io);
-
-t_node	*create_pipe_node(t_node *left, t_node *right);
-t_node	*create_cmd_node(t_lexer *lexer);
-t_io	*create_io_node(char *file, int fd, t_token_type type);
-t_node	*create_node(t_node_type type, t_cmd *cmd, t_io *io);
+char	*get_executable(char *cmd);
+size_t	get_argc(t_token *token);
+char	**parse_argv(t_token **token);
 
 #endif

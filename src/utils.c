@@ -6,24 +6,30 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/22 04:53:28 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/23 02:12:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	syntax_error(char *msg, char *cmd, size_t pos)
+void	syntax_error(char *msg, char *cmd, ssize_t pos)
 {
+	ft_putstr_fd(RED "syntax error: " RESET, STDERR_FILENO);
 	if (msg)
 	{
-		ft_putstr_fd(RED "syntax error: " RESET, STDERR_FILENO);
 		ft_putendl_fd(msg, STDERR_FILENO);
 		write(STDERR_FILENO, "\n", 1);
 	}
-	ft_putendl_fd(cmd, STDERR_FILENO);
-	while (pos--)
-		ft_putstr_fd(RED "-" RESET, STDERR_FILENO);
-	ft_putendl_fd(RED "^" RESET, STDERR_FILENO);
+	if (cmd)
+	{
+		ft_putendl_fd(cmd, STDERR_FILENO);
+		if (pos != -1)
+		{
+			while (pos--)
+				ft_putstr_fd(RED "-" RESET, STDERR_FILENO);
+			ft_putendl_fd(RED "^" RESET, STDERR_FILENO);
+		}
+	}
 	exit(EXIT_FAILURE);
 }
 

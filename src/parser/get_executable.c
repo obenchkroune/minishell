@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   peek.c                                             :+:      :+:    :+:   */
+/*   get_executable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 04:12:43 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/22 04:12:44 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/25 05:50:09 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/25 06:31:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token_type	peek(t_lexer *lexer)
+char	*get_executable(char *cmd)
 {
-	size_t			initial_cur;
-	t_token			*token;
-	t_token_type	type;
+	char	*result;
+	char	**path;
+	char	*slash_cmd;
 
-	initial_cur = lexer->cur;
-	token = get_next_token(lexer);
-	if (!token)
-		return (-1);
-	lexer->cur = initial_cur;
-	type = token->type;
-	free(token);
-	return (type);
+	result = NULL;
+	// printf("%s\n", get_env("PATH"));
+	path = ft_split(get_env("PATH"), ':');
+	slash_cmd = ft_strjoin("/", cmd);
+	while (path && *path)
+	{
+		result = ft_strjoin(*path, slash_cmd);
+		if (access(result, F_OK) == 0)
+			break ;
+		free(result);
+		result = NULL;
+		path++;
+	}
+	free(slash_cmd);
+	return (result);
 }
