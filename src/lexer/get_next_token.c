@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 05:32:57 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/28 02:34:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*get_next_word(t_lexer *lexer)
 
 void	advance_index(t_lexer *lexer, t_token *token)
 {
+	if (token->kind == T_EOL)
+		return ;
 	if (token->kind == T_WORD)
 		token->value = get_next_word(lexer);
 	else if (token->kind == T_DGREAT || token->kind == T_DLESS)
@@ -64,7 +66,7 @@ t_token	*get_next_token(t_lexer *lexer)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		panic("malloc");
-	while (ft_isspace(lexer->val[lexer->i]))
+	while (ft_isspace(lexer->val[lexer->i]) && lexer->val[lexer->i] != '\0')
 		lexer->i++;
 	token->kind = peek_kind(lexer);
 	token->value = NULL;

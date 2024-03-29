@@ -5,8 +5,9 @@ t_shell *shell;
 void	print_argv(char **argv);
 void	print_tree(t_node *root, int level);
 void	print_tab(char **tab);
+void	print_io(t_io *io);
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 
@@ -20,9 +21,14 @@ int main(int argc, char **argv, char **envp)
 		{
 			t_node	*node = parse_input(input);
 			print_tree(node, 1);
+			if (node->type == N_CMD && ft_strncmp(node->cmd->argv[0], "exit", 5) == 0)
+			{
+				free_tree(node);
+				free(input);
+				break ;
+			}
 			// execution
 			free_tree(node);
-			system("leaks minishell");
 			free(input);
 		}
 	}
@@ -39,7 +45,32 @@ void	print_argv(char **argv)
 {
 	while (*argv)
 	{
-		printf(" - %s", *argv++);
+		printf(" - %s\n", *argv++);
+	}
+}
+
+void	print_io(t_io *io)
+{
+	if (!io)
+		printf("\tNO REDIRECTION\n");
+	while (io)
+	{
+		printf("\tfile: %s\ttype:", io->file);
+		switch (io->type) {
+			case IO_APPEND:
+				printf("APPEND\n");
+				break ;
+			case IO_HEREDOC:
+				printf("HEREDOC\n");
+				break ;
+			case IO_IN:
+				printf("INPUT\n");
+				break ;
+			case IO_OUT:
+				printf("OUTPUT\n");
+				break ;
+		}
+		io = io->next;
 	}
 }
 
@@ -54,7 +85,8 @@ void	print_tree(t_node *root, int level)
 		case N_CMD:
 			printf(GREEN"CMD NODE"RESET);
 			printf("\tEXEC_PATH: %s\n", root->cmd->path);
-			// print_argv(root->cmd->argv);
+			print_io(root->io);
+			print_argv(root->cmd->argv);
 			break ;
 		case N_PIPE:
 			printf(BLUE"PIPE NODE\n"RESET);
@@ -75,3 +107,4 @@ void	print_tab(char **tab)
 		tab++;
 	}
 }
+
