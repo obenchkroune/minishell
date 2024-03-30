@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:36:34 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/28 02:40:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:01:07 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+
+#include "../../includes/minishell.h"
 
 t_node	*parse_input(char *input)
 {

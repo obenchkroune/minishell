@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 02:58:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:27:14 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 t_shell	*g_shell;
 
@@ -25,12 +25,14 @@ int	main(int argc, char **argv, char **envp)
 	t_node	*root;
 
 	(void)argc, (void)argv;
+	input = NULL;
 	init_shell(envp);
 	while (true)
 	{
 		input = readline("minishell$ ");
 		if (!is_empty(input))
 		{
+			add_history(input);
 			root = parse_input(input);
 			print_tree(root, 0);
 			// execution 🐱‍👤
@@ -41,15 +43,13 @@ int	main(int argc, char **argv, char **envp)
 	return (EXIT_SUCCESS);
 }
 
-
-
 void	print_argv(char **argv, int level)
 {
 	for (int j = 0; argv[j]; j++)
 	{
 		for (int i = 0; i < level + 1; i++)
 			printf("\t");
-		printf("\t(%d) %s\n", j+1, argv[j]);
+		printf("\t(%d) %s\n", j + 1, argv[j]);
 	}
 }
 
@@ -62,19 +62,20 @@ void	print_io(t_io *io, int level)
 	while (io)
 	{
 		printf("\tfile: %s\ttype:", io->file);
-		switch (io->type) {
-			case IO_APPEND:
-				printf("APPEND\n");
-				break ;
-			case IO_HEREDOC:
-				printf("HEREDOC\n");
-				break ;
-			case IO_IN:
-				printf("INPUT\n");
-				break ;
-			case IO_OUT:
-				printf("OUTPUT\n");
-				break ;
+		switch (io->type)
+		{
+		case IO_APPEND:
+			printf("APPEND\n");
+			break ;
+		case IO_HEREDOC:
+			printf("HEREDOC\n");
+			break ;
+		case IO_IN:
+			printf("INPUT\n");
+			break ;
+		case IO_OUT:
+			printf("OUTPUT\n");
+			break ;
 		}
 		io = io->next;
 	}
@@ -88,18 +89,18 @@ void	print_tree(t_node *root, int level)
 		printf(i == level - 1 ? "|-" : "\t");
 	switch (root->type)
 	{
-		case N_CMD:
-			printf(GREEN"CMD NODE"RESET);
-			printf("\tEXEC_PATH: %s\n", root->cmd->path);
-			print_io(root->io, level);
-			print_argv(root->cmd->argv, level);
-			break ;
-		case N_PIPE:
-			printf(BLUE"PIPE NODE\n"RESET);
-			break ;
-		default:
-			printf(RED"UNKNOWN NODE\n"RESET);
-			break ;
+	case N_CMD:
+		printf(GREEN "CMD NODE" RESET);
+		printf("\tEXEC_PATH: %s\n", root->cmd->path);
+		print_io(root->io, level);
+		print_argv(root->cmd->argv, level);
+		break ;
+	case N_PIPE:
+		printf(BLUE "PIPE NODE\n" RESET);
+		break ;
+	default:
+		printf(RED "UNKNOWN NODE\n" RESET);
+		break ;
 	}
 	printf("\n");
 	print_tree(root->left, level + 1);

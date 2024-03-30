@@ -1,18 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 05:05:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:25 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 11:12:55 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-void	handle_sigint(int signal)
-{
-	(void)signal;
-}
+#include "../../includes/minishell.h"

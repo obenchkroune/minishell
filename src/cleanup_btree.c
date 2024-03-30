@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_btree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:20:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 22:59:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:00:55 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 static void	free_cmd(t_cmd *cmd)
 {

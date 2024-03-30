@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 02:48:47 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 02:49:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:01:56 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../../includes/minishell.h"
 
 char	*ft_strreplace(char *str, char *find, char *replace)
 {

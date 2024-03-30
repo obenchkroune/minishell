@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:27:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 01:32:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:02:33 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void	add_env(t_env **env, char *key, char *value)
 {
@@ -47,8 +47,7 @@ t_env	*parse_env(char **envp)
 		equal_sign = ft_strchr(*envp, '=');
 		if (equal_sign)
 		{
-			add_env(&result,
-				ft_substr(*envp, 0, equal_sign - *envp),
+			add_env(&result, ft_substr(*envp, 0, equal_sign - *envp),
 				ft_strdup(equal_sign + 1));
 		}
 		envp++;

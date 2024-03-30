@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 05:05:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:25 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 09:30:04 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 09:34:17 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	handle_sigint(int signal)
+void	ft_exit(void)
 {
-	(void)signal;
+	//TO DO: free all the allocated memory
+	exit(EXIT_SUCCESS);
 }

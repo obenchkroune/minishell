@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse_io.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:20:44 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 03:15:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:01:31 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../../../includes/minishell.h"
 
 static bool	is_redir_token(t_tok_kind type)
 {
-	return (type == T_GREAT || type == T_LESS ||
-		type == T_DGREAT || type == T_DLESS);
+	return (type == T_GREAT || type == T_LESS || type == T_DGREAT
+		|| type == T_DLESS);
 }
 
 t_io	*create_io_node(t_io_type type, int fd, char *file)
@@ -74,8 +73,8 @@ t_io	*parse_io(t_token **token)
 		*token = (*token)->next;
 		if (!*token || (*token)->kind != T_WORD)
 			panic("invalid syntax");
-		append_io(&io, create_io_node(get_io_type((*token)->prev),
-			-1, (*token)->value));
+		append_io(&io, create_io_node(get_io_type((*token)->prev), -1,
+				(*token)->value));
 		*token = (*token)->next;
 	}
 	return (io);

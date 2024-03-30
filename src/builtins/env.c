@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 05:05:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:25 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 09:13:37 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 09:34:39 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	handle_sigint(int signal)
+void	ft_env(void)
 {
-	(void)signal;
+	t_env	*env;
+
+	env = g_shell->env;
+	while (env)
+	{
+		ft_fprintf(1, "%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
 }

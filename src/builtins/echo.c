@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 05:05:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:25 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 07:32:42 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 09:37:10 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	handle_sigint(int signal)
+void	ft_echo(char **args)
 {
-	(void)signal;
+	bool	n_flag;
+	int		i;
+
+	i = 1;
+	n_flag = false;
+	if (args[1] && ft_strncmp(args[1], "-n", ft_strlen(args[1])) == 0)
+	{
+		n_flag = true;
+		i++;
+	}
+	while (args && args[i])
+	{
+		ft_fprintf(STDIN_FILENO, "%s ", args[i]);
+		i++;
+	}
+	if (n_flag == false)
+		ft_fprintf(STDIN_FILENO, "\n");
 }

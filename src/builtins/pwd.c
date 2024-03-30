@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 05:05:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:25 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 08:26:54 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 09:34:27 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	handle_sigint(int signal)
+static char	*get_current_working_directory(void)
 {
-	(void)signal;
+	char	*buffer;
+
+	buffer = NULL;
+	return (getcwd(buffer, 0));
+}
+
+void	ft_pwd(void)
+{
+	char	*cwd;
+
+	cwd = get_current_working_directory();
+	if (cwd)
+		ft_fprintf(STDOUT_FILENO, "%s\n", cwd);
+	else
+		panic("pwd");
+	free(cwd);
 }

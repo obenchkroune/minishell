@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 22:58:08 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:00:36 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	syntax_error(char *msg, char *cmd, ssize_t pos)
 {
@@ -36,10 +36,7 @@ void	syntax_error(char *msg, char *cmd, ssize_t pos)
 void	panic(char *msg)
 {
 	if (msg != NULL)
-	{
-		ft_putstr_fd(msg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-	}
+		ft_fprintf(STDERR_FILENO, "%s: %s\n", msg, strerror(errno));
 	exit(EXIT_FAILURE);
 }
 

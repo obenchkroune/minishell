@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 05:05:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:25 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 07:33:13 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 10:23:46 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-void	handle_sigint(int signal)
-{
-	(void)signal;
-}
+# include <stdbool.h>
+# define NO_OLDPWD "cd: OLDPWD environment variable has not been set."
+# define NO_HOME "cd: HOME environment variable has not been set."
+
+void	ft_echo(char **args);
+void	ft_cd(char **args);
+void	ft_pwd(void);
+void	ft_env(void);
+void	ft_export(char **args);
+void	ft_unset(char **args);
+void	ft_exit(void);
+bool	is_builtin(char *cmd);
+#endif

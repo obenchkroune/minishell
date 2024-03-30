@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_pipe.c                                       :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 01:22:32 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:01:27 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/03/30 08:56:07 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/03/30 09:35:53 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-t_node	*parse_pipe(t_token **token)
+void	ft_unset(char **args)
 {
-	t_node	*node;
+	t_env	*env;
+	t_env	*prev;
 
-	node = parse_cmd(token);
-	if (*token && (*token)->kind == T_PIPE)
+	env = g_shell->env;
+	while (env)
 	{
-		*token = (*token)->next;
-		node = create_node(N_PIPE, node, parse_pipe(token));
+		if (ft_strncmp(env->key, args[1], ft_strlen(args[1])) == 0)
+		{
+			prev->next = env->next;
+			ft_bzero(env->key, ft_strlen(env->key));
+			ft_bzero(env->value, ft_strlen(env->value));
+			free(env->key);
+			free(env->value);
+			free(env);
+			return ;
+		}
+		prev = env;
+		env = env->next;
 	}
-	return (node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:11:22 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/17 09:04:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:16:25 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include <limits.h>
 # include <stdarg.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # define HEX "0123456789abcdef"
 # define MHEX "0123456789ABCDEF"
 // # define SIZE_MAX 18446744073709551615UL
@@ -33,7 +33,7 @@ typedef struct s_list
 }					t_list;
 
 char				*get_next_line(int fd);
-int					ft_printf(const char *s, ...);
+int					ft_fprintf(int fd, const char *s, ...);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 int					ft_isascii(int c);

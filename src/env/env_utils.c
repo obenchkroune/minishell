@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 06:00:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/29 05:10:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 09:02:44 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 t_env	*get_env(char *key)
 {
 	t_env	*env;
+
 	env = g_shell->env;
 	while (env)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 02:48:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 10:35:09 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,35 @@
 # define CYAN "\x1b[36m"
 # define RESET "\x1b[0m"
 
-# include <stdio.h>
+# include "builtins.h"
+# include "env.h"
+# include "lexer.h"
+# include "libft.h"
+# include "parser.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <libft.h>
-# include <sys/wait.h>
-# include <stdbool.h>
 # include <signal.h>
-# include "parser.h"
-# include "lexer.h"
-# include "env.h"
+# include <stdbool.h>
+# include <stdio.h>
+# include <sys/wait.h>
 
 typedef struct s_shell
 {
-	t_env	*env;
-}	t_shell;
+	t_env		*env;
+}				t_shell;
 
-extern t_shell *g_shell;
+extern t_shell	*g_shell;
 
-
-void	panic(char *msg);
-void	syntax_error(char *msg, char *cmd, ssize_t pos);
-int		ft_isspace(int c);
-bool	is_empty(char *str);
-void	handle_sigint(int signal);
-void	init_shell(char **envp);
-void	cleanup_shell(void);
-void	free_tab(char **tab);
-void	cleanup_rotation(char *input, t_node *nodes);
-char	*ft_strreplace(char *str, char *find, char *replace);
+void			panic(char *msg);
+void			syntax_error(char *msg, char *cmd, ssize_t pos);
+int				ft_isspace(int c);
+bool			is_empty(char *str);
+void			handle_sigint(int signal);
+void			init_shell(char **envp);
+void			cleanup_shell(void);
+void			free_tab(char **tab);
+void			cleanup_rotation(char *input, t_node *nodes);
+char			*ft_strreplace(char *str, char *find, char *replace);
 
 #endif
