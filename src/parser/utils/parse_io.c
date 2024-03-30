@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:20:44 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/28 02:22:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:15:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_io	*parse_io(t_token **token)
 	while (*token && is_redir_token((*token)->kind))
 	{
 		*token = (*token)->next;
-		if ((*token)->kind != T_WORD)
+		if (!*token || (*token)->kind != T_WORD)
 			panic("invalid syntax");
 		append_io(&io, create_io_node(get_io_type((*token)->prev),
 			-1, (*token)->value));
