@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:52:42 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 02:50:00 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:14:31 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_node	*parse_cmd(t_token **token)
 	t_io	*io;
 
 	io = parse_io(token);
-	if ((*token)->kind != T_WORD)
+	if (!*token || (*token)->kind != T_WORD)
 		panic("invalid syntax!");
 	node = create_node(N_CMD, NULL, NULL);
 	node->cmd = parse_cmd_props(token);
