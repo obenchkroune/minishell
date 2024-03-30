@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 06:00:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 23:20:27 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/29 05:10:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_env	*get_env(char *key)
 {
 	t_env	*env;
-	env = shell->env;
+	env = g_shell->env;
 	while (env)
 	{
 		if (ft_strncmp(env->key, key, ft_strlen(key)) == 0)
@@ -45,8 +45,8 @@ t_env	*set_env(char *key, char *value)
 	if (!env)
 	{
 		env = create_env(key, value);
-		env->next = shell->env;
-		shell->env = env;
+		env->next = g_shell->env;
+		g_shell->env = env;
 		return (env);
 	}
 	free(env->value);

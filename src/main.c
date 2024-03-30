@@ -1,56 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/30 02:58:44 by obenchkr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_shell *shell;
+t_shell	*g_shell;
 
-void	print_argv(char **argv);
+void	print_argv(char **argv, int level);
 void	print_tree(t_node *root, int level);
 void	print_tab(char **tab);
-void	print_io(t_io *io);
+void	print_io(t_io *io, int level);
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_node	*root;
 
-	(void)argc;
-	(void)argv;
+	(void)argc, (void)argv;
 	init_shell(envp);
 	while (true)
 	{
 		input = readline("minishell$ ");
 		if (!is_empty(input))
 		{
-			t_node	*node = parse_input(input);
-			print_tree(node, 1);
-			if (node->type == N_CMD && ft_strncmp(node->cmd->argv[0], "exit", 5) == 0)
-			{
-				free_tree(node);
-				free(input);
-				break ;
-			}
-			// execution
-			free_tree(node);
-			free(input);
+			root = parse_input(input);
+			print_tree(root, 0);
+			// execution 🐱‍👤
+			cleanup_rotation(input, root);
 		}
 	}
 	cleanup_shell();
 	return (EXIT_SUCCESS);
 }
 
-/*
----------------------------
-Testing functions
----------------------------
-*/
-void	print_argv(char **argv)
+
+
+void	print_argv(char **argv, int level)
 {
-	while (*argv)
+	for (int j = 0; argv[j]; j++)
 	{
-		printf(" - %s\n", *argv++);
+		for (int i = 0; i < level + 1; i++)
+			printf("\t");
+		printf("\t(%d) %s\n", j+1, argv[j]);
 	}
 }
 
-void	print_io(t_io *io)
+void	print_io(t_io *io, int level)
 {
+	for (int i = 0; i < level + 1; i++)
+		printf("\t");
 	if (!io)
 		printf("\tNO REDIRECTION\n");
 	while (io)
@@ -85,8 +91,8 @@ void	print_tree(t_node *root, int level)
 		case N_CMD:
 			printf(GREEN"CMD NODE"RESET);
 			printf("\tEXEC_PATH: %s\n", root->cmd->path);
-			print_io(root->io);
-			print_argv(root->cmd->argv);
+			print_io(root->io, level);
+			print_argv(root->cmd->argv, level);
 			break ;
 		case N_PIPE:
 			printf(BLUE"PIPE NODE\n"RESET);
@@ -95,6 +101,7 @@ void	print_tree(t_node *root, int level)
 			printf(RED"UNKNOWN NODE\n"RESET);
 			break ;
 	}
+	printf("\n");
 	print_tree(root->left, level + 1);
 	print_tree(root->right, level + 1);
 }
@@ -107,4 +114,3 @@ void	print_tab(char **tab)
 		tab++;
 	}
 }
-

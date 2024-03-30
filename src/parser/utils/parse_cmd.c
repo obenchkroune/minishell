@@ -6,16 +6,11 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:52:42 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/28 03:25:22 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:50:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*expand_arg(char *word)
-{
-	// TODO :)
-}
 
 size_t	get_argc(t_token *token)
 {
@@ -43,7 +38,7 @@ char	**parse_argv(t_token **token)
 	i = 0;
 	while (i < argc)
 	{
-		argv[i++] = ft_strdup((*token)->value);
+		argv[i++] = ft_expand((*token)->value);
 		*token = (*token)->next;
 	}
 	return (argv);

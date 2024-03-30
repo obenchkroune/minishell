@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:54:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/25 06:29:55 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/29 05:10:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_shell(char **envp)
 {
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
+	g_shell = malloc(sizeof(t_shell));
+	if (!g_shell)
 		panic("malloc");
-	shell->env = parse_env(envp);
+	g_shell->env = parse_env(envp);
 }

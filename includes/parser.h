@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/28 01:22:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:48:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	free_tree(t_node *node);
 t_io	*create_io_node(t_io_type type, int fd, char *file);
 void	append_io(t_io **root, t_io *node);
 t_io	*parse_io(t_token **token);
+char	*ft_expand(char *str);
 
 
 #endif

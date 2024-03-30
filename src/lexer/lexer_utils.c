@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:50:10 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/24 05:44:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/29 05:47:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_meta_char(char c)
 {
-	return (ft_strchr("<>|&;$\\", c));
+	return (ft_strchr("<>|&", c));
 }
 
 bool	is_word_char(char c)

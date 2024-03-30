@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:47:42 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/28 02:30:03 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/29 04:57:43 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ void	free_cmd(t_cmd *cmd)
 		return ;
 	i = 0;
 	while (cmd->argv[i])
-	{
-		free(cmd->argv[i]);
-		i++;
-	}
+		free(cmd->argv[i++]);
 	free(cmd->argv);
 	free(cmd->path);
 	free(cmd);

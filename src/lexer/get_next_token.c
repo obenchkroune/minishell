@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/28 02:34:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/29 05:46:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_token	*tokenize(char *input)
 	lexer.val = input;
 	token = get_next_token(&lexer);
 	head = token;
-	while (peek_kind(&lexer) != T_EOL)
+	while (token != NULL && peek_kind(&lexer) != T_EOL)
 	{
 		token->next = get_next_token(&lexer);
 		token->next->prev = token;
