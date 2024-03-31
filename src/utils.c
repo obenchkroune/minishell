@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:09:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:14:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	syntax_error(char *msg, char *cmd, ssize_t pos)
 
 void	panic(char *msg)
 {
-	if (msg != NULL)
-		ft_fprintf(STDERR_FILENO, "%s: %s\n", msg, strerror(errno));
+	perror(msg);
 	cleanup_rotation();
 	cleanup_shell();
 	exit(EXIT_FAILURE);
