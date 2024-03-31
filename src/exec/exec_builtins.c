@@ -18,19 +18,12 @@
 
 bool	ft_is_builtin(char *cmd)
 {
-	const char	*builtins[] = {
-		"echo",
-		"cd",
-		"pwd",
-		"export",
-		"unset",
-		"env",
-		"exit"
-	};
+	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
+			"exit"};
 
 	while (*builtins)
 	{
-		if (!ft_strcmp(cmd, *builtins))
+		if (!ft_strncmp(cmd, *builtins, ft_strlen(*builtins)))
 			return (true);
 	}
 	return (false);
@@ -38,34 +31,18 @@ bool	ft_is_builtin(char *cmd)
 
 void	ft_exec_builtin(char **args)
 {
-<<<<<<< HEAD
-	if (ft_strcmp(args[0], "echo") == 0)
+	if (ft_strncmp(args[0], "echo", 4) == 0)
 		ft_echo(args);
-	else if (ft_strcmp(args[0], "cd") == 0)
+	else if (ft_strncmp(args[0], "cd", 2) == 0)
 		ft_cd(args);
-	else if (ft_strcmp(args[0], "pwd") == 0)
+	else if (ft_strncmp(args[0], "pwd", 3) == 0)
 		ft_pwd();
-	else if (ft_strcmp(args[0], "export") == 0)
+	else if (ft_strncmp(args[0], "export", 6) == 0)
 		ft_export(args);
-	else if (ft_strcmp(args[0], "unset") == 0)
+	else if (ft_strncmp(args[0], "unset", 5) == 0)
 		ft_unset(args);
-	else if (ft_strcmp(args[0], "env") == 0)
+	else if (ft_strncmp(args[0], "env", 3) == 0)
 		ft_env();
-	else if (ft_strcmp(args[0], "exit") == 0)
-=======
-	if (ft_strcmp(args[0], "echo") == 0)
-		ft_echo(args);
-	else if (ft_strcmp(args[0], "cd") == 0)
-		ft_cd(args);
-	else if (ft_strcmp(args[0], "pwd") == 0)
-		ft_pwd();
-	else if (ft_strcmp(args[0], "export") == 0)
-		ft_export(args);
-	else if (ft_strcmp(args[0], "unset") == 0)
-		ft_unset(args);
-	else if (ft_strcmp(args[0], "env") == 0)
-		ft_env();
-	else if (ft_strcmp(args[0], "exit") == 0)
->>>>>>> 9e47469478f5512e2b0ad74af4ca09dc6a6d6e08
+	else if (ft_strncmp(args[0], "exit", 4) == 0)
 		ft_exit();
 }
