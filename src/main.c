@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:27:14 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,18 @@ void	print_io(t_io *io, int level);
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_node	*root;
-
 	(void)argc, (void)argv;
-	input = NULL;
 	init_shell(envp);
 	while (true)
 	{
-		input = readline("minishell$ ");
-		if (!is_empty(input))
+		g_shell->input = readline("minishell$ ");
+		if (!is_empty(g_shell->input))
 		{
-			add_history(input);
-			root = parse_input(input);
-			print_tree(root, 0);
+			add_history(g_shell->input);
+			g_shell->tree = parse_input(g_shell->input);
+			print_tree(g_shell->tree, 0);
 			// execution 🐱‍👤
-			cleanup_rotation(input, root);
+			cleanup_rotation();
 		}
 	}
 	cleanup_shell();

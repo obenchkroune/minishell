@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 10:35:09 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@
 
 typedef struct s_shell
 {
-	t_env		*env;
+	t_env	*env;
+	t_node	*tree;
+	char	*input;
 }				t_shell;
 
 extern t_shell	*g_shell;
@@ -50,7 +52,7 @@ void			handle_sigint(int signal);
 void			init_shell(char **envp);
 void			cleanup_shell(void);
 void			free_tab(char **tab);
-void			cleanup_rotation(char *input, t_node *nodes);
+void			cleanup_rotation(void);
 char			*ft_strreplace(char *str, char *find, char *replace);
 
 #endif

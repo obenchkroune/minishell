@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 22:52:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/03/31 09:03:11 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/31 09:04:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-void	cleanup_shell(void)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	free_env(g_shell->env);
-	g_shell->env = NULL;
-	free(g_shell);
-	g_shell = NULL;
-}
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-void	cleanup_rotation(void)
-{
-	free_tree(g_shell->tree);
-	g_shell->tree = NULL;
-	free(g_shell->input);
-	g_shell->input = NULL;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (*str1 && *str2 && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+	return (*str1 - *str2);
 }
