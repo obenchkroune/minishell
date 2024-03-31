@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:11:22 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/30 09:16:25 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:05:01 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_strcmp(const char *s1, const char *s2);
 char				*get_next_line(int fd);
 int					ft_fprintf(int fd, const char *s, ...);
 int					ft_isalnum(int c);
