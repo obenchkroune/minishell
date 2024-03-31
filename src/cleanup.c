@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:52:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:10:14 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	cleanup_shell(void)
 
 void	cleanup_rotation(void)
 {
-	free_tree(g_shell->nodes);
-	g_shell->nodes = NULL;
+	free_tree(g_shell->tree);
+	g_shell->tree = NULL;
 	free(g_shell->input);
 	g_shell->input = NULL;
 }
