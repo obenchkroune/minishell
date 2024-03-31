@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:50:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		g_shell->input = readline("minishell$ ");
 		if (!is_empty(g_shell->input))
 		{
-			add_history(g_shell->input);
 			g_shell->tree = parse_input(g_shell->input);
 			print_tree(g_shell->tree, 0);
 			// execution 🐱‍👤
