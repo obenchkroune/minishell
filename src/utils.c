@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:36 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:09:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	panic(char *msg)
 {
 	if (msg != NULL)
 		ft_fprintf(STDERR_FILENO, "%s: %s\n", msg, strerror(errno));
+	cleanup_rotation();
+	cleanup_shell();
 	exit(EXIT_FAILURE);
 }
 
