@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:16:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/04 05:05:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_isspace(int c)
 bool	is_empty(char *str)
 {
 	if (!str)
-		return (true);
+		ft_exit();
 	while (*str && ft_isspace(*str))
 		str++;
 	return (ft_strlen(str) == 0);
