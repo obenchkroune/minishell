@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 00:47:49 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:48:35 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,10 @@
 
 typedef struct s_shell
 {
-<<<<<<< HEAD
 	t_env		*env;
 	t_node		*tree;
-	char		**envp;
 	char		*input;
-=======
-	t_env	*env;
-	t_node	*tree;
-	char	*input;
-	int		last_exit_status;
->>>>>>> 228cb7be5b3f104f9d5a1b40878a1c2e678897b3
+	int			last_exit_status;
 }				t_shell;
 
 extern t_shell	*g_shell;
