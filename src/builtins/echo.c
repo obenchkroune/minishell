@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:32:42 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 03:35:07 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 05:32:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_echo(char **args)
 
 	i = 1;
 	n_flag = false;
-	if (args[1] && ft_strncmp(args[1], "-n", ft_strlen(args[1])) == 0)
+	if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
 		n_flag = true;
 		i++;
