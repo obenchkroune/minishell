@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/31 18:33:32 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 02:29:19 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_get_exit_status(int status)
 	return (WEXITSTATUS(status));
 }
 
-static int	ft_exec_pipeline(t_node *tree)
+int	ft_exec_pipeline(t_node *tree)
 {
 	int	status;
 	int	pipe_fd[2];
@@ -67,8 +67,6 @@ static int	ft_exec_pipeline(t_node *tree)
 
 int	ft_exec_node(t_node *tree, bool piped)
 {
-	int	status;
-
 	if (!tree)
 		return (1);
 	if (tree->type == N_PIPE)

@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 00:47:21 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 02:47:07 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,25 @@
 
 bool	ft_is_builtin(char *cmd)
 {
-	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-			"exit"};
-
-	while (*builtins)
-	{
-		if (!ft_strncmp(cmd, *builtins, ft_strlen(*builtins)))
-			return (true);
-	}
-	return (false);
+	return (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") || !ft_strcmp(cmd,
+			"pwd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit"));
 }
 
 void	ft_exec_builtin(char **args)
 {
-	size_t	len;
-
-	len = ft_strlen(args[0]);
-	if (ft_strncmp(args[0], "echo", len) == 0)
+	if (!ft_strcmp(args[0], "echo"))
 		ft_echo(args);
-	else if (ft_strncmp(args[0], "cd", len) == 0)
+	else if (!ft_strcmp(args[0], "cd"))
 		ft_cd(args);
-	else if (ft_strncmp(args[0], "pwd", len) == 0)
+	else if (!ft_strcmp(args[0], "pwd"))
 		ft_pwd();
-	else if (ft_strncmp(args[0], "export", len) == 0)
+	else if (!ft_strcmp(args[0], "export"))
 		ft_export(args);
-	else if (ft_strncmp(args[0], "unset", len) == 0)
+	else if (!ft_strcmp(args[0], "unset"))
 		ft_unset(args);
-	else if (ft_strncmp(args[0], "env", len) == 0)
+	else if (!ft_strcmp(args[0], "env"))
 		ft_env();
-	else if (ft_strncmp(args[0], "exit", len) == 0)
+	else if (!ft_strcmp(args[0], "exit"))
 		ft_exit();
 }
