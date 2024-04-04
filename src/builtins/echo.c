@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:32:42 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 02:43:00 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 03:35:07 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	ft_echo(char **args)
 	}
 	while (args && args[i])
 	{
-		ft_fprintf(STDIN_FILENO, "%s ", args[i]);
+		ft_fprintf(STDOUT_FILENO, "%s ", args[i]);
 		i++;
 	}
 	if (n_flag == false)
-		ft_fprintf(STDIN_FILENO, "\n");
+		ft_fprintf(STDOUT_FILENO, "\n");
 }
