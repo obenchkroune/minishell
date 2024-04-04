@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 06:00:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 03:43:34 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 05:20:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env	*get_env(char *key)
 	env = g_shell->env;
 	while (env)
 	{
-		if (ft_strncmp(env->key, key, ft_strlen(key)) == 0)
+		if (ft_strcmp(env->key, key) == 0)
 			return (env);
 		env = env->next;
 	}
