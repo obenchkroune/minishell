@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:54:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 00:57:50 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 03:09:24 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,6 @@ void	init_shell(char **envp)
 		panic("malloc");
 	ft_bzero(g_shell, sizeof(t_shell));
 	g_shell->env = parse_env(envp);
+	g_shell->last_exit_status = 0;
+	g_shell->cwd = getcwd(NULL, 0);
 }

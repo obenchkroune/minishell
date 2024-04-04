@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/31 18:37:57 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 03:12:37 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	ft_cd(char **args)
 	if ((!path) || ft_strncmp(path, "~", ft_strlen(path)) == 0)
 	{
 		change_dir_to_home();
+		free(g_shell->cwd);
+		g_shell->cwd = getcwd(NULL, 0);
 		return ;
 	}
 	else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
@@ -75,5 +77,7 @@ void	ft_cd(char **args)
 		current_path = ft_strdup(path);
 		change_dir_to_path(current_path);
 	}
+	free(g_shell->cwd);
 	free(current_path);
+	g_shell->cwd = getcwd(NULL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 02:33:42 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 02:53:42 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_shell
 	t_env		*env;
 	t_node		*tree;
 	char		*input;
+	char		*cwd;
 	int			last_exit_status;
 }				t_shell;
 

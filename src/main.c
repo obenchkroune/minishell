@@ -6,30 +6,45 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 02:43:45 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 03:09:37 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_shell	*g_shell;
+t_shell		*g_shell;
 
-void	print_argv(char **argv, int level);
-void	print_tree(t_node *root, int level);
-void	print_tab(char **tab);
-void	print_io(t_io *io, int level);
+void		print_argv(char **argv, int level);
+void		print_tree(t_node *root, int level);
+void		print_tab(char **tab);
+void		print_io(t_io *io, int level);
+
+static char	*get_display_line(void)
+{
+	char		*line;
+	static char	*display_line = NULL;
+
+	free(display_line);
+	line = ft_strjoin(GREEN "minishell@42:" RESET, g_shell->cwd);
+	display_line = ft_strjoin(line, "$ ");
+	free(line);
+	return (display_line);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
+	char	*display_line;
+
 	(void)argc, (void)argv;
 	init_shell(envp);
 	while (true)
 	{
-		g_shell->input = readline("minishell$ ");
+		display_line = get_display_line();
+		g_shell->input = readline(display_line);
 		if (!is_empty(g_shell->input))
 		{
 			g_shell->tree = parse_input(g_shell->input);
-			print_tree(g_shell->tree, 0);
+			// print_tree(g_shell->tree, 0);
 			// execution 🐱‍👤
 			ft_exec_node(g_shell->tree, false);
 			cleanup_rotation();
@@ -45,7 +60,7 @@ void	print_argv(char **argv, int level)
 	{
 		for (int i = 0; i < level + 1; i++)
 			printf("\t");
-		printf("\t(%d) %s\n", j , argv[j]);
+		printf("\t(%d) %s\n", j, argv[j]);
 	}
 }
 
