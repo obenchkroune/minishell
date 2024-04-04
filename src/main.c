@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/31 23:52:11 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(g_shell->input);
 			g_shell->tree = parse_input(g_shell->input);
-			print_tree(g_shell->tree, 0);
+			// print_tree(g_shell->tree, 0);
 			// execution 🐱‍👤
+			ft_exec_node(g_shell->tree, false);
 			cleanup_rotation();
 		}
 	}

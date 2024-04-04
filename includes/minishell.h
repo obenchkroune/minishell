@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 09:20:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/31 18:16:42 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # include "builtins.h"
 # include "env.h"
+# include "exec.h"
 # include "lexer.h"
 # include "libft.h"
 # include "parser.h"
@@ -37,9 +38,10 @@
 
 typedef struct s_shell
 {
-	t_env	*env;
-	t_node	*tree;
-	char	*input;
+	t_env		*env;
+	t_node		*tree;
+	char		**envp;
+	char		*input;
 }				t_shell;
 
 extern t_shell	*g_shell;
