@@ -6,13 +6,11 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 06:16:49 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:14:38 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
 
 static int	ft_exec_cmd(t_node *tree, char **args)
 {
@@ -26,8 +24,7 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 		panic("fork");
 	if (pid == 0)
 	{
-		if (tree->io && (tree->io->type == IO_IN || tree->io->type == IO_OUT
-				|| tree->io->type == IO_APPEND || tree->io->type == IO_HEREDOC))
+		if (tree->io)
 			ft_redirect(tree->io);
 		if (execve(cmd->path, args, env_tab(g_shell->env)) == -1)
 		{
