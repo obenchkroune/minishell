@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 06:00:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 05:20:42 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:44:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_env	*create_env(char *key, char *value)
 		panic("malloc");
 	env->key = ft_strdup(key);
 	env->value = ft_strdup(value);
+	free_tab(g_shell->envp);
+	g_shell->envp = env_tab(g_shell->env);
 	return (env);
 }
 
@@ -52,6 +54,8 @@ t_env	*set_env(char *key, char *value)
 	}
 	free(env->value);
 	env->value = ft_strdup(value);
+	free_tab(g_shell->envp);
+	g_shell->envp = env_tab(g_shell->env);
 	return (env);
 }
 
