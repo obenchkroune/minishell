@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_executable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:50:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 07:34:52 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:13:46 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_executable(char *cmd)
 		return (ft_strdup(cmd));
 	result = NULL;
 	if (get_env("PATH") == NULL)
-		panic_minishell("PATH env variable is not found", 1);
+		return (NULL);
 	path = ft_split(get_env("PATH")->value, ':');
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
