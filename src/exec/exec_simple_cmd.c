@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 07:14:38 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:29:43 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 	{
 		if (tree->io)
 			ft_redirect(tree->io);
-		if (execve(cmd->path, args, env_tab(g_shell->env)) == -1)
+		if (!cmd->path)
 		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(args[0], STDERR_FILENO);
-			ft_putstr_fd(": ", STDERR_FILENO);
-			ft_putstr_fd(strerror(errno), STDERR_FILENO);
-			ft_putstr_fd("\n", STDERR_FILENO);
+			ft_fprintf(2, "minishell: %s: command not found\n", args[0]);
 			exit(127);
+		}
+		if (execve(cmd->path, args, g_shell->envp) == -1)
+		{
+			ft_fprintf(2, "minishell: %s: %s\n", args[0], strerror(errno));
+			exit(1);
 		}
 	}
 	waitpid(pid, &status, 0);
