@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:50:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 05:35:18 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 06:03:58 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_executable(char *cmd)
 	i = 0;
 	result = NULL;
 	if (get_env("PATH") == NULL)
-		panic("PATH not found");
+		panic_minishell("PATH env variable is not found", 1);
 	path = ft_split(get_env("PATH")->value, ':');
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
