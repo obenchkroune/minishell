@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 04:21:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:41:25 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include "exec.h"
 # include "lexer.h"
 # include "libft.h"
-# include <string.h>
 # include "parser.h"
 # include <errno.h>
 # include <fcntl.h>
@@ -36,6 +35,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <string.h>
 # include <sys/wait.h>
 
 typedef struct s_shell
@@ -50,6 +50,7 @@ typedef struct s_shell
 extern t_shell	*g_shell;
 
 void			panic(char *msg);
+void			panic_minishell(char *msg, int status);
 void			syntax_error(char *msg, char *cmd, ssize_t pos);
 int				ft_isspace(int c);
 bool			is_empty(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 05:05:57 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:41:07 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ void	panic(char *msg)
 	exit(EXIT_FAILURE);
 }
 
+void	panic_minishell(char *msg, int status)
+{
+	char	*error;
+
+	error = strerror(errno);
+	ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
+	fr_fprintf(STDERR_FILENO, "%s: %s\n", msg, error);
+	cleanup_rotation();
+	g_shell->last_exit_status = status;
+}
 int	ft_isspace(int c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
