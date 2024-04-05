@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 05:41:25 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:47:00 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "lexer.h"
 # include "libft.h"
 # include "parser.h"
+# include "signals.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -37,6 +38,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/wait.h>
+# include <unistd.h>
 
 typedef struct s_shell
 {
@@ -45,6 +47,7 @@ typedef struct s_shell
 	char		*input;
 	char		*cwd;
 	int			last_exit_status;
+	char		*prompt;
 }				t_shell;
 
 extern t_shell	*g_shell;

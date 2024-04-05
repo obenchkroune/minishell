@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 07:09:55 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:47:39 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ static char	*get_display_line(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*display_line;
-
 	(void)argc, (void)argv;
 	init_shell(envp);
+	signal_init();
 	while (true)
 	{
-		display_line = get_display_line();
-		g_shell->input = readline(display_line);
+		g_shell->prompt = get_display_line();
+		g_shell->input = readline(g_shell->prompt);
 		if (!is_empty(g_shell->input))
 		{
 			g_shell->tree = parse_input(g_shell->input);

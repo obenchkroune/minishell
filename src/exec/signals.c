@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 06:45:31 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:46:49 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,23 @@
 void	sigint_handler(int signum)
 {
 	(void)signum;
-	ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_fprintf(STDOUT_FILENO, "\n");
+	ft_fprintf(STDOUT_FILENO, "%s", g_shell->prompt);
 }
 
 void	sigquit_handler(int signum)
 {
 	(void)signum;
-	ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
+	printf("Quit (core dumped)\n");
+	// cleanup_rotation();
+	// cleanup_shell();
+	// exit(g_shell->last_exit_status);
+}
+
+void	signal_init(void)
+{
+	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+		panic("signal");
+	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
+		panic("signal");
 }
