@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 04:31:31 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:33:24 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	redirect_heredoc(t_io *io)
 {
 	int	fd;
 
-	fd = open("to do", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(io->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		panic("open");
 	dup2(fd, STDIN_FILENO);
@@ -58,8 +58,6 @@ static void	redirect_heredoc(t_io *io)
 
 int	ft_redirect(t_io *io)
 {
-	int	fd;
-
 	while (io)
 	{
 		if (io->type == IO_IN)

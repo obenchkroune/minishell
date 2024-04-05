@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 03:44:26 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:37:14 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!is_empty(g_shell->input))
 		{
 			g_shell->tree = parse_input(g_shell->input);
-			print_tree(g_shell->tree, 0);
+			// print_tree(g_shell->tree, 0);
 			// execution 🐱‍👤
 			ft_exec_node(g_shell->tree);
 			cleanup_rotation();
