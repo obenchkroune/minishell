@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 07:47:39 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:57:34 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		g_shell->prompt = get_display_line();
 		g_shell->input = readline(g_shell->prompt);
+		if (g_shell->input == NULL)
+		{
+			printf("exit\n");
+			exit(g_shell->last_exit_status);
+		}
 		if (!is_empty(g_shell->input))
 		{
 			g_shell->tree = parse_input(g_shell->input);
