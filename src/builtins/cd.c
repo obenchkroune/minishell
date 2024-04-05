@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 05:28:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:53:34 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ static void	change_dir_to_path(char *path)
 	pwd = getcwd(buffer, 2048);
 	if (!pwd)
 	{
-		ft_fprintf(STDERR_FILENO, "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		ft_fprintf(STDERR_FILENO,
+			"cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		return ;
 	}
 	set_env("OLDPWD", pwd);
 	if (chdir(path) != 0)
 	{
-		panic("cd");
+		panic_minishell("cd", 1);
 		return ;
 	}
 	pwd = getcwd(buffer, 2048);
@@ -53,7 +54,7 @@ static void	change_dir_to_home(void)
 	path = ft_strdup(home_env->value);
 	if (path == NULL)
 	{
-		panic(NO_HOME);
+		panic_minishell(NO_HOME, 1);
 		free(path);
 		return ;
 	}
@@ -76,12 +77,14 @@ void	ft_cd(char **args)
 	}
 	else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
 	{
-		current_path = ft_strdup(get_env("OLDPWD")->value);
-		if (current_path == NULL)
+		if (!get_env("OLDPWD"))
 		{
-			panic(NO_OLDPWD);
+			panic_minishell(NO_OLDPWD, 1);
 			return ;
 		}
+		current_path = ft_strdup(get_env("OLDPWD")->value);
+		if (current_path == NULL)
+			return ;
 		change_dir_to_oldpwd(current_path);
 	}
 	else

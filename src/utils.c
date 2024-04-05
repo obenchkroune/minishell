@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 05:41:07 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:55:54 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	syntax_error(char *msg, char *cmd, ssize_t pos)
 			ft_putendl_fd(RED "^" RESET, STDERR_FILENO);
 		}
 	}
-	exit(EXIT_FAILURE);
 }
 
 void	panic(char *msg)
@@ -43,11 +42,8 @@ void	panic(char *msg)
 
 void	panic_minishell(char *msg, int status)
 {
-	char	*error;
-
-	error = strerror(errno);
 	ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
-	fr_fprintf(STDERR_FILENO, "%s: %s\n", msg, error);
+	ft_fprintf(STDERR_FILENO, "%s\n", msg);
 	cleanup_rotation();
 	g_shell->last_exit_status = status;
 }

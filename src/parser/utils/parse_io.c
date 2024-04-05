@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:20:44 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:01:31 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:57:56 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ t_io	*parse_io(t_token **token)
 	{
 		*token = (*token)->next;
 		if (!*token || (*token)->kind != T_WORD)
-			panic("invalid syntax");
+			panic_minishell("invalid syntax: syntax error near unexpected token",
+				2);
 		append_io(&io, create_io_node(get_io_type((*token)->prev), -1,
 				(*token)->value));
 		*token = (*token)->next;
