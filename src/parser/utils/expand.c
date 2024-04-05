@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 02:47:35 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/31 18:57:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:05:01 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,21 @@ static char	*ft_get_name(char *str)
 static char	*replace_variable(char *str, char *name)
 {
 	char	*exit_status;
+	char	*replaced_status;
 
 	if (name[1] == '?')
 	{
 		exit_status = ft_itoa(g_shell->last_exit_status);
-		return ft_strreplace(str, name, exit_status);
+		replaced_status = ft_strreplace(str, name, exit_status);
+		free(exit_status);
+		return (replaced_status);
 	}
 	else if (!get_env(name + 1))
-		return ft_strreplace(str, name, "");
+		return (ft_strreplace(str, name, ""));
 	else if (ft_strlen(name) == 1)
-		return ft_strreplace(str, name, "$");
+		return (ft_strreplace(str, name, "$"));
 	else
-		return ft_strreplace(str, name, get_env(name + 1)->value);
+		return (ft_strreplace(str, name, get_env(name + 1)->value));
 }
 
 char	*ft_expand(char *str)

@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 06:24:18 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:01:54 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_exec_pipeline(t_node *tree)
 		{
 			(close(pipe_fd[0]), close(pipe_fd[1]), waitpid(pid_l, &status, 0),
 				waitpid(pid_r, &status, 0));
+			g_shell->last_exit_status = ft_get_exit_status(status);
 			return (ft_get_exit_status(status));
 		}
 	}

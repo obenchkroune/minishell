@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 07:50:22 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:02:40 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 	status = ft_exec_cmd(tree, args);
 	if (is_pipe)
 		exit(status);
+	g_shell->last_exit_status = status;
 	return (status);
 }
