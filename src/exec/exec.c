@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 03:33:13 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 06:24:18 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_exec_pipe_child(t_node *node, int pipe[2], int direction)
 		dup2(pipe[0], STDIN_FILENO);
 		close(pipe[0]);
 	}
-	status = ft_exec_node(node);
+	status = ft_exec_node(node, true);
 	exit(status);
 }
 
@@ -65,13 +65,13 @@ int	ft_exec_pipeline(t_node *tree)
 	return (0);
 }
 
-int	ft_exec_node(t_node *tree)
+int	ft_exec_node(t_node *tree, bool is_pipe)
 {
 	if (!tree)
 		return (1);
 	if (tree->type == N_PIPE)
 		return (ft_exec_pipeline(tree));
 	else if (tree->type == N_CMD)
-		return (ft_exec_simple_cmd(tree));
+		return (ft_exec_simple_cmd(tree, is_pipe));
 	return (0);
 }

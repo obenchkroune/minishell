@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 03:42:22 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 06:16:49 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 	return (WEXITSTATUS(status));
 }
 
-int	ft_exec_simple_cmd(t_node *tree)
+int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 {
 	int		status;
 	char	**args;
@@ -57,5 +57,7 @@ int	ft_exec_simple_cmd(t_node *tree)
 		return (0);
 	}
 	status = ft_exec_cmd(tree, args);
+	if (is_pipe)
+		exit(status);
 	return (status);
 }

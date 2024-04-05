@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 05:53:34 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 06:26:07 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	change_dir_to_path(char *path)
 	set_env("OLDPWD", pwd);
 	if (chdir(path) != 0)
 	{
-		panic_minishell("cd", 1);
+		panic_minishell(strerror(errno), 1);
 		return ;
 	}
 	pwd = getcwd(buffer, 2048);

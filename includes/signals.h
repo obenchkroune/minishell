@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/30 09:28:02 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 06:24:30 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/04/05 06:45:49 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/04/05 06:46:25 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include "parser.h"
+void	sigint_handler(int signum);
+void	sigquit_handler(int signum);
 
-typedef enum e_dir
-{
-	DIR_LEFT,
-	DIR_RIGHT
-}		t_dir;
-
-int		ft_exec_simple_cmd(t_node *tree, bool is_pipe);
-int		ft_get_exit_status(int status);
-int		ft_exec_node(t_node *tree, bool is_pipe);
-int		ft_exec_pipeline(t_node *tree);
-void	ft_exec_builtin(char **args);
-bool	ft_is_builtin(char *cmd);
-int		ft_redirect(t_io *io);
 #endif
