@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_executable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:50:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 06:03:58 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:34:52 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*get_executable(char *cmd)
 	size_t	i;
 
 	i = 0;
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	result = NULL;
 	if (get_env("PATH") == NULL)
 		panic_minishell("PATH env variable is not found", 1);

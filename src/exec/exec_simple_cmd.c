@@ -6,11 +6,17 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 07:18:13 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 07:50:22 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	is_redirection_node(t_node *tree)
+{
+	return (tree->io && (tree->io->type == IO_IN || tree->io->type == IO_OUT
+			|| tree->io->type == IO_APPEND || tree->io->type == IO_HEREDOC));
+}
 
 static int	ft_exec_cmd(t_node *tree, char **args)
 {
@@ -24,20 +30,21 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 		panic("fork");
 	if (pid == 0)
 	{
-		if (tree->io)
+
+		if (is_redirection_node(tree))
 			ft_redirect(tree->io);
-		if (execve(cmd->path, args, env_tab(g_shell->env)) == -1)
+		if (!cmd->path)
 		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(args[0], STDERR_FILENO);
-			ft_putstr_fd(": ", STDERR_FILENO);
-			ft_putstr_fd(strerror(errno), STDERR_FILENO);
-			ft_putstr_fd("\n", STDERR_FILENO);
+			ft_fprintf(2, "minishell: %s: command not found\n", args[0]);
 			exit(127);
 		}
+		if (execve(cmd->path, args, g_shell->envp) == -1)
+		{
+			ft_fprintf(2, "minishell: %s: %s\n", args[0], strerror(errno));
+			exit(1);
+		}
 	}
-	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	return (waitpid(pid, &status, 0), WEXITSTATUS(status));
 }
 
 int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
