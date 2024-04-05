@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 03:12:37 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/04 05:28:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ static void	change_dir_to_path(char *path)
 	char	buffer[2048];
 
 	pwd = getcwd(buffer, 2048);
+	if (!pwd)
+	{
+		ft_fprintf(STDERR_FILENO, "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		return ;
+	}
 	set_env("OLDPWD", pwd);
 	if (chdir(path) != 0)
 	{
@@ -37,8 +42,15 @@ static void	change_dir_to_oldpwd(char *path)
 static void	change_dir_to_home(void)
 {
 	char	*path;
+	t_env	*home_env;
 
-	path = ft_strdup(get_env("HOME")->value);
+	home_env = get_env("HOME");
+	if (!home_env)
+	{
+		ft_fprintf(STDERR_FILENO, "cd: HOME not set\n");
+		return ;
+	}
+	path = ft_strdup(home_env->value);
 	if (path == NULL)
 	{
 		panic(NO_HOME);
