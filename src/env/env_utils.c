@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 03:50:54 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 05:12:06 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,25 @@ void	add_env(char *key, char *value)
 	temp = ft_strjoin(key, "=");
 	envp[i] = ft_strjoin(temp, value);
 	free(temp);
-	// free_tab(g_shell->envp);
+	free_tab(g_shell->envp);
 	g_shell->envp = envp;
+}
+
+static char	*join_env(char *key, char *value)
+{
+	char	*temp;
+	char	*result;
+
+	temp = ft_strjoin(key, "=");
+	result = ft_strjoin(temp, value);
+	free(temp);
+	return (result);
 }
 
 void	set_env(char *key, char *value)
 {
 	size_t	len;
 	char	*equal_sign;
-	char	*temp;
 	char	**envp;
 
 	envp = g_shell->envp;
@@ -79,9 +89,7 @@ void	set_env(char *key, char *value)
 		if (ft_strncmp(key, *envp, len) == 0)
 		{
 			free(*envp);
-			temp = ft_strjoin(key, "=");
-			*envp = ft_strjoin(temp, value);
-			free(temp);
+			*envp = join_env(key, value);
 			return ;
 		}
 		envp++;

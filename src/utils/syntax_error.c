@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:59:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 05:13:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 void	syntax_error(t_token token)
 {
 	g_shell->has_syntax_error = true;
-	ft_fprintf(2, "minishell: syntax error near unexpected token: '%s'\n", token.value);
+	ft_fprintf(2, "minishell: syntax error near unexpected token: '%s'\n",
+		token.value);
 }

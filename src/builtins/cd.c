@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 03:20:01 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 05:15:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	change_dir_to_path(char *path)
 	pwd = getcwd(buffer, 2048);
 	if (!pwd)
 	{
-		ft_fprintf(STDERR_FILENO,
-			"cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		ft_fprintf(STDERR_FILENO, "cd: error retrieving current directory: ");
+		perror("getcwd");
 		return ;
 	}
 	set_env("OLDPWD", pwd);
