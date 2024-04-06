@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   cleanup_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 22:52:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 03:10:10 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/06 05:02:39 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	cleanup_shell(void)
 {
