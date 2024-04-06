@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 01:16:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:38:17 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 		panic("fork");
 	if (pid == 0)
 	{
-
 		if (is_redirection_node(tree))
 			ft_redirect(tree->redir);
 		if (!cmd->path)
@@ -44,7 +43,10 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 			exit(1);
 		}
 	}
-	return (waitpid(pid, &status, 0), WEXITSTATUS(status));
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (WEXITSTATUS(status));
 }
 
 int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
