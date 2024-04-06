@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 02:53:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:50:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,27 @@ char	**ft_lsttab(t_list *list)
 	return (ret);
 }
 
-void	ft_append_redir(t_redir **root, t_token prev_token)
+int	ft_append_redir(t_redir **root, t_token prev_token)
 {
 	t_token	token;
 	t_redir	*tail;
 	t_redir	*ret;
 
-	if (peek() != T_WORD)
-		panic_minishell("Invalid syntax", 1);
 	token = get_next_token();
+	if (token.type != T_WORD)
+	{
+		syntax_error(prev_token);
+		return (-1);
+	}
 	ret = create_redir(get_redir_type(prev_token), token.value);
 	if (*root == NULL)
 	{
 		*root = ret;
-		return ;
+		return (0);
 	}
 	tail = *root;
 	while (tail->next)
 		tail = tail->next;
 	tail->next = ret;
+	return (0);
 }

@@ -6,16 +6,16 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:18:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:30:23 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:50:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	syntax_error(char *msg)
+void	syntax_error(t_token token)
 {
 	g_shell->has_syntax_error = true;
-	ft_putendl_fd(msg, 2);
+	ft_fprintf(2, "minishell: syntax error near unexpected token: '%s'\n", token.value);
 }
 
 void	panic(char *msg)

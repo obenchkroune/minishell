@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:28:08 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:49:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);
 t_cmd				*create_cmd(char *path, char **argv);
 char				**ft_lsttab(t_list *list);
-void				ft_append_redir(t_redir **root, t_token prev_token);
+int					ft_append_redir(t_redir **root, t_token prev_token);
 t_redir_type		get_redir_type(t_token token);
 void				free_tree(t_node *node);
 

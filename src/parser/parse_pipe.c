@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:34:00 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:50:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ t_node	*parse_cmd(void)
 
 	if (peek() == T_PIPE)
 	{
-		syntax_error("syntax error near unexpected token '|'");
-		return (NULL);
+		token = get_next_token();
+		return (syntax_error(token), NULL);
 	}
 	args = NULL;
 	redir = NULL;
@@ -77,7 +77,8 @@ t_node	*parse_cmd(void)
 		if (token.type == T_WORD)
 			ft_lstadd_back(&args, ft_lstnew(token.value));
 		else
-			ft_append_redir(&redir, token);
+			if (ft_append_redir(&redir, token) == -1)
+				return (NULL);
 	}
 	node->redir = redir;
 	node->cmd = create_cmd(get_executable(args->content), ft_lsttab(args));
