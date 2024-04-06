@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 08:02:40 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:18:48 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 		panic("fork");
 	if (pid == 0)
 	{
-
 		if (is_redirection_node(tree))
 			ft_redirect(tree->io);
 		if (!cmd->path)
