@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:52:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 07:04:34 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/06 03:10:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	cleanup_shell(void)
 {
-	free_env(g_shell->env);
-	g_shell->env = NULL;
 	free(g_shell->cwd);
 	g_shell->cwd = NULL;
 	free_tab(g_shell->envp);
 	g_shell->envp = NULL;
+	free(g_shell->prompt);
+	g_shell->prompt = NULL;
 	free(g_shell);
 	g_shell = NULL;
 }
@@ -30,4 +30,5 @@ void	cleanup_rotation(void)
 	g_shell->tree = NULL;
 	free(g_shell->input);
 	g_shell->input = NULL;
+	g_shell->lexer_idx = 0;
 }

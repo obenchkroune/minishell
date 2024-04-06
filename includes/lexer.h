@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:14 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/30 09:28:15 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 00:49:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,24 @@
 # include <stdbool.h>
 # include <stdlib.h>
 
-typedef struct s_lexer
+typedef enum e_token_type
 {
-	char			*val;
-	size_t			i;
-}					t_lexer;
-
-typedef enum e_tok_kind
-{
-	T_EOL = 0,
-	T_DLESS,
-	T_DGREAT,
+	T_EOF = 0,
+	T_APPEND,
+	T_REDIR_IN,
 	T_PIPE,
-	T_LESS,
-	T_GREAT,
+	T_REDIR_OUT,
+	T_HEREDOC,
 	T_WORD,
-}					t_tok_kind;
+}					t_token_type;
 
 typedef struct s_token
 {
-	t_tok_kind		kind;
+	t_token_type	type;
 	char			*value;
-	struct s_token	*prev;
-	struct s_token	*next;
 }					t_token;
 
-bool				is_meta_char(char c);
-bool				is_word_char(char c);
-char				*get_quoted_word(t_lexer *lexer);
-t_token				*get_next_token(t_lexer *lexer);
-void				advance_index(t_lexer *lexer, t_token *token);
-t_token				*tokenize(char *input);
-void				free_tokens(t_token *token);
+t_token			get_next_token(void);
+t_token_type	peek(void);
 
 #endif

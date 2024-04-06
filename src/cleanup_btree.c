@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_btree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:20:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/30 09:00:55 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 01:07:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
-static void	free_io(t_io *io)
+static void	free_io(t_redir *io)
 {
 	if (!io)
 		return ;
@@ -35,7 +35,7 @@ void	free_btree(t_node *root)
 	if (!root)
 		return ;
 	free_cmd(root->cmd);
-	free_io(root->io);
+	free_io(root->redir);
 	free_btree(root->left);
 	free_btree(root->right);
 }

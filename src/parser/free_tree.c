@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 22:47:42 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/04 05:09:29 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/06 02:45:48 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/06 02:58:35 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_io(t_io *node)
+static void	free_io(t_redir *node)
 {
 	if (!node)
 		return ;
@@ -21,7 +21,7 @@ void	free_io(t_io *node)
 	free(node);
 }
 
-void	free_cmd(t_cmd *cmd)
+static void	free_cmd(t_cmd *cmd)
 {
 	size_t	i;
 
@@ -44,7 +44,7 @@ void	free_tree(t_node *node)
 	if (node->type == N_CMD)
 	{
 		free_cmd(node->cmd);
-		free_io(node->io);
+		free_io(node->redir);
 	}
 	free(node);
 }

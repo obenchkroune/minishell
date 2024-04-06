@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 08:15:02 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 03:20:01 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	change_dir_to_oldpwd(char *path)
 static void	change_dir_to_home(void)
 {
 	char	*path;
-	t_env	*home_env;
+	char	*home_env;
 
 	home_env = get_env("HOME");
 	if (!home_env)
@@ -51,7 +51,7 @@ static void	change_dir_to_home(void)
 		ft_fprintf(STDERR_FILENO, "cd: HOME not set\n");
 		return ;
 	}
-	path = ft_strdup(home_env->value);
+	path = ft_strdup(home_env);
 	if (path == NULL)
 	{
 		panic_minishell(NO_HOME, 1);
@@ -82,7 +82,7 @@ void	ft_cd(char **args)
 			panic_minishell(NO_OLDPWD, 1);
 			return ;
 		}
-		current_path = ft_strdup(get_env("OLDPWD")->value);
+		current_path = ft_strdup(get_env("OLDPWD"));
 		if (current_path == NULL)
 			return ;
 		change_dir_to_oldpwd(current_path);

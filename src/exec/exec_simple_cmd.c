@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 08:02:40 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 01:16:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	is_redirection_node(t_node *tree)
 {
-	return (tree->io && (tree->io->type == IO_IN || tree->io->type == IO_OUT
-			|| tree->io->type == IO_APPEND || tree->io->type == IO_HEREDOC));
+	return (tree->redir && (tree->redir->type == REDIR_IN || tree->redir->type == REDIR_OUT
+			|| tree->redir->type == REDIR_APPEND || tree->redir->type == REDIR_HEREDOC));
 }
 
 static int	ft_exec_cmd(t_node *tree, char **args)
@@ -32,7 +32,7 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 	{
 
 		if (is_redirection_node(tree))
-			ft_redirect(tree->io);
+			ft_redirect(tree->redir);
 		if (!cmd->path)
 		{
 			ft_fprintf(2, "minishell: %s: command not found\n", args[0]);

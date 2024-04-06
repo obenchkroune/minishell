@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:13:37 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/04 03:35:11 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 03:20:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_env(void)
 {
-	t_env	*env;
+	char	**envp;
 
-	env = g_shell->env;
-	while (env)
+	envp = g_shell->envp;
+	while (*envp)
 	{
-		ft_fprintf(STDOUT_FILENO, "%s=%s\n", env->key, env->value);
-		env = env->next;
+		printf("%s\n", *envp);
+		envp++;
 	}
 }

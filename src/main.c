@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 08:09:11 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:31:54 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_shell		*g_shell;
 void		print_argv(char **argv, int level);
 void		print_tree(t_node *root, int level);
 void		print_tab(char **tab);
-void		print_io(t_io *io, int level);
+void		print_io(t_redir *io, int level);
 
 static char	*get_display_line(void)
 {
@@ -40,14 +40,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		g_shell->prompt = get_display_line();
 		g_shell->input = readline(g_shell->prompt);
-		if (g_shell->input == NULL)
-		{
-			printf("exit\n");
-			exit(g_shell->last_exit_status);
-		}
 		if (!is_empty(g_shell->input))
 		{
-			g_shell->tree = parse_input(g_shell->input);
+			g_shell->tree = parse_input();
+			if (g_shell->has_syntax_error)
+			{
+				cleanup_rotation();
+				continue ;
+			}
 			// print_tree(g_shell->tree, 0);
 			// execution 🐱‍👤
 			ft_exec_node(g_shell->tree, false);
@@ -68,7 +68,7 @@ void	print_argv(char **argv, int level)
 	}
 }
 
-void	print_io(t_io *io, int level)
+void	print_io(t_redir *io, int level)
 {
 	for (int i = 0; i < level + 1; i++)
 		printf("\t");
@@ -79,16 +79,16 @@ void	print_io(t_io *io, int level)
 		printf("\tfile: %s\ttype:", io->file);
 		switch (io->type)
 		{
-		case IO_APPEND:
+		case REDIR_APPEND:
 			printf("APPEND\n");
 			break ;
-		case IO_HEREDOC:
+		case REDIR_HEREDOC:
 			printf("HEREDOC\n");
 			break ;
-		case IO_IN:
+		case REDIR_IN:
 			printf("INPUT\n");
 			break ;
-		case IO_OUT:
+		case REDIR_OUT:
 			printf("OUTPUT\n");
 			break ;
 		}
@@ -107,7 +107,7 @@ void	print_tree(t_node *root, int level)
 	case N_CMD:
 		printf(GREEN "CMD NODE" RESET);
 		printf("\tEXEC_PATH: %s\n", root->cmd->path);
-		print_io(root->io, level);
+		print_io(root->redir, level);
 		print_argv(root->cmd->argv, level);
 		break ;
 	case N_PIPE:
@@ -122,11 +122,11 @@ void	print_tree(t_node *root, int level)
 	print_tree(root->right, level + 1);
 }
 
-void	print_tab(char **tab)
-{
-	while (tab && *tab)
-	{
-		printf("- %s\n", *tab);
-		tab++;
-	}
-}
+// void	print_tab(char **tab)
+// {
+// 	while (tab && *tab)
+// 	{
+// 		printf("- %s\n", *tab);
+// 		tab++;
+// 	}
+// }

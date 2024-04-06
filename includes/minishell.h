@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/05 07:49:51 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/06 04:28:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,21 @@
 
 typedef struct s_shell
 {
-	t_env		*env;
 	t_node		*tree;
 	char		*input;
+	size_t		lexer_idx;
 	char		*cwd;
 	char		**envp;
 	int			last_exit_status;
 	char		*prompt;
+	bool		has_syntax_error;
 }				t_shell;
 
 extern t_shell	*g_shell;
 
 void			panic(char *msg);
 void			panic_minishell(char *msg, int status);
-void			syntax_error(char *msg, char *cmd, ssize_t pos);
+void			syntax_error(char *msg);
 int				ft_isspace(int c);
 bool			is_empty(char *str);
 void			handle_sigint(int signal);
