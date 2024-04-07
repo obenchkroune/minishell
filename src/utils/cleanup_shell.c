@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 05:13:05 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 03:02:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	cleanup_rotation(void)
 	free(g_shell->input);
 	g_shell->input = NULL;
 	g_shell->lexer_idx = 0;
+	g_shell->has_heredoc = false;
 }

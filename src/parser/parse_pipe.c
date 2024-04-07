@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 01:26:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 03:00:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ t_redir_type	get_redir_type(t_token token)
 	else if (type == T_REDIR_OUT)
 		return (REDIR_OUT);
 	else
+	{
+		g_shell->has_heredoc = true;
 		return (REDIR_HEREDOC);
+	}
 }
 
 char	*get_executable(char *cmd)

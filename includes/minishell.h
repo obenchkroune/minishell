@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:50:43 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:59:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_shell
 	int			last_exit_status;
 	char		*prompt;
 	bool		has_syntax_error;
+	bool		has_heredoc;
 }				t_shell;
 
 extern t_shell	*g_shell;
