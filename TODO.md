@@ -2,7 +2,7 @@
 
 - [ ] Redo the cd command.
 
-- [ ] translate args like to a single argument
+- [ ] translate args like this to a single argument
 
   - "something""someting else"
 
