@@ -1,9 +1,9 @@
 # TODO
 
-[ ] Redo the cd command.
+- [ ] Redo the cd command.
 
-[ ] translate args like to a single argument
+- [ ] translate args like to a single argument
 
-- "something""someting else"
+  - "something""someting else"
 
-- "something"'something'
+  - "something"'something'
