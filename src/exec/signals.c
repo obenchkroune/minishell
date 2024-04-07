@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/07 05:06:03 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:12:56 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	sigint_handler(int signum)
 	(void)signum;
 	ft_fprintf(STDOUT_FILENO, "\n");
 	rl_replace_line("", 0);
-	rl_on_new_line();
+	if (!*g_shell->input)
+		rl_on_new_line();
 	rl_redisplay();
 }
 
