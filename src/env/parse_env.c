@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:27:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 03:03:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:16:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**parse_env(char **envp)
 	len = ft_tabsize(envp);
 	result = ft_calloc(sizeof(char *), len + 1);
 	if (!result)
-		panic("malloc failed");
+		panic("malloc");
 	i = 0;
 	while (i < len)
 	{

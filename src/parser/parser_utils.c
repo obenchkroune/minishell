@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:50:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:46:36 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_node	*create_node(t_node_type type, t_node *left, t_node *right)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		panic("malloc failed");
+		panic("malloc");
 	ft_bzero(node, sizeof(t_node));
 	node->type = type;
 	node->left = left;
@@ -32,7 +32,7 @@ t_redir	*create_redir(t_redir_type type, char *file)
 
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
-		panic("malloc failed");
+		panic("malloc");
 	ft_bzero(redir, sizeof(t_redir));
 	redir->fd = -1;
 	redir->type = type;
@@ -46,7 +46,7 @@ t_cmd	*create_cmd(char *path, char **argv)
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-		panic("malloc failed");
+		panic("malloc");
 	ft_bzero(cmd, sizeof(t_cmd));
 	cmd->path = path;
 	cmd->argv = argv;
@@ -62,7 +62,7 @@ char	**ft_lsttab(t_list *list)
 	len = ft_lstsize(list) + 1;
 	ret = ft_calloc(len + 1, sizeof(char *));
 	if (!ret)
-		panic("malloc failed");
+		panic("malloc");
 	i = 0;
 	while (list)
 	{
