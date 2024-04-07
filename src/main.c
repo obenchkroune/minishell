@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 05:29:51 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:43:02 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,15 @@ int	main(int argc, char **argv, char **envp)
 	signal_init();
 	while (true)
 	{
+		cleanup_rotation();
 		g_shell->prompt = get_display_line();
 		g_shell->input = readline(g_shell->prompt);
 		if (!g_shell->input)
+		{
+			cleanup_rotation();
+			ft_fprintf(STDOUT_FILENO, "exit\n");
 			break ;
+		}
 		if (is_empty(g_shell->input))
 			continue ;
 		g_shell->tree = parse_input();
@@ -45,7 +50,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(g_shell->input);
 		if (!g_shell->has_syntax_error)
 			ft_exec_node(g_shell->tree, false);
-		cleanup_rotation();
 	}
 	cleanup_shell();
 	return (EXIT_SUCCESS);
