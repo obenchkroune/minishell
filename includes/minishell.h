@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/07 05:09:29 by yaharkat         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/07 11:04:43 by obenchkr         ###   ########.fr       */
->>>>>>> prevent ctrl key symbol from being printed out!
+/*   Updated: 2024/04/07 11:11:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
