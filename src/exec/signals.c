@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/07 05:46:32 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 11:11:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,17 @@ void	sigint_handler(int signum)
 	rl_redisplay();
 }
 
+void	sigquit_handler(int signum)
+{
+	(void)signum;
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 void	signal_init(void)
 {
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+		panic("signal");
+	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
 		panic("signal");
 }

@@ -6,7 +6,11 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/07 05:09:29 by yaharkat         ###   ########.fr       */
+=======
+/*   Updated: 2024/04/07 11:04:43 by obenchkr         ###   ########.fr       */
+>>>>>>> prevent ctrl key symbol from being printed out!
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +43,22 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <termios.h>
 
 typedef struct s_shell
 {
-	t_node		*tree;
-	char		*input;
-	size_t		lexer_idx;
-	char		*cwd;
-	char		**envp;
-	int			last_exit_status;
-	char		last_exit_status_str[5];
-	char		*prompt;
-	bool		has_syntax_error;
-	bool		has_heredoc;
+	t_node			*tree;
+	char			*input;
+	size_t			lexer_idx;
+	char			*cwd;
+	char			**envp;
+	int				last_exit_status;
+	char			last_exit_status_str[5];
+	char			*prompt;
+	bool			has_syntax_error;
+	bool			has_heredoc;
+	char			term_buffer[2048];
+	struct termios	term;
 }				t_shell;
 
 extern t_shell	*g_shell;
@@ -66,5 +73,6 @@ void			cleanup_shell(void);
 void			free_tab(char **tab);
 void			cleanup_rotation(void);
 char			*ft_strreplace(char *str, char *find, char *replace);
+int				set_terminal_attributes(void);
 
 #endif

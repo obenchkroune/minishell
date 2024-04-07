@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 06:04:20 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 11:11:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void	cleanup_rotation(void)
 	}
 	g_shell->lexer_idx = 0;
 	g_shell->has_heredoc = false;
+	g_shell->term.c_lflag |= ECHOCTL;
 }

@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 11:05:31 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/07 10:53:46 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/07 11:04:31 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_shell(char **envp)
+int	set_terminal_attributes(void)
 {
-	g_shell = malloc(sizeof(t_shell));
-	if (!g_shell)
-		panic("malloc");
-	ft_bzero(g_shell, sizeof(t_shell));
-	set_terminal_attributes();
-	g_shell->envp = parse_env(envp);
-	g_shell->last_exit_status = 0;
-	g_shell->cwd = getcwd(NULL, 0);
-	g_shell->has_syntax_error = false;
+	if (tcgetattr(STDIN_FILENO, &g_shell->term) == -1)
+	{
+        perror("tcgetattr");
+        return (-1);
+    }
+	g_shell->term.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_shell->term) == -1)
+	{
+        perror("tcsetattr");
+        return (-1);
+    }
+	return (0);
 }
