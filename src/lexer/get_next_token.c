@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 00:48:21 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 01:28:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,38 @@ static void	skip_whitespace(void)
 		g_shell->lexer_idx++;
 }
 
-static t_token	get_word_token(char *str)
+static t_token	get_quoted_word(void)
+{
+	size_t	i;
+	char	*str;
+	char	*pair_quote;
+
+	str = g_shell->input;
+	i = g_shell->lexer_idx;
+	pair_quote = ft_strchr(&str[i + 1], str[i]);
+	if (!pair_quote)
+	{
+		g_shell->lexer_idx = ft_strlen(str);
+		if (str[i] == '\'')
+			return ((t_token){.type = T_ERROR, .value = "'"});
+		return ((t_token){.type = T_ERROR, .value = "\""});
+	}
+	g_shell->lexer_idx += pair_quote - &str[i] + 1;
+	return ((t_token)
+		{.type = T_WORD, .value = ft_substr(str, i, pair_quote - &str[i] + 1)});
+}
+
+static t_token	get_word_token(void)
 {
 	size_t	start;
 	size_t	i;
 	char	*value;
+	char	*str;
 
+	str = g_shell->input;
 	i = g_shell->lexer_idx;
+	if (ft_strchr("\"'", str[i]))
+		return (get_quoted_word());
 	start = i;
 	while (str[i] && !ft_strchr(">|< ", str[i]))
 		i++;
@@ -83,5 +108,5 @@ t_token	get_next_token(void)
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_PIPE, .value = "|"});
 	else
-		return (get_word_token(input));
+		return (get_word_token());
 }
