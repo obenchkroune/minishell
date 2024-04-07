@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 05:15:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:36:38 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	change_dir_to_home(void);
 
 static void	change_dir_to_path(char *path)
 {
@@ -20,9 +22,8 @@ static void	change_dir_to_path(char *path)
 	pwd = getcwd(buffer, 2048);
 	if (!pwd)
 	{
-		ft_fprintf(STDERR_FILENO, "cd: error retrieving current directory: ");
-		perror("getcwd");
-		return ;
+		path = get_env("HOME");
+		pwd = get_env("HOME");
 	}
 	set_env("OLDPWD", pwd);
 	if (chdir(path) != 0)

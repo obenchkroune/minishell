@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 05:43:02 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:02:12 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static char	*get_display_line(void)
 	char	*line;
 	char	*display_line;
 
-	display_line = NULL;
-	free(display_line);
 	line = ft_strjoin(GREEN "minishell@42:" RESET, g_shell->cwd);
 	display_line = ft_strjoin(line, "$ ");
 	free(line);
