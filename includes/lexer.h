@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:14 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 00:49:12 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 01:07:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef enum e_token_type
 	T_REDIR_OUT,
 	T_HEREDOC,
 	T_WORD,
+	T_ERROR
 }					t_token_type;
 
 typedef struct s_token

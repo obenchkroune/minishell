@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 04:50:21 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 01:26:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_node	*parse_cmd(void)
 	t_list		*args;
 	t_redir		*redir;
 
-	if (peek() == T_PIPE)
+	if (peek() == T_PIPE || peek() == T_ERROR)
 	{
 		token = get_next_token();
 		return (syntax_error(token), NULL);
