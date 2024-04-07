@@ -16,7 +16,7 @@
 
 # include "env.h"
 # include "lexer.h"
-# include <libft.h>
+# include "libft.h"
 # include <stdlib.h>
 
 typedef enum e_redir_type

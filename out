@@ -1,0 +1,14 @@
+total 312
+drwxr-xr-x 8 yaharkat yaharkat   4096 Apr  7 05:05 .
+drwxr-xr-x 3 yaharkat yaharkat   4096 Apr  5 02:56 ..
+drwxr-xr-x 8 yaharkat yaharkat   4096 Apr  7 05:01 .git
+-rw-r--r-- 1 yaharkat yaharkat     91 Apr  5 05:36 .gitignore
+drwxr-xr-x 2 yaharkat yaharkat   4096 Mar 30 07:27 .vscode
+-rw-r--r-- 1 yaharkat yaharkat    557 Apr  7 05:01 Makefile
+-rwxr-xr-x 1 yaharkat yaharkat  15784 Apr  7 05:02 a.out
+drwxr-xr-x 2 yaharkat yaharkat   4096 Apr  7 05:01 includes
+drwxr-xr-x 2 yaharkat yaharkat   4096 Apr  7 05:04 libft
+-rwxr-xr-x 1 yaharkat yaharkat 258600 Apr  7 05:05 minishell
+-rw-r--r-- 1 yaharkat yaharkat      0 Apr  7 05:05 out
+drwxr-xr-x 9 yaharkat yaharkat   4096 Apr  7 05:05 src
+drwxr-xr-x 2 yaharkat yaharkat   4096 Apr  7 05:01 tests

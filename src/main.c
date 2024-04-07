@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 03:06:05 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:08:47 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	main(int argc, char **argv, char **envp)
 		g_shell->input = readline(g_shell->prompt);
 		if (!g_shell->input)
 			break ;
+		if (is_empty(g_shell->input))
+			continue ;
 		g_shell->tree = parse_input();
 		if (!g_shell->has_heredoc)
 			add_history(g_shell->input);
