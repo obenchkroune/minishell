@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 05:10:53 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:19:39 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ int	ft_append_redir(t_redir **root, t_token prev_token)
 	t_redir	*tail;
 	t_redir	*ret;
 
-	token = get_next_token();
-	if (token.type != T_WORD)
+	if (peek() != T_WORD)
 	{
 		syntax_error(prev_token);
 		return (-1);
 	}
+	token = get_next_token();
 	ret = create_redir(get_redir_type(prev_token), token.value);
 	if (*root == NULL)
 	{

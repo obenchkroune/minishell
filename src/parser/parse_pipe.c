@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 03:00:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:01:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ t_node	*parse_cmd(void)
 			ft_lstadd_back(&args, ft_lstnew(token.value));
 		else
 			if (ft_append_redir(&redir, token) == -1)
-				return (NULL);
+				return (free_tree(node), NULL);
 	}
 	node->redir = redir;
 	node->cmd = create_cmd(get_executable(args->content), ft_lsttab(args));
-	return (node);
+	return (free_list(args), node);
 }
 
 t_node	*parse_pipe(void)

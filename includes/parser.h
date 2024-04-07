@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 02:44:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:06:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ typedef struct s_node
 	struct s_node	*right;
 }					t_node;
 
+void				free_list(t_list *list);
+void				free_cmd(t_cmd *cmd);
+void				free_redir(t_redir *io);
 t_node				*parse_input(void);
 t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);

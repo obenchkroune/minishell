@@ -1,8 +1,8 @@
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror $(HEAD) -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror $(HEAD) -g -fsanitize=address
 SRCS	=	$(shell find ./src -type f -name '*.c')
 HEAD	=	-I includes -I ~/.local/include
-CLIBS	=	-Llibft -lft -L ~/.local/lib -lreadline
+CLIBS	=	-Llibft -lft -lreadline
 OBJS	=	$(SRCS:.c=.o)
 NAME	=	minishell
 AR		=	ar rcs

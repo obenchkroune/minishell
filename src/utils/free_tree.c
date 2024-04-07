@@ -6,13 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 05:02:12 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:06:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
@@ -21,13 +21,13 @@ static void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
-static void	free_io(t_redir *io)
+void	free_redir(t_redir *redir)
 {
-	if (!io)
+	if (!redir)
 		return ;
-	free(io->file);
-	free_io(io->next);
-	free(io);
+	free(redir->file);
+	free_redir(redir->next);
+	free(redir);
 }
 
 void	free_tree(t_node *root)
@@ -35,7 +35,8 @@ void	free_tree(t_node *root)
 	if (!root)
 		return ;
 	free_cmd(root->cmd);
-	free_io(root->redir);
+	free_redir(root->redir);
 	free_tree(root->left);
 	free_tree(root->right);
+	free(root);
 }
