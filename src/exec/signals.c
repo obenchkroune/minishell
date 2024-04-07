@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/07 11:11:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 11:16:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sigint_handler(int signum)
 void	sigquit_handler(int signum)
 {
 	(void)signum;
-	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
 }
 
