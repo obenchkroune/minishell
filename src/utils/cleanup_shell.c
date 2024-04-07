@@ -6,11 +6,23 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 03:02:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:01:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_list(t_list *list)
+{
+	t_list	*next;
+
+	while (list)
+	{
+		next = list->next;
+		free(list);
+		list = next;
+	}
+}
 
 void	cleanup_shell(void)
 {
