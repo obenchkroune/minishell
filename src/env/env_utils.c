@@ -6,11 +6,47 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/06 05:12:06 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 03:27:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	ft_strrev(char *str)
+{
+	char	temp;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = ft_strlen(str) - 1;
+	while (i < j)
+	{
+		temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;
+	}
+}
+
+static void	last_exit_str(char *str, size_t size, int exit_status)
+{
+	size_t	i;
+
+	i = 0;
+	ft_bzero(str, size);
+	if (exit_status == 0)
+	{
+		str[0] = '0';
+		return ;
+	}
+	while (i < size && exit_status != 0)
+	{
+		str[i] = exit_status % 10 + '0';
+		exit_status /= 10;
+		i++;
+	}
+	ft_strrev(str);
+}
 
 char	*get_env(char *name)
 {
@@ -18,6 +54,11 @@ char	*get_env(char *name)
 	size_t	len;
 	char	*equal_sign;
 
+	if (*name == '?')
+	{
+		last_exit_str(g_shell->last_exit_status_str, 5, g_shell->last_exit_status);
+		return (g_shell->last_exit_status_str);
+	}
 	envp = g_shell->envp;
 	while (*envp)
 	{

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:57:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 02:56:00 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/07 03:30:32 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ static char	*get_var_name(char *str)
 	char	*start;
 
 	start = str++;
+	if (*str == '?')
+		return (ft_strdup("$?"));
 	if (ft_isdigit(*str++))
 		return (ft_substr(start, 0, 2));
-	while (ft_isalnum(*str) || *str == '_')
+	while (*str && (ft_isalnum(*str) || *str == '_'))
 		str++;
 	return (ft_substr(start, 0, str - start));
 }
