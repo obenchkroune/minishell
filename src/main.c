@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 01:22:52 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 01:30:57 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ static char	*get_display_line(void)
 	return (display_line);
 }
 
-int	ft_count_pipes(char *input)
+static bool	is_invalid_pipe(char *input)
 {
 	int	count;
 
+	if (ft_strnstr(input, "|||", ft_strlen(input)))
+		return (true);
 	count = 0;
 	while (*input)
 	{
@@ -36,7 +38,7 @@ int	ft_count_pipes(char *input)
 			count++;
 		input++;
 	}
-	return (count);
+	return (count % 2 != 0);
 }
 static int	handle_unclosed_pipe(void)
 {
@@ -47,7 +49,7 @@ static int	handle_unclosed_pipe(void)
 
 	g_shell->inside_unclosed_pipe = true;
 	pipe_p = ft_strrchr(g_shell->input, '|');
-	if (ft_count_pipes(g_shell->input) % 2 == 1 && is_empty(pipe_p + 1))
+	if (is_invalid_pipe(g_shell->input) && is_empty(pipe_p + 1))
 		return (-2);
 	if (pipe_p && is_empty(pipe_p + 1))
 	{
