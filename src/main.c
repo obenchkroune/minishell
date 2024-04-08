@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 01:42:12 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 02:03:40 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static int	handle_unclosed_pipe(void)
 	g_shell->inside_unclosed_pipe = true;
 	if (is_invalid_pipe(g_shell->input))
 		return (-2);
-	if (ft_strrchr(g_shell->input, '|') && !is_empty(ft_strrchr(g_shell->input,
-				'|')))
+	if (ft_strrchr(g_shell->input, '|') && is_empty(ft_strrchr(g_shell->input,
+				'|') + 1))
 	{
 		input_pipe_unclosed = readline(">");
 		if (!input_pipe_unclosed)
@@ -69,6 +69,9 @@ static int	handle_unclosed_pipe(void)
 		tmp = g_shell->input;
 		g_shell->input = ft_strjoin(g_shell->input, input_pipe_unclosed);
 		(free(input_pipe_unclosed), free(tmp));
+		if (ft_strrchr(g_shell->input, '|') && is_empty(ft_strrchr(g_shell->input,
+				'|') + 1))
+			return (handle_unclosed_pipe());
 	}
 	return (0);
 }
@@ -94,7 +97,7 @@ static void	exit_eof(int status)
 int	main(int argc, char **argv, char **envp)
 {
 	int	check_status;
-
+  
 	(void)argc, (void)argv;
 	init_shell(envp);
 	signal_init();
