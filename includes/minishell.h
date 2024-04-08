@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 02:24:16 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 02:45:53 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "builtins.h"
 # include "env.h"
 # include "exec.h"
+# include "history.h"
 # include "lexer.h"
 # include "libft.h"
 # include "parser.h"
@@ -46,6 +47,7 @@ typedef struct s_shell
 	t_node			*tree;
 	char			*input;
 	size_t			lexer_idx;
+	t_history		*history;
 	char			*cwd;
 	char			**envp;
 	int				last_exit_status;

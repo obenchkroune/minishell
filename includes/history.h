@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 10:56:21 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/08 03:16:06 by yaharkat         ###   ########.fr       */
+/*   Created: 2024/04/08 02:42:56 by yaharkat          #+#    #+#             */
+/*   Updated: 2024/04/08 02:54:29 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef HISTORY_H
+# define HISTORY_H
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+typedef struct s_history
 {
-	size_t	i;
-	size_t	j;
+	char				*value;
+	struct s_history	*next;
+}						t_history;
 
-	i = 0;
-	if (!*little)
-		return ((char *)big);
-	while (big && big[i] && i < len)
-	{
-		j = 0;
-		while (big[i + j] == little[j] && (i + j) < len)
-		{
-			if (little[j + 1] == '\0')
-				return ((char *)(big + i));
-			j++;
-		}
-		i++;
-	}
-	return (NULL);
-}
+void					set_history(char *line);
+void					ft_clear_history(void);
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 11:26:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/08 03:02:44 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	cleanup_shell(void)
 	g_shell->term.c_lflag |= ECHOCTL;
 	if (tcsetattr(0, 0, &g_shell->term) == -1)
 		perror("");
+	ft_clear_history();
 	free(g_shell);
+	
 	g_shell = NULL;
 }
 

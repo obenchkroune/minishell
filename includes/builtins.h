@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:33:13 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/03/31 23:51:22 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 02:51:47 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	ft_export(char **args);
 void	ft_unset(char **args);
 void	ft_exit(void);
 bool	ft_is_builtin(char *cmd);
+void	ft_history(void);
 #endif
