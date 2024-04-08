@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 01:30:57 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 01:39:46 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ static char	*get_display_line(void)
 
 static bool	is_invalid_pipe(char *input)
 {
-	int	count;
+	int		count;
+	char	*pipe_p;
 
+	pipe_p = ft_strrchr(g_shell->input, '|');
+	if (!pipe_p)
+		return (false);
 	if (ft_strnstr(input, "|||", ft_strlen(input)))
 		return (true);
 	count = 0;
@@ -38,20 +42,19 @@ static bool	is_invalid_pipe(char *input)
 			count++;
 		input++;
 	}
-	return (count % 2 != 0);
+	return (count > 2 && is_empty(pipe_p + 1));
 }
 static int	handle_unclosed_pipe(void)
 {
 	char	*input_pipe_unclosed;
 	char	*tmp;
 	int		status;
-	char	*pipe_p;
 
 	g_shell->inside_unclosed_pipe = true;
-	pipe_p = ft_strrchr(g_shell->input, '|');
-	if (is_invalid_pipe(g_shell->input) && is_empty(pipe_p + 1))
+	if (is_invalid_pipe(g_shell->input))
 		return (-2);
-	if (pipe_p && is_empty(pipe_p + 1))
+	if (ft_strrchr(g_shell->input, '|') && !is_empty(ft_strrchr(g_shell->input,
+				'|')))
 	{
 		input_pipe_unclosed = readline(">");
 		if (!input_pipe_unclosed)
@@ -65,8 +68,7 @@ static int	handle_unclosed_pipe(void)
 		}
 		tmp = g_shell->input;
 		g_shell->input = ft_strjoin(g_shell->input, input_pipe_unclosed);
-		free(input_pipe_unclosed);
-		free(tmp);
+		(free(input_pipe_unclosed), free(tmp));
 	}
 	return (0);
 }
