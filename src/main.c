@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 00:34:56 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 01:22:52 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,30 @@ static char	*get_display_line(void)
 	return (display_line);
 }
 
+int	ft_count_pipes(char *input)
+{
+	int	count;
+
+	count = 0;
+	while (*input)
+	{
+		if (*input == '|')
+			count++;
+		input++;
+	}
+	return (count);
+}
 static int	handle_unclosed_pipe(void)
 {
 	char	*input_pipe_unclosed;
 	char	*tmp;
+	int		status;
 	char	*pipe_p;
 
 	g_shell->inside_unclosed_pipe = true;
 	pipe_p = ft_strrchr(g_shell->input, '|');
+	if (ft_count_pipes(g_shell->input) % 2 == 1 && is_empty(pipe_p + 1))
+		return (-2);
 	if (pipe_p && is_empty(pipe_p + 1))
 	{
 		input_pipe_unclosed = readline(">");
@@ -40,8 +56,9 @@ static int	handle_unclosed_pipe(void)
 			return (free(input_pipe_unclosed), -1);
 		if (is_empty(input_pipe_unclosed))
 		{
-			if (handle_unclosed_pipe() == -1)
-				return (free(input_pipe_unclosed), -1);
+			status = handle_unclosed_pipe();
+			if (status < 0)
+				return (free(input_pipe_unclosed), status);
 			return (free(input_pipe_unclosed), 0);
 		}
 		tmp = g_shell->input;
@@ -54,16 +71,26 @@ static int	handle_unclosed_pipe(void)
 
 static void	exit_eof(int status)
 {
-	if (status == 2)
-		panic_minishell("syntax error: unexpected end of file", status);
-	ft_fprintf(STDOUT_FILENO, "exit\n");
+	if (status == -1)
+		panic_minishell("syntax error near unexpected token `|'", 2);
+	else if (status == -2)
+		panic_minishell("syntax error: unexpected '|'", 2);
 	cleanup_rotation();
-	cleanup_shell();
-	exit(status);
+	if (status != -2)
+	{
+		cleanup_shell();
+		ft_fprintf(STDOUT_FILENO, "exit\n");
+	}
+	if (status != -2 && status < 0)
+		exit(2);
+	else if (status != -2)
+		exit(status);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	int	check_status;
+
 	(void)argc, (void)argv;
 	init_shell(envp);
 	signal_init();
@@ -76,8 +103,12 @@ int	main(int argc, char **argv, char **envp)
 			exit_eof(0);
 		if (is_empty(g_shell->input))
 			continue ;
-		if (handle_unclosed_pipe() == -1)
-			exit_eof(2);
+		check_status = handle_unclosed_pipe();
+		if (check_status < 0)
+		{
+			exit_eof(check_status);
+			continue ;
+		}
 		g_shell->inside_unclosed_pipe = false;
 		g_shell->tree = parse_input();
 		if (!g_shell->has_heredoc)
