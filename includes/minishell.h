@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 00:23:02 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 02:24:16 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_shell
 	char			last_exit_status_str[5];
 	char			*prompt;
 	bool			inside_unclosed_pipe;
+	bool			has_unclosed_pipe;
 	bool			has_syntax_error;
 	bool			has_heredoc;
 	char			term_buffer[2048];
@@ -71,5 +72,7 @@ void				free_tab(char **tab);
 void				cleanup_rotation(void);
 char				*ft_strreplace(char *str, char *find, char *replace);
 int					set_terminal_attributes(void);
-
+bool				is_invalid_pipe(char *input);
+int					handle_unclosed_pipe(void);
+void				exit_eof(int status);
 #endif

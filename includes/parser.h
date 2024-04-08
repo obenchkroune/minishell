@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 05:06:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/08 02:37:49 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_cmd
 
 typedef struct s_redir
 {
-	t_redir_type		type;
+	t_redir_type	type;
 	char			*file;
 	int				fd;
 	struct s_redir	*prev;
@@ -61,6 +61,7 @@ typedef struct s_node
 void				free_list(t_list *list);
 void				free_cmd(t_cmd *cmd);
 void				free_redir(t_redir *io);
+void				free_matrix(char **matrix);
 t_node				*parse_input(void);
 t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);
@@ -70,7 +71,5 @@ int					ft_append_redir(t_redir **root, t_token prev_token);
 t_redir_type		get_redir_type(t_token token);
 void				free_tree(t_node *node);
 char				**expand_argv(char **argv);
-
-
 
 #endif

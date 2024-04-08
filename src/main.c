@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 02:03:40 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 02:40:17 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,79 +25,31 @@ static char	*get_display_line(void)
 	return (display_line);
 }
 
-static bool	is_invalid_pipe(char *input)
+static void	g_shell_checks_update(void)
 {
-	int		count;
-	char	*pipe_p;
-
-	pipe_p = ft_strrchr(g_shell->input, '|');
-	if (!pipe_p)
-		return (false);
-	if (ft_strnstr(input, "|||", ft_strlen(input)))
-		return (true);
-	count = 0;
-	while (*input)
-	{
-		if (*input == '|')
-			count++;
-		input++;
-	}
-	return (count > 2 && is_empty(pipe_p + 1));
-}
-static int	handle_unclosed_pipe(void)
-{
-	char	*input_pipe_unclosed;
+	char	**new_input;
 	char	*tmp;
-	int		status;
 
-	g_shell->inside_unclosed_pipe = true;
-	if (is_invalid_pipe(g_shell->input))
-		return (-2);
-	if (ft_strrchr(g_shell->input, '|') && is_empty(ft_strrchr(g_shell->input,
-				'|') + 1))
+	g_shell->inside_unclosed_pipe = false;
+	g_shell->tree = parse_input();
+	if (!g_shell->has_syntax_error)
+		ft_exec_node(g_shell->tree, false);
+	if (!g_shell->has_heredoc && g_shell->has_unclosed_pipe)
 	{
-		input_pipe_unclosed = readline(">");
-		if (!input_pipe_unclosed)
-			return (free(input_pipe_unclosed), -1);
-		if (is_empty(input_pipe_unclosed))
-		{
-			status = handle_unclosed_pipe();
-			if (status < 0)
-				return (free(input_pipe_unclosed), status);
-			return (free(input_pipe_unclosed), 0);
-		}
-		tmp = g_shell->input;
-		g_shell->input = ft_strjoin(g_shell->input, input_pipe_unclosed);
-		(free(input_pipe_unclosed), free(tmp));
-		if (ft_strrchr(g_shell->input, '|') && is_empty(ft_strrchr(g_shell->input,
-				'|') + 1))
-			return (handle_unclosed_pipe());
+		new_input = ft_split(g_shell->input, '|');
+		tmp = ft_strtrim(new_input[0], " ");
+		add_history(tmp);
+		free_matrix(new_input);
+		free(tmp);
 	}
-	return (0);
-}
-
-static void	exit_eof(int status)
-{
-	if (status == -1)
-		panic_minishell("syntax error: unexpected end of file", 2);
-	else if (status == -2)
-		panic_minishell("syntax error: unexpected '|'", 2);
-	cleanup_rotation();
-	if (status != -2)
-	{
-		cleanup_shell();
-		ft_fprintf(STDOUT_FILENO, "exit\n");
-	}
-	if (status != -2 && status < 0)
-		exit(2);
-	else if (status != -2)
-		exit(status);
+	else if (!g_shell->has_heredoc)
+		add_history(g_shell->input);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	int	check_status;
-  
+
 	(void)argc, (void)argv;
 	init_shell(envp);
 	signal_init();
@@ -116,12 +68,7 @@ int	main(int argc, char **argv, char **envp)
 			exit_eof(check_status);
 			continue ;
 		}
-		g_shell->inside_unclosed_pipe = false;
-		g_shell->tree = parse_input();
-		if (!g_shell->has_heredoc)
-			add_history(g_shell->input);
-		if (!g_shell->has_syntax_error)
-			ft_exec_node(g_shell->tree, false);
+		g_shell_checks_update();
 	}
 	return (EXIT_SUCCESS);
 }
