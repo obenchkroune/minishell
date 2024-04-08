@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 11:11:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:23:02 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/wait.h>
-# include <unistd.h>
 # include <termios.h>
+# include <unistd.h>
 
 typedef struct s_shell
 {
@@ -51,24 +51,25 @@ typedef struct s_shell
 	int				last_exit_status;
 	char			last_exit_status_str[5];
 	char			*prompt;
+	bool			inside_unclosed_pipe;
 	bool			has_syntax_error;
 	bool			has_heredoc;
 	char			term_buffer[2048];
 	struct termios	term;
-}				t_shell;
+}					t_shell;
 
-extern t_shell	*g_shell;
+extern t_shell		*g_shell;
 
-void			panic(char *msg);
-void			panic_minishell(char *msg, int status);
-void			syntax_error(t_token token);
-int				ft_isspace(int c);
-bool			is_empty(char *str);
-void			init_shell(char **envp);
-void			cleanup_shell(void);
-void			free_tab(char **tab);
-void			cleanup_rotation(void);
-char			*ft_strreplace(char *str, char *find, char *replace);
-int				set_terminal_attributes(void);
+void				panic(char *msg);
+void				panic_minishell(char *msg, int status);
+void				syntax_error(t_token token);
+int					ft_isspace(int c);
+bool				is_empty(char *str);
+void				init_shell(char **envp);
+void				cleanup_shell(void);
+void				free_tab(char **tab);
+void				cleanup_rotation(void);
+char				*ft_strreplace(char *str, char *find, char *replace);
+int					set_terminal_attributes(void);
 
 #endif

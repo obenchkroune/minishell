@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 06:02:12 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:34:56 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,43 @@ static char	*get_display_line(void)
 	return (display_line);
 }
 
+static int	handle_unclosed_pipe(void)
+{
+	char	*input_pipe_unclosed;
+	char	*tmp;
+	char	*pipe_p;
+
+	g_shell->inside_unclosed_pipe = true;
+	pipe_p = ft_strrchr(g_shell->input, '|');
+	if (pipe_p && is_empty(pipe_p + 1))
+	{
+		input_pipe_unclosed = readline(">");
+		if (!input_pipe_unclosed)
+			return (free(input_pipe_unclosed), -1);
+		if (is_empty(input_pipe_unclosed))
+		{
+			if (handle_unclosed_pipe() == -1)
+				return (free(input_pipe_unclosed), -1);
+			return (free(input_pipe_unclosed), 0);
+		}
+		tmp = g_shell->input;
+		g_shell->input = ft_strjoin(g_shell->input, input_pipe_unclosed);
+		free(input_pipe_unclosed);
+		free(tmp);
+	}
+	return (0);
+}
+
+static void	exit_eof(int status)
+{
+	if (status == 2)
+		panic_minishell("syntax error: unexpected end of file", status);
+	ft_fprintf(STDOUT_FILENO, "exit\n");
+	cleanup_rotation();
+	cleanup_shell();
+	exit(status);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc, (void)argv;
@@ -36,19 +73,17 @@ int	main(int argc, char **argv, char **envp)
 		g_shell->prompt = get_display_line();
 		g_shell->input = readline(g_shell->prompt);
 		if (!g_shell->input)
-		{
-			cleanup_rotation();
-			ft_fprintf(STDOUT_FILENO, "exit\n");
-			break ;
-		}
+			exit_eof(0);
 		if (is_empty(g_shell->input))
 			continue ;
+		if (handle_unclosed_pipe() == -1)
+			exit_eof(2);
+		g_shell->inside_unclosed_pipe = false;
 		g_shell->tree = parse_input();
 		if (!g_shell->has_heredoc)
 			add_history(g_shell->input);
 		if (!g_shell->has_syntax_error)
 			ft_exec_node(g_shell->tree, false);
 	}
-	cleanup_shell();
 	return (EXIT_SUCCESS);
 }

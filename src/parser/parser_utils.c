@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 05:19:39 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:45:44 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	ft_append_redir(t_redir **root, t_token prev_token)
 
 bool	is_empty(char *str)
 {
+	if (!str)
+		return (false);
 	while (*str)
 	{
 		if (!ft_isspace(*str))

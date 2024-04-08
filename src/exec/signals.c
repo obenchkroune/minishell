@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/07 11:16:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:22:39 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	sigint_handler(int signum)
 	rl_replace_line("", 0);
 	if (!g_shell->input)
 		rl_on_new_line();
-	rl_redisplay();
+	if (!g_shell->inside_unclosed_pipe)
+		rl_redisplay();
+	else
+		ft_fprintf(STDOUT_FILENO, ">");
 }
 
 void	sigquit_handler(int signum)

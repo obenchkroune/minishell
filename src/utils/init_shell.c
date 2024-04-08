@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 11:05:31 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:19:53 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	init_shell(char **envp)
 	ft_bzero(g_shell, sizeof(t_shell));
 	set_terminal_attributes();
 	g_shell->envp = parse_env(envp);
-	g_shell->last_exit_status = 0;
 	g_shell->cwd = getcwd(NULL, 0);
 	g_shell->has_syntax_error = false;
 }
