@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 01:39:46 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/08 01:42:12 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	handle_unclosed_pipe(void)
 static void	exit_eof(int status)
 {
 	if (status == -1)
-		panic_minishell("syntax error near unexpected token `|'", 2);
+		panic_minishell("syntax error: unexpected end of file", 2);
 	else if (status == -2)
 		panic_minishell("syntax error: unexpected '|'", 2);
 	cleanup_rotation();
