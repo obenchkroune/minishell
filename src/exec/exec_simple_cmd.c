@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/07 02:45:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/09 00:56:21 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 bool	is_redirection_node(t_node *tree)
 {
-	return (tree->redir && (tree->redir->type == REDIR_IN || tree->redir->type == REDIR_OUT
-			|| tree->redir->type == REDIR_APPEND || tree->redir->type == REDIR_HEREDOC));
+	return (tree->redir && (tree->redir->type == REDIR_IN
+			|| tree->redir->type == REDIR_OUT
+			|| tree->redir->type == REDIR_APPEND
+			|| tree->redir->type == REDIR_HEREDOC));
 }
 
 static int	ft_exec_cmd(t_node *tree, char **args)

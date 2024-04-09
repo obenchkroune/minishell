@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 03:27:34 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:05:04 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static void	ft_strrev(char *str)
 		temp = str[i];
 		str[i] = str[j];
 		str[j] = temp;
+		i++;
+		j--;
 	}
+	printf("Here\n");
 }
 
 static void	last_exit_str(char *str, size_t size, int exit_status)
@@ -56,7 +59,8 @@ char	*get_env(char *name)
 
 	if (*name == '?')
 	{
-		last_exit_str(g_shell->last_exit_status_str, 5, g_shell->last_exit_status);
+		last_exit_str(g_shell->last_exit_status_str, 5,
+			g_shell->last_exit_status);
 		return (g_shell->last_exit_status_str);
 	}
 	envp = g_shell->envp;
