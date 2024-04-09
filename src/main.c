@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/09 00:53:16 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:52:29 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	g_shell_checks_update(void)
 	}
 	if (!g_shell->has_syntax_error)
 		ft_exec_node(g_shell->tree, false);
+	g_shell->should_continue_execution = true;
 }
 
 int	main(int argc, char **argv, char **envp)

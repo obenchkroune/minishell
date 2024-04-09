@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:02 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 00:57:00 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:35:07 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ int		ft_exec_node(t_node *tree, bool is_pipe);
 int		ft_exec_pipeline(t_node *tree);
 void	ft_exec_builtin(char **args);
 bool	ft_is_builtin(char *cmd);
-int		ft_redirect(t_redir *io);
+int		ft_redirect(t_redir *io, bool is_builtin);
 #endif

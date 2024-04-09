@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 02:45:53 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:47:21 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_shell
 	bool			inside_unclosed_pipe;
 	bool			has_unclosed_pipe;
 	bool			has_syntax_error;
+	bool			should_continue_execution;
 	bool			has_heredoc;
 	char			term_buffer[2048];
 	struct termios	term;

@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 03:18:35 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/09 02:00:31 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ void	panic_minishell(char *msg, int status)
 {
 	ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
 	ft_fprintf(STDERR_FILENO, "%s\n", msg);
-	cleanup_rotation();
 	g_shell->last_exit_status = status;
 }

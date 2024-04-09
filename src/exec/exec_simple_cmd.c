@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/09 00:56:21 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:51:27 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 	if (pid == 0)
 	{
 		if (is_redirection_node(tree))
-			ft_redirect(tree->redir);
+			ft_redirect(tree->redir, false);
 		if (!cmd->path)
 		{
 			ft_fprintf(2, "minishell: %s: command not found\n", args[0]);
@@ -61,7 +61,10 @@ int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 	args = expand_argv(cmd->argv);
 	if (ft_is_builtin(cmd->argv[0]))
 	{
-		ft_exec_builtin(args);
+		if (is_redirection_node(tree))
+			ft_redirect(tree->redir, true);
+		if (g_shell->should_continue_execution)
+			ft_exec_builtin(args);
 		return (0);
 	}
 	status = ft_exec_cmd(tree, args);
