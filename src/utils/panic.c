@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/09 02:00:31 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/09 02:02:04 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	panic(char *msg)
 {
+	ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
 	perror(msg);
 	cleanup_rotation();
 	cleanup_shell();

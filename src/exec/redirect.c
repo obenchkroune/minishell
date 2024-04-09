@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/09 02:00:49 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/09 02:05:38 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 static void	redirect_in(t_redir *io, bool is_builtin)
 {
-	int	fd;
+	int		fd;
+	char	*tmp;
 
 	fd = open(io->file, O_RDONLY);
 	if (fd == -1 && !is_builtin)
-		panic("open");
+		panic(io->file);
 	else if (fd == -1 && is_builtin)
 	{
-		panic_minishell("No such file or directory", 1);
+		tmp = ft_strjoin(io->file, ": No such file or directory");
+		panic_minishell(tmp, 1);
+		free(tmp);
 		g_shell->should_continue_execution = false;
 		return ;
 	}
@@ -31,14 +34,17 @@ static void	redirect_in(t_redir *io, bool is_builtin)
 
 static void	redirect_out(t_redir *io, bool is_builtin)
 {
-	int	fd;
+	int		fd;
+	char	*tmp;
 
 	fd = open(io->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1 && !is_builtin)
-		panic("open");
+		panic(io->file);
 	else if (fd == -1 && is_builtin)
 	{
-		panic_minishell("Cannot create file", 1);
+		tmp = ft_strjoin(io->file, ": Cannot create file");
+		panic_minishell(tmp, 1);
+		free(tmp);
 		g_shell->should_continue_execution = false;
 		return ;
 	}
@@ -48,14 +54,17 @@ static void	redirect_out(t_redir *io, bool is_builtin)
 
 static void	redirect_append(t_redir *io, bool is_builtin)
 {
-	int	fd;
+	int		fd;
+	char	*tmp;
 
 	fd = open(io->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1 && !is_builtin)
-		panic("open");
+		panic(io->file);
 	else if (fd == -1 && is_builtin)
 	{
-		panic_minishell("Cannot create file", 1);
+		tmp = ft_strjoin(io->file, ": Cannot create file");
+		panic_minishell(tmp, 1);
+		free(tmp);
 		g_shell->should_continue_execution = false;
 		return ;
 	}
@@ -65,14 +74,17 @@ static void	redirect_append(t_redir *io, bool is_builtin)
 
 static void	redirect_heredoc(t_redir *io, bool is_builtin)
 {
-	int	fd;
+	int		fd;
+	char	*tmp;
 
 	fd = open(io->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1 && !is_builtin)
-		panic("open");
+		panic(io->file);
 	else if (fd == -1 && is_builtin)
 	{
-		panic_minishell("No such file or directory", 1);
+		tmp = ft_strjoin(io->file, ": No such file or directory");
+		panic_minishell(tmp, 1);
+		free(tmp);
 		g_shell->should_continue_execution = false;
 		return ;
 	}
