@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal.c                                         :+:      :+:    :+:   */
+/*   is_empty.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 10:53:46 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:39:57 by oussama          ###   ########.fr       */
+/*   Created: 2024/04/11 18:33:22 by oussama           #+#    #+#             */
+/*   Updated: 2024/04/11 18:33:41 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_terminal_attributes(void)
+bool	is_empty(char *str)
 {
-	if (tcgetattr(STDIN_FILENO, &g_shell->term) == -1)
+	if (!str)
+		return (false);
+	while (*str)
 	{
-		perror("tcgetattr");
-		return (-1);
+		if (!ft_isspace(*str))
+			return (false);
+		str++;
 	}
-	g_shell->term.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_shell->term) == -1)
-	{
-		perror("tcsetattr");
-		return (-1);
-	}
-	return (0);
+	return (true);
 }

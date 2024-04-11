@@ -6,7 +6,7 @@
 /*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:10:27 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:42:25 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static char	*get_user_host_line(void)
 	size_t	color_len;
 
 	color_len = ft_strlen(GREEN) + ft_strlen(RESET);
-	len = color_len + ft_strlen(g_shell->username) + ft_strlen(g_shell->hostname) + 3;
+	len = color_len + ft_strlen(g_shell->username)
+		+ ft_strlen(g_shell->hostname) + 3;
 	result = ft_calloc(len + 1, sizeof(char));
 	if (!result)
 		panic("malloc");
@@ -32,7 +33,7 @@ static char	*get_user_host_line(void)
 	ft_strlcat(result, g_shell->username, len + 1);
 	ft_strlcat(result, "@", len + 1);
 	ft_strlcat(result, g_shell->hostname, len + 1);
-	ft_strlcat(result, RESET ": " , len + 1);
+	ft_strlcat(result, RESET ": ", len + 1);
 	return (result);
 }
 

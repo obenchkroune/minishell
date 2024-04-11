@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 23:45:44 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:32:44 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,4 @@ int	ft_append_redir(t_redir **root, t_token prev_token)
 		tail = tail->next;
 	tail->next = ret;
 	return (0);
-}
-
-bool	is_empty(char *str)
-{
-	if (!str)
-		return (false);
-	while (*str)
-	{
-		if (!ft_isspace(*str))
-			return (false);
-		str++;
-	}
-	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/09 01:51:27 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:41:33 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 		if (is_redirection_node(tree))
 			ft_redirect(tree->redir, false);
 		if (!cmd->path)
-		{
-			ft_fprintf(2, "minishell: %s: command not found\n", args[0]);
-			exit(127);
-		}
+			(ft_fprintf(2, "minishell: %s: command not found\n", args[0]),
+				exit(127));
 		if (execve(cmd->path, args, g_shell->envp) == -1)
 		{
 			ft_fprintf(2, "minishell: %s: %s\n", args[0], strerror(errno));

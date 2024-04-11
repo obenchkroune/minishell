@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 02:42:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/08 03:22:55 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:36:00 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_clear_history(void)
 	g_shell->history = NULL;
 	rl_clear_history();
 }
+
 void	set_history(char *line)
 {
 	t_history	*new;
@@ -55,8 +56,8 @@ void	set_history(char *line)
 
 void	ft_history(void)
 {
-	t_history *tmp;
-	int i;
+	t_history	*tmp;
+	int			i;
 
 	i = 1;
 	tmp = g_shell->history;

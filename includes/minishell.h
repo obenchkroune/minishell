@@ -6,7 +6,7 @@
 /*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 17:46:06 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:32:04 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_shell
 	bool			should_continue_execution;
 	bool			has_heredoc;
 	char			term_buffer[2048];
-    char            *username;
-    char            *hostname;
+	char			*username;
+	char			*hostname;
 	struct termios	term;
 }					t_shell;
 
