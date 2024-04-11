@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/09 01:47:21 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:09:52 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 # define MINISHELL_H
 
-# define RED "\x1b[31m"
-# define GREEN "\x1b[32m"
-# define YELLOW "\x1b[33m"
-# define BLUE "\x1b[34m"
-# define MAGENTA "\x1b[35m"
-# define CYAN "\x1b[36m"
-# define RESET "\x1b[0m"
+# define RED "\001\x1b[31m\002"
+# define GREEN "\001\x1b[32m\002"
+# define YELLOW "\001\x1b[33m\002"
+# define BLUE "\001\x1b[34m\002"
+# define MAGENTA "\001\x1b[35m\002"
+# define CYAN "\001\x1b[36m\002"
+# define RESET "\001\x1b[0m\002"
 
 # include "builtins.h"
 # include "env.h"
