@@ -2,7 +2,7 @@
 
 - [ ] Redo the `cd` command.
 
-- [ ] Fix long commands not being displayed properly!
+- [x] Fix long commands not being displayed properly!
 
 - [ ] Translate arguments like these into a single argument:
 
