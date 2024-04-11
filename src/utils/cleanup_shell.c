@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 03:02:44 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:53:08 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	cleanup_shell(void)
 	if (tcsetattr(0, 0, &g_shell->term) == -1)
 		perror("");
 	ft_clear_history();
+	free(g_shell->username);
+	free(g_shell->hostname);
 	free(g_shell);
-	
 	g_shell = NULL;
 }
 

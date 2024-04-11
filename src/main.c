@@ -3,25 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/09 01:52:29 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:10:27 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "env.h"
+#include "libft.h"
+#include <stdlib.h>
 
 t_shell		*g_shell;
 
+static char	*get_user_host_line(void)
+{
+	char	*result;
+	size_t	len;
+	size_t	color_len;
+
+	color_len = ft_strlen(GREEN) + ft_strlen(RESET);
+	len = color_len + ft_strlen(g_shell->username) + ft_strlen(g_shell->hostname) + 3;
+	result = ft_calloc(len + 1, sizeof(char));
+	if (!result)
+		panic("malloc");
+	ft_strlcat(result, CYAN, len + 1);
+	ft_strlcat(result, g_shell->username, len + 1);
+	ft_strlcat(result, "@", len + 1);
+	ft_strlcat(result, g_shell->hostname, len + 1);
+	ft_strlcat(result, RESET ": " , len + 1);
+	return (result);
+}
+
 static char	*get_display_line(void)
 {
-	char	*line;
+	char	*temp;
 	char	*display_line;
+	char	*user_host_line;
 
-	line = ft_strjoin(GREEN "minishell@42:" RESET, g_shell->cwd);
-	display_line = ft_strjoin(line, "$ ");
-	free(line);
+	user_host_line = get_user_host_line();
+	temp = ft_strjoin(user_host_line, g_shell->cwd);
+	free(user_host_line);
+	display_line = ft_strjoin(temp, "$ ");
+	free(temp);
 	return (display_line);
 }
 
