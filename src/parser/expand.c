@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "libft.h"
 
 char	*ft_strreplace(char *str, char *find, char *replace)
 {
@@ -38,6 +39,8 @@ static char	*get_var_name(char *str)
 	char	*start;
 
 	start = str++;
+	if (*str == '\\')
+		str++;
 	if (*str == '?')
 		return (ft_strdup("$?"));
 	if (ft_isdigit(*str++))
@@ -47,6 +50,7 @@ static char	*get_var_name(char *str)
 	return (ft_substr(start, 0, str - start));
 }
 
+// TODO: fix leaks
 static char	*expand_arg(char *arg)
 {
 	char	*result;
@@ -61,6 +65,8 @@ static char	*expand_arg(char *arg)
 		{
 			name = get_var_name(arg);
 			value = get_env(name + 1);
+			if (ft_strncmp(name, "$\\", 2) == 0)
+				value = ft_strreplace(name, "$\\", "$");
 			if (!value)
 				value = "";
 			temp = result;

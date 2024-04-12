@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/07 01:28:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:10:04 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "libft.h"
+#include <stdio.h>
 
 static void	skip_whitespace(void)
 {
@@ -21,7 +23,10 @@ static void	skip_whitespace(void)
 		g_shell->lexer_idx++;
 }
 
-static t_token	get_quoted_word(void)
+#define SINGLE_QUOTE_ERR -1
+#define DOUBLE_QUOTE_ERR -2
+
+int	get_quoted_word_len(void)
 {
 	size_t	i;
 	char	*str;
@@ -34,12 +39,46 @@ static t_token	get_quoted_word(void)
 	{
 		g_shell->lexer_idx = ft_strlen(str);
 		if (str[i] == '\'')
-			return ((t_token){.type = T_ERROR, .value = "'"});
-		return ((t_token){.type = T_ERROR, .value = "\""});
+			return (SINGLE_QUOTE_ERR);
+		return (DOUBLE_QUOTE_ERR);
 	}
-	g_shell->lexer_idx += pair_quote - &str[i] + 1;
+	return (pair_quote - &str[i] + 1);
+}
+
+// TODO: fix leaks
+static t_token	get_quoted_word(void)
+{
+	size_t	start;
+	char	*str;
+	int		len;
+	char	*value;
+	char	*word;
+	char	*temp;
+
+	str = g_shell->input;
+	start = g_shell->lexer_idx;
+	value = NULL;
+	while (str[start] && ft_strchr("\"'", str[start]))
+	{
+		len = get_quoted_word_len();
+		if (len < 0)
+		{
+			if (len == SINGLE_QUOTE_ERR)
+				return ((t_token){.type = T_ERROR, .value = "'"});
+			return ((t_token){.type = T_ERROR, .value = "\""});
+		}
+		word = ft_substr(str, start + 1, len - 2);
+		if (str[start] == '\'')
+			word = ft_strreplace(word, "$", "$\\");
+		temp = value;
+		value = ft_strjoin(value, word);
+		free(temp);
+		free(word);
+		g_shell->lexer_idx += len;
+		start = g_shell->lexer_idx;
+	}
 	return ((t_token)
-		{.type = T_WORD, .value = ft_substr(str, i, pair_quote - &str[i] + 1)});
+		{.type = T_WORD, .value = value});
 }
 
 static t_token	get_word_token(void)
@@ -51,7 +90,7 @@ static t_token	get_word_token(void)
 
 	str = g_shell->input;
 	i = g_shell->lexer_idx;
-	if (ft_strchr("\"'", str[i]))
+	if (str[i] && ft_strchr("\"'", str[i]))
 		return (get_quoted_word());
 	start = i;
 	while (str[i] && !ft_strchr(">|< ", str[i]))

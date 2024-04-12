@@ -6,12 +6,13 @@
 /*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:42:25 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:07:34 by oussama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "env.h"
+#include "lexer.h"
 #include "libft.h"
 #include <stdlib.h>
 
@@ -55,7 +56,6 @@ static void	g_shell_checks_update(void)
 {
 	char	**new_input;
 	char	*tmp;
-
 	g_shell->inside_unclosed_pipe = false;
 	g_shell->tree = parse_input();
 	if (!g_shell->has_heredoc && g_shell->has_unclosed_pipe)
