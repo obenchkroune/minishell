@@ -26,7 +26,9 @@ void	ft_echo(char **args)
 	}
 	while (args && args[i])
 	{
-		ft_fprintf(STDOUT_FILENO, "%s", args[i]);
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
 	if (n_flag == false)
