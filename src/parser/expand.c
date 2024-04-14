@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "libft.h"
 
 typedef struct s_arg
 {
@@ -45,7 +44,9 @@ static char	*get_var_name(char *str)
 {
 	char	*start;
 
-	start = str++;
+	start = str;
+	if (*str == '$')
+		str++;
 	if (*str == '?')
 		return (ft_strdup("$?"));
 	if (ft_isdigit(*str++))
@@ -66,6 +67,15 @@ t_arg	*create_arg_node(char *value, bool expand)
 	arg->content = value;
 	arg->expand = expand;
 	return (arg);
+}
+
+void	cleanup_arg_nodes(t_arg *args)
+{
+	if (!args)
+		return ;
+	free(args->next);
+	free(args->content);
+	free(args);
 }
 
 void	add_arg_node(t_arg **root, t_arg *arg)
@@ -114,7 +124,7 @@ static char	*replace_env_vars(char *arg)
 	char	*result;
 	char	*name;
 	char	*value;
-	char	*temp;
+	char	*replaced_str;
 
 	result = ft_strdup(arg);
 	while (*arg)
@@ -125,10 +135,10 @@ static char	*replace_env_vars(char *arg)
 			value = get_env(name + 1);
 			if (!value)
 				value = "";
-			temp = result;
-			result = ft_strreplace(result, name, value);
+			replaced_str = ft_strreplace(result, name, value);
+			free(result);
+			result = replaced_str;
 			arg += ft_strlen(name);
-			free(temp);
 			free(name);
 			continue ;
 		}
@@ -165,6 +175,7 @@ char	*join_args(t_arg *args)
 		ft_strlcat(result, temp->content, len + 1);
 		temp = temp->next;
 	}
+	cleanup_arg_nodes(args);
 	return (result);
 }
 
@@ -191,7 +202,7 @@ static char	*expand_arg(const char *str)
 			i += ft_strlen(arg->content);
 		}
 	}
-	return (join_args(args));
+	return join_args(args);
 }
 
 char	**expand_argv(char **argv)
