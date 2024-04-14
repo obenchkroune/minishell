@@ -127,23 +127,23 @@ t_token	get_next_token(void)
 	char	*input;
 
 	skip_whitespace();
-	input = g_shell->input;
-	if (input[g_shell->lexer_idx] == '\0')
+	input = g_shell->input + g_shell->lexer_idx;
+	if (*input == '\0')
 		return (g_shell->lexer_idx = 0,
 			(t_token){.type = T_EOF, .value = NULL});
-	if (ft_strcmp(input, ">>") == 0)
+	else if (ft_strcmp(input, ">>") == 0)
 		return (g_shell->lexer_idx += 2,
 			(t_token){.type = T_APPEND, .value = ">>"});
-	if (ft_strcmp(input, "<<") == 0)
+	else if (ft_strcmp(input, "<<") == 0)
 		return (g_shell->lexer_idx += 2,
 			(t_token){.type = T_HEREDOC, .value = "<<"});
-	if (input[g_shell->lexer_idx] == '>')
+	else if (*input == '>')
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_REDIR_OUT, .value = ">"});
-	if (input[g_shell->lexer_idx] == '<')
+	else if (*input == '<')
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_REDIR_IN, .value = "<"});
-	if (input[g_shell->lexer_idx] == '|')
+	else if (*input == '|')
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_PIPE, .value = "|"});
 	else
