@@ -2,7 +2,7 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror $(HEAD) -g3 -fsanitize=address
 SRCS	=	$(shell find ./src -type f -name '*.c')
 HEAD	=	-I includes -I ~/.local/include
-CLIBS	=	-Llibft -lft -lreadline
+CLIBS	=	-Llibft -lft -lreadline -lcurses
 OBJS	=	$(SRCS:.c=.o)
 NAME	=	minishell
 AR		=	ar rcs
