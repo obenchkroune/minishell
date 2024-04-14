@@ -13,6 +13,13 @@
 #include "../../includes/minishell.h"
 #include "libft.h"
 
+typedef struct s_arg
+{
+	char			*content;
+	bool			expand;
+	struct	s_arg	*next;
+}	t_arg;
+
 char	*ft_strreplace(char *str, char *find, char *replace)
 {
 	char	*result;
@@ -39,8 +46,6 @@ static char	*get_var_name(char *str)
 	char	*start;
 
 	start = str++;
-	if (*str == '\\')
-		str++;
 	if (*str == '?')
 		return (ft_strdup("$?"));
 	if (ft_isdigit(*str++))
@@ -50,23 +55,74 @@ static char	*get_var_name(char *str)
 	return (ft_substr(start, 0, str - start));
 }
 
-// TODO: fix leaks
-static char	*expand_arg(char *arg)
+t_arg	*create_arg_node(char *value, bool expand)
+{
+	t_arg	*arg;
+
+	arg = malloc(sizeof(t_arg));
+	if (!arg)
+		panic("malloc");
+	ft_bzero(arg, sizeof(t_arg));
+	arg->content = value;
+	arg->expand = expand;
+	return (arg);
+}
+
+void	add_arg_node(t_arg **root, t_arg *arg)
+{
+	t_arg	*tail;
+
+	if (!root || !arg)
+		return ;
+	if (*root == NULL)
+	{
+		*root = arg;
+		return ;
+	}
+	tail = *root;
+	while (tail->next)
+		tail = tail->next;
+	tail->next = arg;
+}
+
+char	*get_next_word(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+
+	while (str[i] && !ft_strchr("'\"", str[i]))
+		i++;
+	return (ft_substr(str, 0, i));
+}
+
+size_t	get_len(t_arg *args)
+{
+	size_t	len;
+
+	len = 0;
+	while (args)
+	{
+		len += ft_strlen(args->content);
+		args = args->next;
+	}
+	return (len);
+}
+
+static char	*replace_env_vars(char *arg)
 {
 	char	*result;
 	char	*name;
 	char	*value;
 	char	*temp;
 
-	result = ft_strtrim(arg, "\"");
+	result = ft_strdup(arg);
 	while (*arg)
 	{
 		if (*arg == '$')
 		{
 			name = get_var_name(arg);
 			value = get_env(name + 1);
-			if (ft_strncmp(name, "$\\", 2) == 0)
-				value = ft_strreplace(name, "$\\", "$");
 			if (!value)
 				value = "";
 			temp = result;
@@ -81,6 +137,63 @@ static char	*expand_arg(char *arg)
 	return (result);
 }
 
+char	*join_args(t_arg *args)
+{
+	t_arg	*temp;
+	size_t	len;
+	char	*result;
+	char	*content;
+
+	temp = args;
+	while (temp)
+	{
+		if (temp->expand)
+			content = replace_env_vars(temp->content);
+		else
+			content = ft_strdup(temp->content);
+		free(temp->content);
+		temp->content = content;
+		temp = temp->next;
+	}
+	len = get_len(args);
+	result = ft_calloc(len + 1, sizeof(char));
+	if (!result)
+		panic("malloc");
+	temp = args;
+	while (temp)
+	{
+		ft_strlcat(result, temp->content, len + 1);
+		temp = temp->next;
+	}
+	return (result);
+}
+
+static char	*expand_arg(const char *str)
+{
+	t_arg	*args;
+	t_arg	*arg;
+	size_t	i;
+
+	i = 0;
+	args = NULL;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			arg = create_arg_node(get_next_word(str + i + 1), str[i] != '\'');
+			add_arg_node(&args, arg);
+			i += ft_strlen(arg->content) + 1;
+		}
+		else
+		{
+			arg = create_arg_node(get_next_word(str + i), true);
+			add_arg_node(&args, arg);
+			i += ft_strlen(arg->content);
+		}
+	}
+	return (join_args(args));
+}
+
 char	**expand_argv(char **argv)
 {
 	char	*arg;
@@ -89,12 +202,10 @@ char	**expand_argv(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		if (argv[i][0] != '\'')
-			arg = expand_arg(argv[i]);
-		else
-			arg = ft_strtrim(argv[i], "'");
+		arg = expand_arg(argv[i]);
 		free(argv[i]);
-		argv[i++] = arg;
+		argv[i] = arg;
+		i++;
 	}
 	return (argv);
 }

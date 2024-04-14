@@ -23,64 +23,6 @@ static void	skip_whitespace(void)
 		g_shell->lexer_idx++;
 }
 
-#define SINGLE_QUOTE_ERR -1
-#define DOUBLE_QUOTE_ERR -2
-
-int	get_quoted_word_len(void)
-{
-	size_t	i;
-	char	*str;
-	char	*pair_quote;
-
-	str = g_shell->input;
-	i = g_shell->lexer_idx;
-	pair_quote = ft_strchr(&str[i + 1], str[i]);
-	if (!pair_quote)
-	{
-		g_shell->lexer_idx = ft_strlen(str);
-		if (str[i] == '\'')
-			return (SINGLE_QUOTE_ERR);
-		return (DOUBLE_QUOTE_ERR);
-	}
-	return (pair_quote - &str[i] + 1);
-}
-
-// TODO: fix leaks
-static t_token	get_quoted_word(void)
-{
-	size_t	start;
-	char	*str;
-	int		len;
-	char	*value;
-	char	*word;
-	char	*temp;
-
-	str = g_shell->input;
-	start = g_shell->lexer_idx;
-	value = NULL;
-	while (str[start] && ft_strchr("\"'", str[start]))
-	{
-		len = get_quoted_word_len();
-		if (len < 0)
-		{
-			if (len == SINGLE_QUOTE_ERR)
-				return ((t_token){.type = T_ERROR, .value = "'"});
-			return ((t_token){.type = T_ERROR, .value = "\""});
-		}
-		word = ft_substr(str, start + 1, len - 2);
-		if (str[start] == '\'')
-			word = ft_strreplace(word, "$", "$\\");
-		temp = value;
-		value = ft_strjoin(value, word);
-		free(temp);
-		free(word);
-		g_shell->lexer_idx += len;
-		start = g_shell->lexer_idx;
-	}
-	return ((t_token)
-		{.type = T_WORD, .value = value});
-}
-
 static t_token	get_word_token(void)
 {
 	size_t	start;
@@ -90,11 +32,18 @@ static t_token	get_word_token(void)
 
 	str = g_shell->input;
 	i = g_shell->lexer_idx;
-	if (str[i] && ft_strchr("\"'", str[i]))
-		return (get_quoted_word());
 	start = i;
 	while (str[i] && !ft_strchr(">|< ", str[i]))
+	{
+		if (str[i] && ft_strchr("'\"", str[i]))
+		{
+			if (!ft_strchr(str + i + 1, str[i]))
+				return ((t_token){.type = T_ERROR, value = ft_substr(str + i, 0, 1)});
+			i = ft_strchr(str + i + 1, str[i]) -str + 1;
+			continue ;
+		}
 		i++;
+	}
 	value = ft_substr(str + start, 0, i - start);
 	g_shell->lexer_idx = i;
 	return ((t_token){.type = T_WORD, .value = value});
