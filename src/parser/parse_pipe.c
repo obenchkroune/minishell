@@ -79,9 +79,8 @@ t_node	*parse_cmd(void)
 		token = get_next_token();
 		if (token.type == T_WORD)
 			ft_lstadd_back(&args, ft_lstnew(token.value));
-		else
-			if (ft_append_redir(&redir, token) == -1)
-				return (free_tree(node), NULL);
+		else if (ft_append_redir(&redir, token) == -1)
+			return (free_tree(node), NULL);
 	}
 	node->redir = redir;
 	node->cmd = create_cmd(get_executable(args->content), ft_lsttab(args));
