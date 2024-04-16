@@ -2,6 +2,8 @@
 
 - [ ] Redo the `cd` command.
 
+- [ ] Fix Heredoc
+
 - [x] Fix long commands not being displayed properly!
 
 - [x] Fix a problem with parsing single quotes inside Double quotes
