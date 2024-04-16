@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:57:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:22:28 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:48:16 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*join_args(t_arg *args)
 	return (result);
 }
 
-static char	*expand_arg(const char *str)
+char	*expand_arg(const char *str)
 {
 	t_arg	*args_list;
 	t_arg	*arg_node;

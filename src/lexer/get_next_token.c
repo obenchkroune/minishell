@@ -6,14 +6,11 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:15:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:40:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "lexer.h"
-#include "libft.h"
-#include <stdio.h>
 
 static void	skip_whitespace(void)
 {

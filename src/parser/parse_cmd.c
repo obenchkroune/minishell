@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:33:43 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:48:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_executable(char *cmd)
 	size_t	i;
 
 	i = 0;
+	cmd = expand_arg(cmd);
 	if (access(cmd, F_OK) == 0)
 		return (ft_strdup(cmd));
 	result = NULL;
@@ -56,6 +57,7 @@ char	*get_executable(char *cmd)
 	}
 	free(slash_cmd);
 	free_tab(path);
+	free(cmd);
 	return (result);
 }
 
@@ -78,13 +80,10 @@ t_node	*parse_cmd(void)
 	t_list		*args;
 	t_redir		*redir;
 
+	if (peek() == T_PIPE || peek() == T_ERROR)
+		return (get_next_token(), syntax_error("|"), NULL);
 	if (peek() == T_EOF)
 		return (NULL);
-	if (peek() == T_PIPE || peek() == T_ERROR)
-	{
-		get_next_token();
-		return (syntax_error("|"), NULL);
-	}
 	args = NULL;
 	redir = NULL;
 	node = create_node(N_CMD, NULL, NULL);

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:22:42 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:48:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void				free_list(t_list *list);
 void				free_cmd(t_cmd *cmd);
 void				free_redir(t_redir *io);
 void				free_matrix(char **matrix);
-void				parse_input(void);
+char				*expand_arg(const char *str);
+int					parse_input(void);
 t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);
 t_cmd				*create_cmd(char *path, char **argv);
