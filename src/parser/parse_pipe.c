@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:55:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 05:11:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,20 @@ void	unclosed_pipe(void)
 {
 	char	*input;
 	char	*temp;
+	size_t	i;
 
-	input = readline("> ");
+	i = 0;
+	input = NULL;
+	while (true)
+	{
+		free(input);
+		input = readline("> ");
+		while (input && ft_isspace(input[i]))
+			i++;
+		if (input && ft_strlen(input + i) == 0)
+			continue ;
+		break ;
+	}
 	if (!input)
 	{
 		panic_minishell("syntax error: unexpected end of file", 2);

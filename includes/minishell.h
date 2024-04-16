@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:57:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 05:15:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,5 @@ char				*ft_strreplace(char *str, char *find, char *replace);
 int					set_terminal_attributes(void);
 bool				is_invalid_pipe(char *input);
 int					handle_unclosed_pipe(void);
-void				exit_eof(int status);
 char				*get_display_line(void);
 #endif
