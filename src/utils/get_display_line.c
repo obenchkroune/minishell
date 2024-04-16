@@ -41,7 +41,7 @@ char	*get_display_line(void)
 	user_host_line = get_user_host_line();
 	temp = ft_strjoin(user_host_line, g_shell->cwd);
 	free(user_host_line);
-	display_line = ft_strjoin(temp, "\n\r$ ");
+	display_line = ft_strjoin(temp, "\n$ ");
 	free(temp);
 	return (display_line);
 }

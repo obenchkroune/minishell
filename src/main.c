@@ -11,11 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "env.h"
-#include "lexer.h"
-#include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 t_shell		*g_shell;
 
@@ -29,12 +24,13 @@ int	main(int argc, char **argv, char **envp)
 		cleanup_rotation();
 		g_shell->prompt = get_display_line();
 		g_shell->input = readline(g_shell->prompt);
-		g_shell->lexer_idx = 0;
 		if (!g_shell->input)
 			ft_exit();
 		if (is_empty(g_shell->input))
 			continue ;
 		g_shell->tree = parse_input();
+		if (!g_shell->has_heredoc)
+			add_history(g_shell->input);
 		if (!g_shell->has_syntax_error)
 			ft_exec_node(g_shell->tree, false);
 	}

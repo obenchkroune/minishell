@@ -14,7 +14,7 @@
 
 void	sigint_handler(int signum)
 {
-	printf("\n\r%s", g_shell->prompt);
+	printf("\n%s", g_shell->prompt);
 	g_shell->last_exit_status = signum + 128;
 	rl_replace_line("", 0);
 	if (!g_shell->input)
