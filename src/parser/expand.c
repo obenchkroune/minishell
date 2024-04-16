@@ -100,7 +100,8 @@ char	*get_next_word(const char *str)
 	size_t	i;
 
 	i = 0;
-
+	if (str[i] == '\'' || str[i] == '"')
+		return (ft_substr(str, 1, ft_strchr(str + i + 1, str[i]) - str - 1));
 	while (str[i] && !ft_strchr("'\"", str[i]))
 		i++;
 	return (ft_substr(str, 0, i));
@@ -191,15 +192,14 @@ static char	*expand_arg(const char *str)
 	args_list = NULL;
 	while (str[i])
 	{
+		arg_node = create_arg_node(get_next_word(str + i), str[i] != '\'');
 		if (str[i] == '"' || str[i] == '\'')
 		{
-			arg_node = create_arg_node(get_next_word(str + i + 1), str[i] != '\'');
 			add_arg_node(&args_list, arg_node);
 			i += ft_strlen(arg_node->content) + 1;
 		}
 		else
 		{
-			arg_node = create_arg_node(get_next_word(str + i), true);
 			add_arg_node(&args_list, arg_node);
 			i += ft_strlen(arg_node->content);
 		}
