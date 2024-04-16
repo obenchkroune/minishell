@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:03:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 04:28:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,23 @@ static t_token	get_word_token(void)
 	size_t	start;
 	size_t	i;
 	char	*value;
-	char	*str;
+	char	*input;
 
-	str = g_shell->input;
+	input = g_shell->input;
 	i = g_shell->lexer_idx;
 	start = i;
-	while (str[i] && !ft_strchr(">|< ", str[i]))
+	while (input[i] && !ft_strchr(">|< ", input[i]))
 	{
-		if (str[i] && ft_strchr("'\"", str[i]))
+		if (input[i] && ft_strchr("'\"", input[i]))
 		{
-			if (!ft_strchr(str + i + 1, str[i]))
-				return ((t_token){.type = T_ERROR, value = ft_substr(str + i, 0, 1)});
-			i = ft_strchr(str + i + 1, str[i]) -str + 1;
+			if (!ft_strchr(input + i + 1, input[i]))
+				return ((t_token){.type = T_ERROR, value = ft_substr(input + i, 0, 1)});
+			i = ft_strchr(input + i + 1, input[i]) -input + 1;
 			continue ;
 		}
 		i++;
 	}
-	value = ft_substr(str + start, 0, i - start);
+	value = ft_substr(input + start, 0, i - start);
 	g_shell->lexer_idx = i;
 	return ((t_token){.type = T_WORD, .value = value});
 }
