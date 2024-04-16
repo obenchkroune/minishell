@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/12 16:07:34 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/16 04:03:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env.h"
 #include "lexer.h"
 #include "libft.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 t_shell		*g_shell;
@@ -47,7 +48,7 @@ static char	*get_display_line(void)
 	user_host_line = get_user_host_line();
 	temp = ft_strjoin(user_host_line, g_shell->cwd);
 	free(user_host_line);
-	display_line = ft_strjoin(temp, "$ ");
+	display_line = ft_strjoin(temp, "\n\r$ ");
 	free(temp);
 	return (display_line);
 }
@@ -89,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 		cleanup_rotation();
 		g_shell->prompt = get_display_line();
 		g_shell->input = readline(g_shell->prompt);
+		g_shell->lexer_idx = 0;
 		if (!g_shell->input)
 			exit_eof(0);
 		if (is_empty(g_shell->input))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/11 18:28:37 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/16 03:49:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sigint_handler(int signum)
 {
-	ft_fprintf(STDOUT_FILENO, "\n");
+	printf("\n\r%s", g_shell->prompt);
 	rl_replace_line("", 0);
 	if (!g_shell->input)
 	{
