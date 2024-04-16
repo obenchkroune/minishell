@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 05:15:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 07:18:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct s_shell
 
 extern t_shell		*g_shell;
 
+char				*ft_strreplace(char *str, char *find, char *replace);
+void				display_prompt(void);
 void				panic(char *msg);
 void				panic_minishell(char *msg, int status);
 void				syntax_error(char *s);

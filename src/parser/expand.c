@@ -3,97 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:57:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/09 01:00:10 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/16 07:22:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-typedef struct s_arg
-{
-	char			*content;
-	bool			expand;
-	struct	s_arg	*next;
-}	t_arg;
-
-char	*ft_strreplace(char *str, char *find, char *replace)
-{
-	char	*result;
-	size_t	len;
-	char	*find_pos;
-
-	if (!str || !find || !replace)
-		return (NULL);
-	find_pos = ft_strnstr(str, find, ft_strlen(str));
-	if (!find_pos)
-		return (ft_strdup(str));
-	len = ft_strlen(str) - ft_strlen(find) + ft_strlen(replace);
-	result = ft_calloc(sizeof(char), len + 1);
-	if (!result)
-		panic("malloc");
-	ft_strlcat(result, str, find_pos - str + 1);
-	ft_strlcat(result, replace, len + 1);
-	ft_strlcat(result, find_pos + ft_strlen(find), len + 1);
-	return (result);
-}
-
-static char	*get_var_name(char *str)
-{
-	char	*start;
-
-	start = str;
-	if (*str == '$')
-		str++;
-	if (*str == '?')
-		return (ft_strdup("$?"));
-	if (ft_isdigit(*str++))
-		return (ft_substr(start, 0, 2));
-	while (*str && (ft_isalnum(*str) || *str == '_'))
-		str++;
-	return (ft_substr(start, 0, str - start));
-}
-
-t_arg	*create_arg_node(char *value, bool expand)
-{
-	t_arg	*arg;
-
-	arg = malloc(sizeof(t_arg));
-	if (!arg)
-		panic("malloc");
-	ft_bzero(arg, sizeof(t_arg));
-	arg->content = value;
-	arg->expand = expand;
-	return (arg);
-}
-
-void	cleanup_arg_nodes(t_arg *args)
-{
-	if (!args)
-		return ;
-	cleanup_arg_nodes(args->next);
-	free(args->content);
-	free(args);
-}
-
-void	add_arg_node(t_arg **root, t_arg *arg)
-{
-	t_arg	*tail;
-
-	if (!root || !arg)
-		return ;
-	if (*root == NULL)
-	{
-		*root = arg;
-		return ;
-	}
-	tail = *root;
-	while (tail->next)
-		tail = tail->next;
-	tail->next = arg;
-}
 
 char	*get_next_word(const char *str)
 {
@@ -107,7 +24,7 @@ char	*get_next_word(const char *str)
 	return (ft_substr(str, 0, i));
 }
 
-size_t	get_len(t_arg *args)
+static size_t	get_len(t_arg *args)
 {
 	size_t	len;
 
@@ -120,36 +37,6 @@ size_t	get_len(t_arg *args)
 	return (len);
 }
 
-char	*replace_env_vars(char *arg)
-{
-	char	*result;
-	char	*name;
-	char	*value;
-	char	*new_result;
-	size_t	i;
-
-	result = ft_strdup(arg);
-	i = 0;
-	while (result[i])
-	{
-		if (result[i] == '$')
-		{
-			name = get_var_name(result + i);
-			value = get_env(name + 1);
-			if (!value)
-				value = "";
-			new_result = ft_strreplace(result, name, value);
-			free(result);
-			result = new_result;
-			i += ft_strlen(value) - 1;
-			free(name);
-		}
-		else
-			i++;
-	}
-	return (result);
-}
-
 char	*join_args(t_arg *args)
 {
 	t_arg	*temp;
@@ -160,10 +47,7 @@ char	*join_args(t_arg *args)
 	temp = args;
 	while (temp)
 	{
-		if (temp->expand)
-			content = replace_env_vars(temp->content);
-		else
-			content = ft_strdup(temp->content);
+		content = replace_env_vars(temp->content, temp->expand);
 		free(temp->content);
 		temp->content = content;
 		temp = temp->next;

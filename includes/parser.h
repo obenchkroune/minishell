@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:30:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 07:22:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,22 @@ typedef struct s_node
 	struct s_node	*right;
 }					t_node;
 
+typedef struct s_arg
+{
+	char			*content;
+	bool			expand;
+	struct	s_arg	*next;
+}	t_arg;
+
+char				*replace_env_vars(char *arg, bool expand);
+t_arg				*create_arg_node(char *value, bool expand);
+void				cleanup_arg_nodes(t_arg *args);
+void				add_arg_node(t_arg **root, t_arg *arg);
 void				free_list(t_list *list);
 void				free_cmd(t_cmd *cmd);
 void				free_redir(t_redir *io);
 void				free_matrix(char **matrix);
-t_node				*parse_input(void);
+void				parse_input(void);
 t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);
 t_cmd				*create_cmd(char *path, char **argv);

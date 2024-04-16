@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 05:11:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 07:29:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,20 @@ void	unclosed_pipe(void)
 	{
 		free(input);
 		input = readline("> ");
+		if (!input)
+		{
+			panic_minishell("syntax error: unexpected end of file", 2);
+			g_shell->last_exit_status = 258;
+			g_shell->has_syntax_error = true;
+			return ;
+		}
 		while (input && ft_isspace(input[i]))
 			i++;
-		if (input && ft_strlen(input + i) == 0)
-			continue ;
-		break ;
-	}
-	if (!input)
-	{
-		panic_minishell("syntax error: unexpected end of file", 2);
-		g_shell->last_exit_status = 258;
-		g_shell->has_syntax_error = true;
-		return ;
+		if (ft_strlen(input + i) != 0)
+			break ;
 	}
 	temp = ft_strjoin(g_shell->input, input);
-	free(g_shell->input);
-	free(input);
+	(free(g_shell->input), free(input));
 	g_shell->input = temp;
 }
 

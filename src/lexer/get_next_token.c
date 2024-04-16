@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:28:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 07:15:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static t_token	get_word_token(void)
 		if (input[i] && ft_strchr("'\"", input[i]))
 		{
 			if (!ft_strchr(input + i + 1, input[i]))
-				return ((t_token){.type = T_ERROR, value = ft_substr(input + i, 0, 1)});
+				return ((t_token){.type = T_ERROR,
+					value = ft_substr(input + i, 0, 1)});
 			i = ft_strchr(input + i + 1, input[i]) - input + 1;
 			continue ;
 		}

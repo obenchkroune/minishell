@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
+/*   display_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:14:17 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/16 07:13:09 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/16 07:13:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	parse_input(void)
+void	display_prompt(void)
 {
-	g_shell->has_syntax_error = false;
-	g_shell->lexer_idx = 0;
-	g_shell->tree = parse_pipe();
-	if (!g_shell->has_heredoc)
-		add_history(g_shell->input);
+	g_shell->prompt = get_display_line();
+	g_shell->input = readline(g_shell->prompt);
+	if (!g_shell->input)
+		ft_exit();
 }
