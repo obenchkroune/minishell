@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 01:26:42 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/16 04:57:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	syntax_error(t_token token)
+void	syntax_error(char *s)
 {
 	g_shell->has_syntax_error = true;
 	ft_fprintf(2, RED "minishell: " RESET
-		"syntax error near unexpected token: `%s`\n",
-		token.value);
+		"syntax error near unexpected token: `%s`\n", s);
 }

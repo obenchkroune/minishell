@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:32:44 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/16 04:58:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_append_redir(t_redir **root, t_token prev_token)
 
 	if (peek() != T_WORD)
 	{
-		syntax_error(prev_token);
+		syntax_error(prev_token.value);
 		return (-1);
 	}
 	token = get_next_token();
