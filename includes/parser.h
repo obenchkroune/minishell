@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/08 02:37:49 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/16 04:30:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ int					ft_append_redir(t_redir **root, t_token prev_token);
 t_redir_type		get_redir_type(t_token token);
 void				free_tree(t_node *node);
 char				**expand_argv(char **argv);
+t_node				*parse_cmd(void);
+t_node				*parse_pipe(void);
 
 #endif
