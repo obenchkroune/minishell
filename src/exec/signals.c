@@ -14,17 +14,14 @@
 
 void	sigint_handler(int signum)
 {
-	printf("\n%s", g_shell->prompt);
 	g_shell->last_exit_status = signum + 128;
+	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	if (!g_shell->input)
 	{
 		rl_on_new_line();
-	}
-	if (!g_shell->inside_unclosed_pipe)
 		rl_redisplay();
-	else
-		ft_fprintf(STDOUT_FILENO, ">");
+	}
 }
 
 void	sigquit_handler(int signum)
