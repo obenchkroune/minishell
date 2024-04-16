@@ -40,7 +40,7 @@ static t_token	get_word_token(void)
 		{
 			if (!ft_strchr(input + i + 1, input[i]))
 				return ((t_token){.type = T_ERROR, value = ft_substr(input + i, 0, 1)});
-			i = ft_strchr(input + i + 1, input[i]) -input + 1;
+			i = ft_strchr(input + i + 1, input[i]) - input + 1;
 			continue ;
 		}
 		i++;

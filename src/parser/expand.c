@@ -73,7 +73,7 @@ void	cleanup_arg_nodes(t_arg *args)
 {
 	if (!args)
 		return ;
-	free(args->next);
+	cleanup_arg_nodes(args->next);
 	free(args->content);
 	free(args);
 }
@@ -119,30 +119,32 @@ size_t	get_len(t_arg *args)
 	return (len);
 }
 
-static char	*replace_env_vars(char *arg)
+char	*replace_env_vars(char *arg)
 {
 	char	*result;
 	char	*name;
 	char	*value;
-	char	*replaced_str;
+	char	*new_result;
+	size_t	i;
 
 	result = ft_strdup(arg);
-	while (*arg)
+	i = 0;
+	while (result[i])
 	{
-		if (*arg == '$')
+		if (result[i] == '$')
 		{
-			name = get_var_name(arg);
+			name = get_var_name(result + i);
 			value = get_env(name + 1);
 			if (!value)
 				value = "";
-			replaced_str = ft_strreplace(result, name, value);
+			new_result = ft_strreplace(result, name, value);
 			free(result);
-			result = replaced_str;
-			arg += ft_strlen(name);
+			result = new_result;
+			i += ft_strlen(value) - 1;
 			free(name);
-			continue ;
 		}
-		arg++;
+		else
+			i++;
 	}
 	return (result);
 }
@@ -175,34 +177,36 @@ char	*join_args(t_arg *args)
 		ft_strlcat(result, temp->content, len + 1);
 		temp = temp->next;
 	}
-	cleanup_arg_nodes(args);
 	return (result);
 }
 
 static char	*expand_arg(const char *str)
 {
-	t_arg	*args;
-	t_arg	*arg;
+	t_arg	*args_list;
+	t_arg	*arg_node;
 	size_t	i;
+	char	*result;
 
 	i = 0;
-	args = NULL;
+	args_list = NULL;
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
 		{
-			arg = create_arg_node(get_next_word(str + i + 1), str[i] != '\'');
-			add_arg_node(&args, arg);
-			i += ft_strlen(arg->content) + 1;
+			arg_node = create_arg_node(get_next_word(str + i + 1), str[i] != '\'');
+			add_arg_node(&args_list, arg_node);
+			i += ft_strlen(arg_node->content) + 1;
 		}
 		else
 		{
-			arg = create_arg_node(get_next_word(str + i), true);
-			add_arg_node(&args, arg);
-			i += ft_strlen(arg->content);
+			arg_node = create_arg_node(get_next_word(str + i), true);
+			add_arg_node(&args_list, arg_node);
+			i += ft_strlen(arg_node->content);
 		}
 	}
-	return join_args(args);
+	result = join_args(args_list);
+	cleanup_arg_nodes(args_list);
+	return (result);
 }
 
 char	**expand_argv(char **argv)
