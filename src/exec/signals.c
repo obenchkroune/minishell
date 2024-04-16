@@ -33,8 +33,7 @@ void	sigquit_handler(int signum)
 
 void	signal_init(void)
 {
-	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-		panic("signal");
-	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
+	if (signal(SIGINT, sigint_handler) == SIG_ERR
+		|| signal(SIGQUIT, sigquit_handler) == SIG_ERR)
 		panic("signal");
 }
