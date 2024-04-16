@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/12 16:10:04 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/16 04:03:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "lexer.h"
 #include "libft.h"
 #include <stdio.h>
 
@@ -54,18 +55,18 @@ t_token_type	peek(void)
 	char	*input;
 
 	skip_whitespace();
-	input = g_shell->input;
-	if (input[g_shell->lexer_idx] == '\0')
+	input = g_shell->input + g_shell->lexer_idx;
+	if (*input == '\0')
 		return (T_EOF);
-	if (ft_strcmp(input, ">>") == 0)
+	if (ft_strncmp(input, ">>", 2) == 0)
 		return (T_APPEND);
-	if (ft_strcmp(input, "<<") == 0)
+	if (ft_strncmp(input, "<<", 2) == 0)
 		return (T_HEREDOC);
-	if (input[g_shell->lexer_idx] == '>')
+	if (*input == '>')
 		return (T_REDIR_OUT);
-	if (input[g_shell->lexer_idx] == '<')
+	if (*input == '<')
 		return (T_REDIR_IN);
-	if (input[g_shell->lexer_idx] == '|')
+	if (*input == '|')
 		return (T_PIPE);
 	else
 		return (T_WORD);
@@ -73,26 +74,23 @@ t_token_type	peek(void)
 
 t_token	get_next_token(void)
 {
-	char	*input;
-
 	skip_whitespace();
-	input = g_shell->input + g_shell->lexer_idx;
-	if (*input == '\0')
+	if (peek() == T_EOF)
 		return (g_shell->lexer_idx = 0,
 			(t_token){.type = T_EOF, .value = NULL});
-	else if (ft_strcmp(input, ">>") == 0)
+	else if (peek() == T_APPEND)
 		return (g_shell->lexer_idx += 2,
 			(t_token){.type = T_APPEND, .value = ">>"});
-	else if (ft_strcmp(input, "<<") == 0)
+	else if (peek() == T_HEREDOC)
 		return (g_shell->lexer_idx += 2,
 			(t_token){.type = T_HEREDOC, .value = "<<"});
-	else if (*input == '>')
+	else if (peek() == T_REDIR_OUT)
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_REDIR_OUT, .value = ">"});
-	else if (*input == '<')
+	else if (peek() == T_REDIR_IN)
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_REDIR_IN, .value = "<"});
-	else if (*input == '|')
+	else if (peek() == T_PIPE)
 		return (g_shell->lexer_idx += 1,
 			(t_token){.type = T_PIPE, .value = "|"});
 	else
