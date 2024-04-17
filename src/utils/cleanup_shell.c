@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 17:53:08 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/17 04:00:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,13 @@ void	cleanup_shell(void)
 
 void	cleanup_rotation(void)
 {
-	if (g_shell->tree)
-	{
-		free_tree(g_shell->tree);
-		g_shell->tree = NULL;
-	}
-	if (g_shell->input)
-	{
-		free(g_shell->input);
-		g_shell->input = NULL;
-	}
-	if (g_shell->prompt)
-	{
-		free(g_shell->prompt);
-		g_shell->prompt = NULL;
-	}
+	free_tree(g_shell->tree);
+	g_shell->tree = NULL;
+	free(g_shell->input);
+	g_shell->input = NULL;
+	free(g_shell->prompt);
+	g_shell->prompt = NULL;
+	g_shell->has_syntax_error = false;
 	g_shell->lexer_idx = 0;
 	g_shell->has_heredoc = false;
 }

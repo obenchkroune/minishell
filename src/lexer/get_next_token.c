@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 23:40:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/17 04:06:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ static void	skip_whitespace(void)
 	input = g_shell->input;
 	while (ft_isspace(input[g_shell->lexer_idx]))
 		g_shell->lexer_idx++;
+}
+
+static t_token	quote_error(char *input)
+{
+	char	quote[2];
+
+	ft_strlcpy(quote, input, 2);
+	syntax_error(quote);
+	g_shell->lexer_idx++;
+	return ((t_token){.type = T_ERROR, .value = NULL});
 }
 
 static t_token	get_word_token(void)
@@ -36,8 +46,7 @@ static t_token	get_word_token(void)
 		if (input[i] && ft_strchr("'\"", input[i]))
 		{
 			if (!ft_strchr(input + i + 1, input[i]))
-				return ((t_token){.type = T_ERROR,
-					value = ft_substr(input + i, 0, 1)});
+				return (quote_error(input + i));
 			i = ft_strchr(input + i + 1, input[i]) - input + 1;
 			continue ;
 		}
