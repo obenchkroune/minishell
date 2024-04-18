@@ -6,13 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:17:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:27:11 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 03:53:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_arg	*create_arg_node(char *value, bool expand)
+t_arg	*create_arg_node(char *value, t_arg_type type)
 {
 	t_arg	*arg;
 
@@ -21,7 +21,7 @@ t_arg	*create_arg_node(char *value, bool expand)
 		panic("malloc");
 	ft_bzero(arg, sizeof(t_arg));
 	arg->content = value;
-	arg->expand = expand;
+	arg->type = type;
 	return (arg);
 }
 

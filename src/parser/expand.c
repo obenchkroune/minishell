@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:57:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 02:48:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 04:23:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,39 @@ static size_t	get_len(t_arg *args)
 
 char	*join_args(t_arg *args)
 {
-	t_arg	*temp;
+	t_arg	*node;
 	size_t	len;
 	char	*result;
 	char	*content;
 
-	temp = args;
-	while (temp)
+	node = args;
+	while (node)
 	{
-		content = replace_env_vars(temp->content, temp->expand);
-		free(temp->content);
-		temp->content = content;
-		temp = temp->next;
+		content = replace_env_vars(node->content, node->type);
+		free(node->content);
+		node->content = content;
+		node = node->next;
 	}
 	len = get_len(args);
 	result = ft_calloc(len + 1, sizeof(char));
 	if (!result)
 		panic("malloc");
-	temp = args;
-	while (temp)
+	node = args;
+	while (node)
 	{
-		ft_strlcat(result, temp->content, len + 1);
-		temp = temp->next;
+		ft_strlcat(result, node->content, len + 1);
+		node = node->next;
 	}
 	return (result);
+}
+
+t_arg_type	get_arg_type(char c)
+{
+	if (c == '\'')
+		return (ARG_SINGLE_QUOTE);
+	if (c == '"')
+		return (ARG_DOUBLE_QUOTE);
+	return (ARG_PLAIN);
 }
 
 char	*expand_arg(const char *str)
@@ -76,7 +85,7 @@ char	*expand_arg(const char *str)
 	args_list = NULL;
 	while (str[i])
 	{
-		arg_node = create_arg_node(get_next_word(str + i), str[i] != '\'');
+		arg_node = create_arg_node(get_next_word(str + i), get_arg_type(str[i]));
 		if (str[i] == '"' || str[i] == '\'')
 		{
 			add_arg_node(&args_list, arg_node);

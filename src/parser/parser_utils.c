@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:58:28 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 04:08:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_cmd	*create_cmd(char *path, char **argv)
 	ft_bzero(cmd, sizeof(t_cmd));
 	cmd->path = path;
 	cmd->argv = argv;
+	cmd->argc = ft_tabsize(argv);
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 23:48:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 04:05:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum e_node_type
 typedef struct s_cmd
 {
 	char			*path;
+	int				argc;
 	char			**argv;
 }					t_cmd;
 
@@ -58,15 +59,22 @@ typedef struct s_node
 	struct s_node	*right;
 }					t_node;
 
+typedef enum e_arg_type
+{
+	ARG_PLAIN,
+	ARG_SINGLE_QUOTE,
+	ARG_DOUBLE_QUOTE
+}					t_arg_type;
+
 typedef struct s_arg
 {
 	char			*content;
-	bool			expand;
+	t_arg_type		type;
 	struct	s_arg	*next;
-}	t_arg;
+}					t_arg;
 
-char				*replace_env_vars(char *arg, bool expand);
-t_arg				*create_arg_node(char *value, bool expand);
+char				*replace_env_vars(char *arg, t_arg_type type);
+t_arg				*create_arg_node(char *value, t_arg_type type);
 void				cleanup_arg_nodes(t_arg *args);
 void				add_arg_node(t_arg **root, t_arg *arg);
 void				free_list(t_list *list);

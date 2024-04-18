@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/11 18:41:33 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/18 04:27:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,19 @@ static int	ft_exec_cmd(t_node *tree, char **args)
 int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 {
 	int		status;
-	char	**args;
 	t_cmd	*cmd;
 
 	cmd = tree->cmd;
-	args = expand_argv(cmd->argv);
+	expand_argv(cmd->argv);
 	if (ft_is_builtin(cmd->argv[0]))
 	{
 		if (is_redirection_node(tree))
 			ft_redirect(tree->redir, true);
 		if (g_shell->should_continue_execution)
-			ft_exec_builtin(args);
+			ft_exec_builtin(cmd->argv);
 		return (0);
 	}
-	status = ft_exec_cmd(tree, args);
+	status = ft_exec_cmd(tree, cmd->argv);
 	if (is_pipe)
 		exit(status);
 	g_shell->last_exit_status = status;
