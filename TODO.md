@@ -2,7 +2,7 @@
 
 - [ ] Redo the `cd` command.
 
-- [ ] Fix Heredoc
+- [x] Fix Heredoc
 
 - [ ] Fix a problem with expantion when combinining unspaced signle/dobulequotes 
 
