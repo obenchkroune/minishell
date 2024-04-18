@@ -4,7 +4,7 @@
 
 - [x] Fix Heredoc
 
-- [ ] Fix a problem with expantion when combinining unspaced signle/dobulequotes 
+- [x] Fix a problem with expantion when combinining unspaced signle/dobulequotes 
 
 - [x] Fix long commands not being displayed properly!
 

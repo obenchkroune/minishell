@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:57:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 23:48:16 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 02:48:35 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_next_word(const char *str)
 	size_t	i;
 
 	i = 0;
-	if (str[i] == '\'' || str[i] == '"')
+	if (str[i] && ft_strchr("\"'", str[i]))
 		return (ft_substr(str, 1, ft_strchr(str + i + 1, str[i]) - str - 1));
 	while (str[i] && !ft_strchr("'\"", str[i]))
 		i++;
@@ -80,7 +80,7 @@ char	*expand_arg(const char *str)
 		if (str[i] == '"' || str[i] == '\'')
 		{
 			add_arg_node(&args_list, arg_node);
-			i += ft_strlen(arg_node->content) + 1;
+			i += ft_strlen(arg_node->content) + 2;
 		}
 		else
 		{
