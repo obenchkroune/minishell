@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 03:55:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:25:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,34 @@ static char	*get_var_name(char *str)
 	return (ft_substr(start, 0, str - start));
 }
 
-char	*replace_env_vars(char *arg, t_arg_type type)
+static void	expand_home(char **result)
 {
-	char	*result;
+	char	*replaced_str;
+
+	replaced_str = ft_strreplace(*result, "~", getenv("HOME"));
+	free(result);
+	*result = replaced_str;
+}
+
+static void	expand_env_var(char **result, char **arg)
+{
 	char	*name;
 	char	*value;
 	char	*replaced_str;
+
+	name = get_var_name(*arg);
+	value = get_env(name + 1);
+	if (!value)
+		value = "";
+	replaced_str = ft_strreplace(*result, name, value);
+	(free(name), free(*result));
+	*result = replaced_str;
+	*arg += ft_strlen(name);
+}
+
+char	*replace_env_vars(char *arg, t_arg_type type)
+{
+	char	*result;
 
 	result = ft_strdup(arg);
 	if (type == ARG_SINGLE_QUOTE)
@@ -42,25 +64,18 @@ char	*replace_env_vars(char *arg, t_arg_type type)
 	{
 		if (type == ARG_PLAIN && *arg == '~' && ft_strchr("/ ", *(arg + 1)))
 		{
-			replaced_str = ft_strreplace(result, "~", getenv("HOME"));
-			arg += 1;
-			free(result);
-			result = replaced_str;
-			continue ;
+			expand_home(&result);
+			arg++;
 		}
-		if (*arg == '$')
+		else if (*arg == '$')
 		{
-			name = get_var_name(arg);
-			value = get_env(name + 1);
-			if (!value)
-				value = "";
-			replaced_str = ft_strreplace(result, name, value);
-			arg += ft_strlen(name);
-			(free(name), free(result));
-			result = replaced_str;
+			expand_env_var(&result, &arg);
 			continue ;
 		}
-		arg++;
+		else
+		{
+			arg++;
+		}
 	}
 	return (result);
 }

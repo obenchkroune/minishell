@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 04:05:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:29:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_arg
 	struct	s_arg	*next;
 }					t_arg;
 
+char				*join_args(t_arg *args);
 char				*replace_env_vars(char *arg, t_arg_type type);
 t_arg				*create_arg_node(char *value, t_arg_type type);
 void				cleanup_arg_nodes(t_arg *args);
