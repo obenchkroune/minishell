@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 10:25:07 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:59:46 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	expand_home(char **result)
 	char	*replaced_str;
 
 	replaced_str = ft_strreplace(*result, "~", getenv("HOME"));
-	free(result);
+	free(*result);
 	*result = replaced_str;
 }
 

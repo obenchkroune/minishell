@@ -6,32 +6,34 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 03:26:11 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:57:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_export(char **args)
+void	ft_export(t_cmd *cmd)
 {
 	char	*equal_sign;
 	char	*key;
+	int		i;
 
-	if (ft_tabsize(args) == 1)
+	if (cmd->argc == 1)
 	{
 		ft_env();
 		return ;
 	}
-	while (args && *args)
+	i = 1;
+	while (i < cmd->argc)
 	{
-		equal_sign = ft_strchr(*args, '=');
+		equal_sign = ft_strchr(cmd->argv[i], '=');
 		if (equal_sign)
 		{
-			key = ft_substr(*args, 0, equal_sign - *args);
+			key = ft_substr(cmd->argv[i], 0, equal_sign - cmd->argv[i]);
 			set_env(key, equal_sign + 1);
 			free(key);
 			key = NULL;
 		}
-		args++;
+		i++;
 	}
 }

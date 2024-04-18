@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:32:42 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/05 07:12:22 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:49:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_echo(char **args)
+void	ft_echo(t_cmd *cmd)
 {
-	bool	n_flag;
+	bool	trim_nl;
 	int		i;
 
 	i = 1;
-	n_flag = false;
-	if (args[1] && ft_strcmp(args[1], "-n") == 0)
+	trim_nl = false;
+	if (cmd->argc > 2 && ft_strcmp(cmd->argv[1], "-n") == 0)
 	{
-		n_flag = true;
+		trim_nl = true;
 		i++;
 	}
-	while (args && args[i])
+	while (i < cmd->argc)
 	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
+		ft_putstr_fd(cmd->argv[i], STDOUT_FILENO);
+		if (cmd->argv[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
-	if (n_flag == false)
+	if (!trim_nl)
 		ft_fprintf(STDOUT_FILENO, "\n");
 }

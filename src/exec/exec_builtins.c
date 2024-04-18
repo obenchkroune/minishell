@@ -3,58 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/08 03:14:33 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:55:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	tab_len(char **tab)
+bool	ft_is_builtin(t_cmd *cmd)
 {
-	int	i;
+	const char *builtins[] = {
+		"echo",
+		"cd",
+		"pwd",
+		"export",
+		"unset",
+		"env",
+		"exit",
+		NULL
+	};
+	size_t		i;
 
 	i = 0;
-	while (tab[i])
+	while (builtins[i])
+	{
+		if (ft_strcmp(cmd->argv[0], builtins[i]) == 0)
+			return (true);
 		i++;
-	return (i);
+	}
+	return (false);
 }
 
-bool	ft_is_builtin(char *cmd)
+void	ft_exec_builtin(t_cmd *cmd)
 {
-	if (!cmd)
-		return (false);
-	return (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") || !ft_strcmp(cmd,
-			"pwd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
-		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd,
-			"history"));
-}
-
-void	ft_exec_builtin(char **args)
-{
-	if (!args || !args[0])
-		return ;
-	if (!ft_strcmp(args[0], "echo"))
-		ft_echo(args);
-	else if (tab_len(args) <= 2 && !ft_strcmp(args[0], "cd"))
-		ft_cd(args);
-	else if (tab_len(args) == 1 && !ft_strcmp(args[0], "pwd"))
+	if (!ft_strcmp(cmd->argv[0], "echo"))
+		ft_echo(cmd);
+	else if (ft_strcmp(cmd->argv[0], "cd") == 0)
+		ft_cd(cmd);
+	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "pwd"))
 		ft_pwd();
-	else if (tab_len(args) == 2 && !ft_strcmp(args[0], "export"))
-		ft_export(args);
-	else if (tab_len(args) == 2 && !ft_strcmp(args[0], "unset"))
-		ft_unset(args);
-	else if (tab_len(args) == 1 && !ft_strcmp(args[0], "env"))
+	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "export"))
+		ft_export(cmd);
+	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "unset"))
+		ft_unset(cmd);
+	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "env"))
 		ft_env();
-	else if (tab_len(args) == 1 && !ft_strcmp(args[0], "exit"))
+	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "exit"))
 		ft_exit();
-	else if (!ft_strcmp(args[0], "history") && !args[1])
+	else if (!ft_strcmp(cmd->argv[0], "history") && !cmd->argv[1])
 		ft_history();
-	else if (tab_len(args) == 2 && !ft_strcmp(args[0], "history")
-		&& !ft_strcmp(args[1], "-c"))
-		ft_clear_history();
+	// else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "history")
+	// 	&& !ft_strcmp(cmd->argv[1], "-c"))
+	// 	ft_clear_history();
 	else
 		panic_minishell("too many arguments", 1);
 }
