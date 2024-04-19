@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 16:48:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:24:43 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	ft_is_builtin(t_cmd *cmd)
 {
-	const char *builtins[] = {
+	const char	*builtins[] = {
 		"echo",
 		"cd",
 		"pwd",
