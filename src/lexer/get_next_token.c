@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:43:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:51:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static bool	handle_unclosed_quote(void)
 			return (false);
 		}
 		value = append_input(g_shell->input, input);
-		free(g_shell->input);
-		free(input);
+		(free(g_shell->input), free(input));
 		g_shell->input = value;
 	}
 	return (true);
