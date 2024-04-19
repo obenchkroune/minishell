@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:32:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:17:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,19 @@ char	**ft_lsttab(t_list *list)
 	return (ret);
 }
 
-void	ft_append_redir(t_redir **root, t_token prev_token)
+void	ft_append_redir(t_redir **root)
 {
 	t_token	token;
 	t_redir	*tail;
 	t_redir	*ret;
 
+	token = get_next_token();
 	if (peek() != T_WORD)
 	{
 		syntax_error(NULL);
 		return ;
 	}
-	token = get_next_token();
-	ret = create_redir(get_redir_type(prev_token), token.value);
+	ret = create_redir(get_redir_type(token), get_next_token().value);
 	if (*root == NULL)
 	{
 		*root = ret;

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 12:20:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:16:45 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_node	*parse_cmd(void)
 		if (peek() == T_WORD)
 			ft_lstadd_back(&args, ft_lstnew(get_next_token().value));
 		else
-			ft_append_redir(&redir, get_next_token());
+			ft_append_redir(&redir);
 	}
 	node->redir = redir;
 	if (args)
