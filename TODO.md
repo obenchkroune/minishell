@@ -1,4 +1,4 @@
 # TODO
  
-- [ ] Handle syntax errors in a better way.
+- [ ] make syntax error get the current token
 - [ ] add '\n' after reading a line in HEREDOC
