@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/18 12:55:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 05:54:23 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	ft_exec_builtin(t_cmd *cmd)
 		ft_unset(cmd);
 	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "env"))
 		ft_env();
-	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "exit"))
-		ft_exit();
+	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
+		ft_exit(cmd);
 	else if (!ft_strcmp(cmd->argv[0], "history") && !cmd->argv[1])
 		ft_history();
 	// else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "history")

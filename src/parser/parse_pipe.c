@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:29:27 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 05:43:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	unclosed_pipe(void)
 		input = readline("> ");
 		if (!input)
 		{
-			panic_minishell("syntax error: unexpected end of file", 2);
+			syntax_error("syntax error: unexpected end of file");
 			g_shell->last_exit_status = 258;
 			g_shell->has_syntax_error = true;
 			return ;

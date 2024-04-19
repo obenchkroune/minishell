@@ -6,77 +6,76 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/17 04:06:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 05:52:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	skip_whitespace(void)
-{
-	char	*input;
+#define QUOTE_ERROR \
+"minishell: syntax error: unexpected EOF while looking for matching `%c'\n"
 
-	input = g_shell->input;
-	while (ft_isspace(input[g_shell->lexer_idx]))
-		g_shell->lexer_idx++;
+static char	*append_input(char *s1, char *s2)
+{
+	char	*value;
+
+	s1 = ft_strjoin(s1, "\n");
+	value = ft_strjoin(s1, s2);
+	free(s1);
+	return (value);
 }
 
-static t_token	quote_error(char *input)
+static int	handle_unclosed_quote(void)
 {
-	char	quote[2];
+	char	quote;
+	char	*input;
+	char	*value;
 
-	ft_strlcpy(quote, input, 2);
-	syntax_error(quote);
-	g_shell->lexer_idx++;
-	return ((t_token){.type = T_ERROR, .value = NULL});
+	quote = g_shell->input[g_shell->lexer_idx];
+	if (quote != 0 && !ft_strchr("'\"", quote))
+		return (-1);
+	while (g_shell->input[g_shell->lexer_idx]
+		&& !ft_strchr(g_shell->input + g_shell->lexer_idx + 1, quote))
+	{
+		input = readline("> ");
+		if (!input)
+		{
+			g_shell->has_syntax_error = true;
+			printf(QUOTE_ERROR, quote);
+			return (g_shell->lexer_idx++, -1);
+		}
+		value = append_input(g_shell->input, input);
+		free(g_shell->input);
+		g_shell->input = value;
+	}
+	return (0);
 }
 
 static t_token	get_word_token(void)
 {
 	size_t	start;
-	size_t	i;
 	char	*value;
-	char	*input;
+	char	*pair_quote;
 
-	input = g_shell->input;
-	i = g_shell->lexer_idx;
-	start = i;
-	while (input[i] && !ft_strchr(">|< ", input[i]))
+	start = g_shell->lexer_idx;
+	while (g_shell->input[g_shell->lexer_idx]
+		&& !ft_strchr(">|< ", g_shell->input[g_shell->lexer_idx]))
 	{
-		if (input[i] && ft_strchr("'\"", input[i]))
+		if (g_shell->input[g_shell->lexer_idx]
+			&& ft_strchr("'\"", g_shell->input[g_shell->lexer_idx]))
 		{
-			if (!ft_strchr(input + i + 1, input[i]))
-				return (quote_error(input + i));
-			i = ft_strchr(input + i + 1, input[i]) - input + 1;
+			pair_quote = ft_strchr(g_shell->input + g_shell->lexer_idx + 1,
+					g_shell->input[g_shell->lexer_idx]);
+			if (!pair_quote)
+				if (handle_unclosed_quote() == -1)
+					return ((t_token){.type = T_ERROR, .value = NULL});
+			g_shell->lexer_idx = pair_quote - g_shell->input + 1;
 			continue ;
 		}
-		i++;
+		g_shell->lexer_idx++;
 	}
-	value = ft_substr(input + start, 0, i - start);
-	g_shell->lexer_idx = i;
+	value = ft_substr(g_shell->input + start, 0, g_shell->lexer_idx - start);
 	return ((t_token){.type = T_WORD, .value = value});
-}
-
-t_token_type	peek(void)
-{
-	char	*input;
-
-	skip_whitespace();
-	input = g_shell->input + g_shell->lexer_idx;
-	if (*input == '\0')
-		return (T_EOF);
-	if (ft_strncmp(input, ">>", 2) == 0)
-		return (T_APPEND);
-	if (ft_strncmp(input, "<<", 2) == 0)
-		return (T_HEREDOC);
-	if (*input == '>')
-		return (T_REDIR_OUT);
-	if (*input == '<')
-		return (T_REDIR_IN);
-	if (*input == '|')
-		return (T_PIPE);
-	else
-		return (T_WORD);
 }
 
 t_token	get_next_token(void)
