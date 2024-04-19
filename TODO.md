@@ -1,3 +1,3 @@
 # TODO
 
-- [ ] Fix leaks when aborting quote prompt
+- so far so good
