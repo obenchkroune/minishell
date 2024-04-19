@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 17:12:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:33:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static int	ft_exec_cmd(t_node *tree)
 			(ft_fprintf(2, "minishell: %s: command not found\n", cmd->argv[0]),
 				exit(127));
 		if (execve(cmd->path, cmd->argv, g_shell->envp) == -1)
-			(perror(""), exit(1));
+			(ft_putstr_fd(RED "minishell: " RESET, 2),
+				perror(cmd->argv[0]), exit(1));
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
