@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 18:53:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:55:45 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,12 @@ char	*replace_env_vars(char *arg, t_arg_type type)
 	{
 		if (type == ARG_PLAIN && *arg == '~' && ft_strchr("/ ", *(arg + 1)))
 		{
-<<<<<<< HEAD
 			expand_home(&result);
 			arg++;
 		}
 		else if (*arg == '$')
 		{
 			expand_env_var(&result, &arg);
-=======
-			name = get_var_name(arg);
-			if (ft_strcmp(name, "$") == 0)
-			{
-				(free(name), arg++);
-				continue ;
-			}
-			value = get_env(name + 1);
-			if (!value)
-				value = "";
-			replaced_str = ft_strreplace(result, name, value);
-			arg += ft_strlen(name);
-			(free(name), free(result));
-			result = replaced_str;
->>>>>>> 510d773 (handle $)
 			continue ;
 		}
 		else
