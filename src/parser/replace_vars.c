@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 18:55:45 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:58:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ static void	expand_env_var(char **result, char **arg)
 	char	*replaced_str;
 
 	name = get_var_name(*arg);
+	if (ft_strcmp(name, "$") == 0)
+	{
+		*arg += 1;
+		return ;
+	}
 	value = get_env(name + 1);
 	if (!value)
 		value = "";
