@@ -1,3 +1,3 @@
 # TODO
 
-- so far so good
+- [ ] Expand redir arguments
