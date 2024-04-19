@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:38:53 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/19 06:44:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	set_env(char *key, char *value)
 	char	*equal_sign;
 	char	**envp;
 
+	if (!value)
+		value = "";
 	envp = g_shell->envp;
 	while (*envp)
 	{
