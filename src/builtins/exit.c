@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:30:04 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 10:27:16 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:28:11 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	ft_exit(t_cmd *cmd)
 	cleanup_rotation();
 	cleanup_shell();
 	printf("exit\n");
+	system("leaks minishell");
 	exit(status);
 }

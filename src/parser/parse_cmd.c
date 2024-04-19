@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 09:51:12 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:36:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ t_node	*parse_cmd(void)
 	t_redir		*redir;
 
 	if (peek() == T_PIPE || peek() == T_ERROR)
-		return (syntax_error("|"), NULL);
+	{
+		syntax_error("syntax error");
+		return (NULL);
+	}
 	if (peek() == T_EOF)
 		return (NULL);
 	args = NULL;
@@ -88,7 +91,10 @@ t_node	*parse_cmd(void)
 	while (peek() != T_PIPE && peek() != T_EOF)
 	{
 		if (append_cmd_redir(&args, &redir) == -1)
+		{
+			syntax_error("syntax error near redirection token");
 			return (free_tree(node), NULL);
+		}
 	}
 	node->redir = redir;
 	node->cmd = create_cmd(get_executable(args->content), ft_lsttab(args));
