@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:50:55 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:18:41 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	syntax_error(char *msg)
 	{
 		token = get_next_token();
 		ft_fprintf(STDERR_FILENO,
-			RED "minishell: " RESET "syntax error near unexpected token `%s'\n",
-			token.value);
+			RED "minishell: " RESET
+			"syntax error near unexpected token `%s'\n", token.value);
 		if (token.type == T_WORD)
 			free(token.value);
 	}
 	g_shell->has_syntax_error = true;
 	g_shell->last_exit_status = 1;
-	g_shell->lexer_idx = ft_strlen(g_shell->input) - 1;
+	g_shell->lexer_idx = ft_strlen(g_shell->input);
 }

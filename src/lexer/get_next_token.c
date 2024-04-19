@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:51:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:03:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_token	get_next_token(void)
 	skip_whitespace();
 	if (peek() == T_EOF)
 		return (g_shell->lexer_idx = 0,
-			(t_token){.type = T_EOF, .value = NULL});
+			(t_token){.type = T_EOF, .value = "newline"});
 	else if (peek() == T_APPEND)
 		return (g_shell->lexer_idx += 2,
 			(t_token){.type = T_APPEND, .value = ">>"});

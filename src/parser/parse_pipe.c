@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 05:43:08 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:13:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,14 @@ void	unclosed_pipe(void)
 {
 	char	*input;
 	char	*temp;
-	size_t	i;
 
-	i = 0;
-	input = NULL;
-	while (true)
+	input = readline("> ");
+	if (!input)
 	{
-		free(input);
-		input = readline("> ");
-		if (!input)
-		{
-			syntax_error("syntax error: unexpected end of file");
-			g_shell->last_exit_status = 258;
-			g_shell->has_syntax_error = true;
-			return ;
-		}
-		while (input && ft_isspace(input[i]))
-			i++;
-		if (ft_strlen(input + i) != 0)
-			break ;
+		syntax_error("syntax error: unexpedted end of file");
+		return ;
 	}
-	temp = ft_strjoin(g_shell->input, input);
+	temp = append_input(g_shell->input, input);	
 	(free(g_shell->input), free(input));
 	g_shell->input = temp;
 }
@@ -51,7 +38,7 @@ t_node	*parse_pipe(void)
 	if (peek() == T_PIPE)
 	{
 		get_next_token();
-		if (peek() == T_EOF)
+		while (peek() == T_EOF)
 			unclosed_pipe();
 		node = create_node(N_PIPE, node, parse_pipe());
 	}
