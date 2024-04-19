@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:30:04 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 17:20:22 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 19:21:03 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ void	ft_exit(t_cmd *cmd)
 	{
 		if (!ft_isnumber(cmd->argv[1]))
 		{
-			printf("exit\nminishell: exit: %s: numeric argument required\n",
+			ft_fprintf(STDERR_FILENO,
+				"exit\nminishell: exit: %s: numeric argument required\n",
 				cmd->argv[1]);
-			exit(255);
+			exit(2);
 		}
 		status = ft_atoi(cmd->argv[1]);
 	}

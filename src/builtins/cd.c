@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 06:44:07 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 19:28:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	cd_relative(char *path)
 	free(new_path);
 	new_path = temp;
 	if (chdir(new_path) == -1)
-		perror("minishell");
+		(g_shell->last_exit_status = 1, perror("minishell"));
 	else
 	{
 		set_env("OLDPWD", get_env("PWD"));
@@ -35,7 +35,7 @@ static void	cd_absolute(char *path)
 {
 	if (chdir(path) == -1)
 	{
-		perror("minishell");
+		(g_shell->last_exit_status = 1, perror("minishell"));
 		return ;
 	}
 	set_env("OLDPWD", get_env("PWD"));
@@ -44,35 +44,37 @@ static void	cd_absolute(char *path)
 
 static void	cd_oldpwd(void)
 {
-	if (!get_env("OLDPWD"))
-		panic_minishell("OLDPWD not set!", 1);
-	else if (chdir(get_env("OLDPWD")) == -1)
-		perror("minishell");
-	else
+	char	*oldpwd;
+
+	oldpwd = get_env("OLDPWD");
+	if (!oldpwd)
 	{
-		set_env("OLDPWD", get_env("PWD"));
-		set_env("PWD", get_env("OLDPWD"));
+		panic_minishell("OLDPWD not set!", 1);
+		return ;
 	}
+	cd_absolute(oldpwd);
 }
 
 static void	cd_home(void)
 {
-	if (!get_env("HOME"))
+	char	*home;
+
+	home = get_env("HOME");
+	if (!home)
 		panic_minishell("HOME not set!", 1);
-	else if (chdir(get_env("HOME")) == -1)
-		perror("minishell");
-	else
-	{
-		set_env("OLDPWD", get_env("PWD"));
-		set_env("PWD", get_env("HOME"));
-	}
+	cd_absolute(home);
 }
 
 void	ft_cd(t_cmd *cmd)
 {
 	char	*path;
 
-	path = cmd->argv[cmd->argc - 1];
+	if (cmd->argc > 2)
+	{
+		panic_minishell("too many arguments", 1);
+		return ;
+	}
+	path = cmd->argv[1];
 	if (cmd->argc == 1)
 		cd_home();
 	else if (ft_strncmp(path, "-", 2) == 0)

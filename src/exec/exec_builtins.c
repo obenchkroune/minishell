@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 17:24:43 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 19:00:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_exec_builtin(t_cmd *cmd)
 		ft_echo(cmd);
 	else if (ft_strcmp(cmd->argv[0], "cd") == 0)
 		ft_cd(cmd);
-	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "pwd"))
+	else if (ft_strcmp(cmd->argv[0], "pwd") == 0)
 		ft_pwd();
 	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "export"))
 		ft_export(cmd);
