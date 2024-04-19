@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:30:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:34:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	syntax_error(char *msg)
 	t_token	token;
 
 	if (msg)
-	{
 		ft_fprintf(2, RED "minishell: " RESET "%s\n", msg);
-	}
 	else
 	{
 		token = get_next_token();

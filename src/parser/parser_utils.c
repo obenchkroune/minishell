@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:25:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:32:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_append_redir(t_redir **root, t_token prev_token)
 
 	if (peek() != T_WORD)
 	{
-		syntax_error("syntax error");
+		syntax_error(NULL);
 		return ;
 	}
 	token = get_next_token();

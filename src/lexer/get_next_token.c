@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:08:54 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:43:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ static bool	handle_unclosed_quote(void)
 		input = readline("> ");
 		if (!input)
 		{
-			g_shell->has_syntax_error = true;
-			printf(RED "minishell: " RESET QUOTE_ERROR " `%c'\n", quote);
+			if (quote == '\'')
+				syntax_error(QUOTE_ERROR " `''");
+			else
+				syntax_error(QUOTE_ERROR " `\"'");
+			syntax_error("syntax error: unexpected end of file");
 			return (false);
 		}
 		value = append_input(g_shell->input, input);
