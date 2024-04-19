@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:13:11 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/19 06:19:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 
 static char	*get_hostname(void)
 {
-	int		fd;
-	char	*result;
-	char	*line;
-
-	fd = open("/etc/hostname", O_RDONLY);
-	if (fd < 0)
-		return (ft_strdup("42"));
-	line = get_next_line(fd);
-	result = ft_strtrim(line, "\n");
-	free(line);
-	close(fd);
-	return (result);
+	if (get_env("HOSTNAME"))
+		return (ft_strdup(get_env("HOSTNAME")));
+	else if (get_env("HOST"))
+		return (ft_strdup(get_env("HOST")));
+	return (ft_strdup("42"));
 }
 
 static char	*get_username(void)

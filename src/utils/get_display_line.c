@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:26:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 04:26:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 06:27:37 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,23 @@ static char	*get_user_host_line(void)
 
 char	*get_display_line(void)
 {
-	char	*temp;
+	char	*cwd;
 	char	*display_line;
 	char	*user_host_line;
+	char	*temp;
+	char	*home;
 
+	home = get_env("HOME");
 	user_host_line = get_user_host_line();
-	temp = ft_strjoin(user_host_line, g_shell->cwd);
+	cwd = ft_strjoin(user_host_line, g_shell->cwd);
 	free(user_host_line);
-	display_line = ft_strjoin(temp, "$ ");
-	free(temp);
+	if (home && ft_strncmp(g_shell->cwd, home, ft_strlen(home)) == 0)
+	{
+		temp = ft_strreplace(cwd, home, "~");
+		free(cwd);
+		cwd = temp;
+	}
+	display_line = ft_strjoin(cwd, "$ ");
+	free(cwd);
 	return (display_line);
 }

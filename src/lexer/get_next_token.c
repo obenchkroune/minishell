@@ -6,14 +6,15 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 05:52:57 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 06:15:41 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 #define QUOTE_ERROR \
-"minishell: syntax error: unexpected EOF while looking for matching `%c'\n"
+RED "minishell:" RESET \
+"syntax error: unexpected EOF while looking for matching `%c'\n"
 
 static char	*append_input(char *s1, char *s2)
 {
