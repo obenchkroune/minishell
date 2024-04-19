@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 06:36:03 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:48:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ bool	ft_is_builtin(t_cmd *cmd)
 		"unset",
 		"env",
 		"exit",
+		"history",
 		NULL
 	};
 	size_t		i;
@@ -52,11 +53,9 @@ void	ft_exec_builtin(t_cmd *cmd)
 		ft_env();
 	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
 		ft_exit(cmd);
-	else if (!ft_strcmp(cmd->argv[0], "history") && !cmd->argv[1])
-		ft_history();
-	// else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "history")
-	// 	&& !ft_strcmp(cmd->argv[1], "-c"))
-	// 	ft_clear_history();
-	else
-		panic_minishell("too many arguments", 1);
+	else if (ft_strcmp(cmd->argv[0], "history") == 0)
+		ft_history(cmd);
+	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "history")
+		&& !ft_strcmp(cmd->argv[1], "-c"))
+		ft_clear_history();
 }

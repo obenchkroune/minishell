@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 12:13:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:49:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_node	*parse_pipe(void)
 	if (peek() == T_PIPE)
 	{
 		get_next_token();
-		while (peek() == T_EOF)
+		while (peek() == T_EOF && !g_shell->has_syntax_error)
 			unclosed_pipe();
 		node = create_node(N_PIPE, node, parse_pipe());
 	}

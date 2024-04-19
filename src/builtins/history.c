@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 02:42:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/11 18:36:00 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/19 16:48:01 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,26 @@ void	set_history(char *line)
 	}
 }
 
-void	ft_history(void)
+void	ft_history(t_cmd *cmd)
 {
 	t_history	*tmp;
 	int			i;
 
+	if (cmd->argc > 2)
+	{
+		panic_minishell("minishell: history: too many arguments\n", 2);
+		return ;
+	}
+	if (cmd->argc == 2 && !ft_strcmp(cmd->argv[1], "-c"))
+	{
+		ft_clear_history();
+		return ;
+	}
 	i = 1;
 	tmp = g_shell->history;
 	while (tmp)
 	{
-		ft_fprintf(STDOUT_FILENO, "%d %s\n", i, tmp->value);
+		printf("%d %s\n", i, tmp->value);
 		tmp = tmp->next;
 		i++;
 	}
