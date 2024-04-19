@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 10:36:28 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:27:06 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,6 @@ char	*get_executable(char *cmd)
 	return (result);
 }
 
-int	append_cmd_redir(t_list **args, t_redir **redir)
-{
-	t_token	token;
-
-	token = get_next_token();
-	if (token.type == T_WORD)
-	{
-		ft_lstadd_back(args, ft_lstnew(token.value));
-		return (1);
-	}
-	return (ft_append_redir(redir, token));
-}
-
 t_node	*parse_cmd(void)
 {
 	t_node		*node;
@@ -80,7 +67,7 @@ t_node	*parse_cmd(void)
 
 	if (peek() == T_PIPE || peek() == T_ERROR)
 	{
-		syntax_error("syntax error");
+		syntax_error(NULL);
 		return (NULL);
 	}
 	if (peek() == T_EOF)
@@ -90,11 +77,10 @@ t_node	*parse_cmd(void)
 	node = create_node(N_CMD, NULL, NULL);
 	while (peek() != T_PIPE && peek() != T_EOF)
 	{
-		if (append_cmd_redir(&args, &redir) == -1)
-		{
-			syntax_error("syntax error near redirection token");
-			return (free_tree(node), NULL);
-		}
+		if (peek() == T_WORD)
+			ft_lstadd_back(&args, ft_lstnew(get_next_token().value));
+		else
+			ft_append_redir(&redir, get_next_token());
 	}
 	node->redir = redir;
 	node->cmd = create_cmd(get_executable(args->content), ft_lsttab(args));

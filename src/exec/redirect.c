@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/18 02:37:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:11:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static void	redirect_heredoc(t_redir *io)
 			break ;
 		}
 		write(pipe_fd[1], line, ft_strlen(line));
+		write(pipe_fd[1], "\n", 1);
 		free(line);
 	}
 	dup2(pipe_fd[0], STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 10:29:21 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:24:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_arg
 	struct	s_arg	*next;
 }					t_arg;
 
+char				*append_input(char *s1, char *s2);
 char				*join_args(t_arg *args);
 char				*replace_env_vars(char *arg, t_arg_type type);
 t_arg				*create_arg_node(char *value, t_arg_type type);
@@ -88,7 +89,7 @@ t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);
 t_cmd				*create_cmd(char *path, char **argv);
 char				**ft_lsttab(t_list *list);
-int					ft_append_redir(t_redir **root, t_token prev_token);
+void				ft_append_redir(t_redir **root, t_token prev_token);
 t_redir_type		get_redir_type(t_token token);
 void				free_tree(t_node *node);
 char				**expand_argv(char **argv);
