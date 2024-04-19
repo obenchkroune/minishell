@@ -6,15 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 06:15:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:26:54 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-#define QUOTE_ERROR \
-RED "minishell:" RESET \
-"syntax error: unexpected EOF while looking for matching `%c'\n"
+#define QUOTE_ERROR "syntax error: unexpected EOF while looking for matching"
 
 static char	*append_input(char *s1, char *s2)
 {
@@ -26,7 +24,7 @@ static char	*append_input(char *s1, char *s2)
 	return (value);
 }
 
-static int	handle_unclosed_quote(void)
+static bool	handle_unclosed_quote(void)
 {
 	char	quote;
 	char	*input;
@@ -34,7 +32,7 @@ static int	handle_unclosed_quote(void)
 
 	quote = g_shell->input[g_shell->lexer_idx];
 	if (quote != 0 && !ft_strchr("'\"", quote))
-		return (-1);
+		return (false);
 	while (g_shell->input[g_shell->lexer_idx]
 		&& !ft_strchr(g_shell->input + g_shell->lexer_idx + 1, quote))
 	{
@@ -42,40 +40,55 @@ static int	handle_unclosed_quote(void)
 		if (!input)
 		{
 			g_shell->has_syntax_error = true;
-			printf(QUOTE_ERROR, quote);
-			return (g_shell->lexer_idx++, -1);
+			printf(RED "minishell: " RESET QUOTE_ERROR " `%c'\n", quote);
+			return (false);
 		}
 		value = append_input(g_shell->input, input);
 		free(g_shell->input);
+		free(input);
 		g_shell->input = value;
 	}
-	return (0);
+	return (true);
+}
+
+static bool	handle_quoted_word(size_t *i)
+{
+	char	*pair_quote;
+
+	pair_quote = ft_strchr(g_shell->input + *i + 1, g_shell->input[*i]);
+	if (!pair_quote)
+	{
+		if (!handle_unclosed_quote())
+			return (false);
+	}
+	pair_quote = ft_strchr(g_shell->input + *i + 1, g_shell->input[*i]);
+	*i = pair_quote - g_shell->input + 1;
+	return (true);
 }
 
 static t_token	get_word_token(void)
 {
 	size_t	start;
 	char	*value;
-	char	*pair_quote;
+	size_t	i;
 
 	start = g_shell->lexer_idx;
-	while (g_shell->input[g_shell->lexer_idx]
-		&& !ft_strchr(">|< ", g_shell->input[g_shell->lexer_idx]))
+	i = g_shell->lexer_idx;
+	while (g_shell->input[i] && !ft_strchr(">|< ", g_shell->input[i]))
 	{
-		if (g_shell->input[g_shell->lexer_idx]
-			&& ft_strchr("'\"", g_shell->input[g_shell->lexer_idx]))
+		if (g_shell->input[i] && ft_strchr("'\"", g_shell->input[i]))
 		{
-			pair_quote = ft_strchr(g_shell->input + g_shell->lexer_idx + 1,
-					g_shell->input[g_shell->lexer_idx]);
-			if (!pair_quote)
-				if (handle_unclosed_quote() == -1)
-					return ((t_token){.type = T_ERROR, .value = NULL});
-			g_shell->lexer_idx = pair_quote - g_shell->input + 1;
+			if (!handle_quoted_word(&i))
+			{
+				g_shell->lexer_idx = i + 1;
+				return ((t_token){.type = T_ERROR, .value = NULL});
+			}
 			continue ;
 		}
-		g_shell->lexer_idx++;
+		i++;
 	}
-	value = ft_substr(g_shell->input + start, 0, g_shell->lexer_idx - start);
+	value = ft_substr(g_shell->input + start, 0, i - start);
+	g_shell->lexer_idx = i;
 	return ((t_token){.type = T_WORD, .value = value});
 }
 

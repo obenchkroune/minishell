@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 10:26:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:51:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_executable(char *cmd)
 		result = NULL;
 		i++;
 	}
-	(free(slash_cmd), free(path), free(cmd));
+	(free(slash_cmd), free_tab(path), free(cmd));
 	return (result);
 }
 
