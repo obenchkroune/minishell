@@ -6,42 +6,19 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:26:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/22 21:13:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:49:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*get_user_host_line(void)
-{
-	char	*result;
-	size_t	len;
-	size_t	color_len;
-
-	color_len = ft_strlen(GREEN) + ft_strlen(RESET);
-	len = color_len + ft_strlen(g_shell->username)
-		+ ft_strlen(g_shell->hostname) + 3;
-	result = ft_calloc(len + 1, sizeof(char));
-	if (!result)
-		panic("malloc");
-	ft_strlcat(result, CYAN, len + 1);
-	ft_strlcat(result, g_shell->username, len + 1);
-	ft_strlcat(result, "@", len + 1);
-	ft_strlcat(result, g_shell->hostname, len + 1);
-	ft_strlcat(result, RESET ": ", len + 1);
-	return (result);
-}
-
 char	*get_display_line(void)
 {
-	char	*cwd;
 	char	*display_line;
-	char	*user_host_line;
+	char	*temp;
 
-	user_host_line = get_user_host_line();
-	cwd = ft_strjoin(user_host_line, g_shell->cwd);
-	free(user_host_line);
-	display_line = ft_strjoin(cwd, "$ ");
-	free(cwd);
+	temp = ft_strjoin("📁 ", g_shell->cwd);
+	display_line = ft_strjoin(temp, GREEN "\n➜  " RESET);
+	free(temp);
 	return (display_line);
 }

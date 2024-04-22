@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/16 07:18:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:38:17 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef struct s_shell
 	bool			should_continue_execution;
 	bool			has_heredoc;
 	char			term_buffer[2048];
-	char			*username;
-	char			*hostname;
 	struct termios	term;
 }					t_shell;
 

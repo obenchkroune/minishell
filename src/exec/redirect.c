@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/22 14:18:22 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:19:41 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	redirect_in(t_redir *io, bool is_builtin)
 		panic_minishell(tmp, 1);
 		free(tmp);
 		g_shell->should_continue_execution = false;
+		g_shell->last_exit_status = 1;
 		return ;
 	}
 	dup2(fd, STDIN_FILENO);
@@ -46,6 +47,7 @@ static void	redirect_out(t_redir *io, bool is_builtin)
 		panic_minishell(tmp, 1);
 		free(tmp);
 		g_shell->should_continue_execution = false;
+		g_shell->last_exit_status = 1;
 		return ;
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -66,6 +68,7 @@ static void	redirect_append(t_redir *io, bool is_builtin)
 		panic_minishell(tmp, 1);
 		free(tmp);
 		g_shell->should_continue_execution = false;
+		g_shell->last_exit_status = 1;
 		return ;
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -91,7 +94,8 @@ static void	redirect_heredoc(t_redir *io)
 		write(pipe_fd[1], "\n", 1);
 		free(line);
 	}
-	dup2(pipe_fd[0], STDIN_FILENO);
+	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+		panic("dup2");
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 }
