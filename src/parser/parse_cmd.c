@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 17:16:45 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:12:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_executable(char *cmd)
 
 	i = 0;
 	result = NULL;
-	cmd = expand_arg(cmd);
+	cmd = ft_expand(cmd);
 	if (access(cmd, F_OK) == 0)
 		return (ft_strdup(cmd));
 	if (get_env("PATH") == NULL)

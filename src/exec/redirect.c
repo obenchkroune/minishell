@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 11:11:00 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:18:22 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,20 @@ static void	redirect_heredoc(t_redir *io)
 	close(pipe_fd[1]);
 }
 
-int	ft_redirect(t_redir *io, bool is_builtin)
+int	ft_redirect(t_redir *redir, bool is_builtin)
 {
-	while (io && g_shell->should_continue_execution)
+	expand_redir(redir);
+	while (redir && g_shell->should_continue_execution)
 	{
-		if (io->type == REDIR_IN)
-			redirect_in(io, is_builtin);
-		else if (io->type == REDIR_OUT)
-			redirect_out(io, is_builtin);
-		else if (io->type == REDIR_APPEND)
-			redirect_append(io, is_builtin);
-		else if (io->type == REDIR_HEREDOC)
-			redirect_heredoc(io);
-		io = io->next;
+		if (redir->type == REDIR_IN)
+			redirect_in(redir, is_builtin);
+		else if (redir->type == REDIR_OUT)
+			redirect_out(redir, is_builtin);
+		else if (redir->type == REDIR_APPEND)
+			redirect_append(redir, is_builtin);
+		else if (redir->type == REDIR_HEREDOC)
+			redirect_heredoc(redir);
+		redir = redir->next;
 	}
 	return (0);
 }
