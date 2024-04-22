@@ -1,3 +1,3 @@
 # TODO
 
-- [ ] Expand redir arguments
+- [x] Expand redir arguments
