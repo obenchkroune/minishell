@@ -6,11 +6,17 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 19:28:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:27:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	cd_error(char *path)
+{
+	ft_fprintf(2, "minishell: cd: %s: %s\n", path, strerror(errno));
+	g_shell->last_exit_status = 1;
+}
 
 static void	cd_relative(char *path)
 {
@@ -22,7 +28,7 @@ static void	cd_relative(char *path)
 	free(new_path);
 	new_path = temp;
 	if (chdir(new_path) == -1)
-		(g_shell->last_exit_status = 1, perror("minishell"));
+		cd_error(path);
 	else
 	{
 		set_env("OLDPWD", get_env("PWD"));
@@ -35,7 +41,7 @@ static void	cd_absolute(char *path)
 {
 	if (chdir(path) == -1)
 	{
-		(g_shell->last_exit_status = 1, perror("minishell"));
+		cd_error(path);
 		return ;
 	}
 	set_env("OLDPWD", get_env("PWD"));
@@ -49,7 +55,7 @@ static void	cd_oldpwd(void)
 	oldpwd = get_env("OLDPWD");
 	if (!oldpwd)
 	{
-		panic_minishell("OLDPWD not set!", 1);
+		panic_minishell("cd: OLDPWD not set!", 1);
 		return ;
 	}
 	cd_absolute(oldpwd);
@@ -61,7 +67,10 @@ static void	cd_home(void)
 
 	home = get_env("HOME");
 	if (!home)
-		panic_minishell("HOME not set!", 1);
+	{
+		panic_minishell("cd: HOME not set!", 1);
+		return ;
+	}
 	cd_absolute(home);
 }
 
@@ -71,7 +80,7 @@ void	ft_cd(t_cmd *cmd)
 
 	if (cmd->argc > 2)
 	{
-		panic_minishell("too many arguments", 1);
+		panic_minishell("cd: too many arguments", 1);
 		return ;
 	}
 	path = cmd->argv[1];

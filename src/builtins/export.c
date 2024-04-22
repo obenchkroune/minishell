@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 19:29:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:18:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,29 @@ static bool	is_valid_name(char *name)
 	return (true);
 }
 
-void	ft_export(t_cmd *cmd)
+static void	export_error(char *key)
+{
+	ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n",
+		key);
+	g_shell->last_exit_status = 1;
+	free(key);
+}
+
+char	*get_export_key(const char *arg)
 {
 	char	*equal_sign;
+	char	*key;
+
+	equal_sign = ft_strchr(arg, '=');
+	if (!equal_sign || equal_sign - arg == 0)
+		key = ft_strdup(arg);
+	else
+		key = ft_substr(arg, 0, equal_sign - arg);
+	return (key);
+}
+
+void	ft_export(t_cmd *cmd)
+{
 	char	*key;
 	int		i;
 
@@ -38,22 +58,15 @@ void	ft_export(t_cmd *cmd)
 	i = 1;
 	while (i < cmd->argc)
 	{
-		equal_sign = ft_strchr(cmd->argv[i], '=');
-		if (!equal_sign || equal_sign - cmd->argv[i] == 0)
-			key = ft_strdup(cmd->argv[i]);
-		else
-			key = ft_substr(cmd->argv[i], 0, equal_sign - cmd->argv[i]);
-		if (!is_valid_name(key))
+		key = get_export_key(cmd->argv[i]);
+		if (is_valid_name(key))
 		{
-			ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n",
-				key);
-			g_shell->last_exit_status = 1;
-			(free(key), i++);
-			continue ;
+			set_env(key, ft_strchr(cmd->argv[i], '=') + 1);
+			free(key);
+			key = NULL;
 		}
-		set_env(key, equal_sign + 1);
-		free(key);
-		key = NULL;
+		else
+			export_error(key);
 		i++;
 	}
 }
