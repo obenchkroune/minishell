@@ -6,13 +6,16 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/22 21:38:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:45:23 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
+
+# define COLOR_BOLD  "\e[1m"
+# define COLOR_OFF   "\e[m"
 
 # define RED "\001\x1b[31m\002"
 # define GREEN "\001\x1b[32m\002"
@@ -51,12 +54,10 @@ typedef struct s_shell
 	char			*cwd;
 	char			**envp;
 	int				last_exit_status;
-	char			last_exit_status_str[5];
 	char			*prompt;
 	bool			inside_unclosed_pipe;
 	bool			has_unclosed_pipe;
 	bool			has_syntax_error;
-	bool			should_continue_execution;
 	bool			has_heredoc;
 	char			term_buffer[2048];
 	struct termios	term;

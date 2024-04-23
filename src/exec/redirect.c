@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/22 15:19:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:48:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	redirect_in(t_redir *io, bool is_builtin)
 		tmp = ft_strjoin(io->file, ": No such file or directory");
 		panic_minishell(tmp, 1);
 		free(tmp);
-		g_shell->should_continue_execution = false;
 		g_shell->last_exit_status = 1;
 		return ;
 	}
@@ -46,7 +45,6 @@ static void	redirect_out(t_redir *io, bool is_builtin)
 		tmp = ft_strjoin(io->file, ": Cannot create file");
 		panic_minishell(tmp, 1);
 		free(tmp);
-		g_shell->should_continue_execution = false;
 		g_shell->last_exit_status = 1;
 		return ;
 	}
@@ -67,7 +65,6 @@ static void	redirect_append(t_redir *io, bool is_builtin)
 		tmp = ft_strjoin(io->file, ": Cannot create file");
 		panic_minishell(tmp, 1);
 		free(tmp);
-		g_shell->should_continue_execution = false;
 		g_shell->last_exit_status = 1;
 		return ;
 	}
@@ -103,7 +100,7 @@ static void	redirect_heredoc(t_redir *io)
 int	ft_redirect(t_redir *redir, bool is_builtin)
 {
 	expand_redir(redir);
-	while (redir && g_shell->should_continue_execution)
+	while (redir)
 	{
 		if (redir->type == REDIR_IN)
 			redirect_in(redir, is_builtin);

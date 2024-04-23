@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/22 21:40:19 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:45:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	init_shell(char **envp)
 	g_shell->has_heredoc = false;
 	g_shell->has_unclosed_pipe = false;
 	g_shell->inside_unclosed_pipe = false;
-	g_shell->should_continue_execution = true;
 }
