@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 17:24:28 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:54:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	unclosed_pipe(void)
 	if (!input)
 	{
 		syntax_error("syntax error: unexpedted end of file");
-		return ;
+		ft_exit(&(t_cmd){.argc = 1});
 	}
 	temp = append_input(g_shell->input, input);
 	(free(g_shell->input), free(input));
