@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/22 21:27:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:37:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static void	cd_home(void)
 void	ft_cd(t_cmd *cmd)
 {
 	char	*path;
+	char	*cwd;
 
 	if (cmd->argc > 2)
 	{
@@ -92,6 +93,10 @@ void	ft_cd(t_cmd *cmd)
 		cd_absolute(path);
 	else
 		cd_relative(path);
-	free(g_shell->cwd);
-	g_shell->cwd = getcwd(NULL, 0);
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		free(g_shell->cwd);
+		g_shell->cwd = cwd;
+	}
 }

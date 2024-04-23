@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 19:00:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:46:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	ft_exec_builtin(t_cmd *cmd)
 	else if (ft_strcmp(cmd->argv[0], "cd") == 0)
 		ft_cd(cmd);
 	else if (ft_strcmp(cmd->argv[0], "pwd") == 0)
-		ft_pwd();
-	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "export"))
+		ft_pwd(cmd);
+	else if (ft_strcmp(cmd->argv[0], "export") == 0)
 		ft_export(cmd);
-	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "unset"))
+	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
 		ft_unset(cmd);
-	else if (cmd->argc == 1 && !ft_strcmp(cmd->argv[0], "env"))
-		ft_env();
+	else if (ft_strcmp(cmd->argv[0], "env") == 0)
+		ft_env(cmd);
 	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
 		ft_exit(cmd);
 	else if (ft_strcmp(cmd->argv[0], "history") == 0)

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/22 21:18:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:50:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ char	*get_export_key(const char *arg)
 	return (key);
 }
 
+static void	print_env(void)
+{
+	char	**envp;
+
+	envp = g_shell->envp;
+	while (envp && *envp)
+	{
+		printf("declare -x %s\n", *envp);
+		envp++;
+	}
+}
+
 void	ft_export(t_cmd *cmd)
 {
 	char	*key;
@@ -52,7 +64,7 @@ void	ft_export(t_cmd *cmd)
 
 	if (cmd->argc == 1)
 	{
-		ft_env();
+		print_env();
 		return ;
 	}
 	i = 1;
