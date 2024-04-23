@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/22 22:51:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:25:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	sigint_handler(int signum)
 {
 	g_shell->last_exit_status = signum + 128;
-	ft_putendl_fd("", 1);
+	ft_putendl_fd("$", 1);
+	write(1, g_shell->prompt, ft_strlen(g_shell->prompt) - 2);
 	rl_replace_line("", 0);
 	if (!g_shell->input)
 	{
