@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 16:59:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/26 00:03:02 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@ void	parse_input(void)
 	}
 	g_shell->tree = parse_pipe();
 	if (!g_shell->has_heredoc)
+	{
 		add_history(g_shell->input);
+		set_history(g_shell->input);
+	}
 }
