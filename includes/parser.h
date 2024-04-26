@@ -18,6 +18,8 @@
 #include "lexer.h"
 #include "libft.h"
 #include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 typedef enum e_redir_type {
   REDIR_IN,

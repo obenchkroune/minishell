@@ -11,6 +11,12 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "libft.h"
+#include <fcntl.h>
+#include <stdbool.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <unistd.h>
 
 t_redir_type	get_redir_type(t_token token)
 {
@@ -30,6 +36,17 @@ t_redir_type	get_redir_type(t_token token)
 	}
 }
 
+static bool	is_regular_file(const char *file)
+{
+	int			fd;
+	struct stat	file_info;
+
+	fd = open(file, O_RDONLY);
+	if (fstat(fd, &file_info) < 0)
+		panic("fstat");
+	return (close(fd), !S_ISDIR(file_info.st_mode));
+}
+
 char	*get_executable(char *cmd)
 {
 	char	*result;
@@ -40,23 +57,22 @@ char	*get_executable(char *cmd)
 	i = 0;
 	result = NULL;
 	cmd = ft_expand(cmd);
-	if (access(cmd, F_OK) == 0)
+	if (!is_regular_file(cmd) || !get_env("PATH"))
+		return (free(cmd), NULL);
+	if (access(cmd, X_OK | F_OK) == 0)
 		return (cmd);
-	if (get_env("PATH") == NULL)
-		return (NULL);
 	path = ft_split(get_env("PATH"), ':');
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
 	{
 		result = ft_strjoin(path[i], slash_cmd);
-		if (access(result, F_OK) == 0)
+		if (access(result, X_OK | F_OK) == 0)
 			break ;
 		free(result);
 		result = NULL;
 		i++;
 	}
-	(free(slash_cmd), free_tab(path), free(cmd));
-	return (result);
+	return (free(slash_cmd), free_tab(path), free(cmd), result);
 }
 
 t_node	*parse_cmd(void)
