@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 08:56:07 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 04:24:14 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:50:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ void	remove_env(int idx)
 	g_shell->envp[i] = NULL;
 }
 
-void	ft_unset(char **args)
+void	ft_unset(t_cmd *cmd)
 {
 	int		idx;
+	int		i;
 
-	while (args && *args)
+	i = 1;
+	while (i < cmd->argc)
 	{
-		idx = get_idx(*args);
-		if (idx == -1)
+		idx = get_idx(cmd->argv[i]);
+		if (idx != -1)
 		{
-			args++;
-			continue ;
+			remove_env(idx);
 		}
-		remove_env(idx);
-		args++;
+		i++;
 	}
 }

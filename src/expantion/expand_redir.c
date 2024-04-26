@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tab.c                                         :+:      :+:    :+:   */
+/*   expand_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 05:01:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 09:50:12 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/22 14:21:38 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/22 14:21:46 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tab(char **tab)
+void	expand_redir(t_redir *redir)
 {
-	size_t	i;
+	char	*expanded_file;
 
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
+	if (!redir)
+		return ;
+	expand_redir(redir->next);
+	expanded_file = ft_expand(redir->file);
+	free(redir->file);
+	redir->file = expanded_file;
 }

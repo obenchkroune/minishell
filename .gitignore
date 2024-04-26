@@ -7,3 +7,4 @@ examples
 **/*.o
 libft/libft.a
 minishell
+tests

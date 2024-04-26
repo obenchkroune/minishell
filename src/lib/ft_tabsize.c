@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tab.c                                         :+:      :+:    :+:   */
+/*   ft_tabsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 05:01:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 09:50:12 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/18 04:03:09 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/18 10:29:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tab(char **tab)
+size_t	ft_tabsize(char **tab)
 {
 	size_t	i;
 
 	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
+	while (tab && tab[i])
+		i++;
+	return (i);
 }

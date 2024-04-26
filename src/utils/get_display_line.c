@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tab.c                                         :+:      :+:    :+:   */
+/*   get_display_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 05:01:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 09:50:12 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/16 04:26:18 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/23 21:44:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tab(char **tab)
+char	*get_display_line(void)
 {
-	size_t	i;
+	char	*display_line;
+	char	*header;
+	char	*cwd;
+	char	*home;
 
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
+	home = get_env("HOME");
+	if (home)
+		cwd = ft_strreplace(g_shell->cwd, home, "~");
+	else
+		cwd = ft_strdup(g_shell->cwd);
+	header = ft_strjoin(CYAN COLOR_BOLD "minishell: " COLOR_OFF RESET, cwd);
+	display_line = ft_strjoin(header, "\n$ ");
+	(free(cwd), free(header));
+	return (display_line);
 }

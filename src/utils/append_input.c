@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tab.c                                         :+:      :+:    :+:   */
+/*   append_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 05:01:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 09:50:12 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/19 11:09:12 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/19 11:48:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tab(char **tab)
+char	*append_input(char *s1, char *s2)
 {
-	size_t	i;
+	char	*value;
 
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
+	s1 = ft_strjoin(s1, "\n");
+	value = ft_strjoin(s1, s2);
+	free(s1);
+	return (value);
 }

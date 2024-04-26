@@ -6,32 +6,79 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/06 03:26:11 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:50:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_export(char **args)
+static bool	is_valid_name(char *name)
+{
+	if (!ft_isalpha(*name))
+		return (false);
+	while (*++name)
+	{
+		if (!ft_isalnum(*name))
+			return (false);
+	}
+	return (true);
+}
+
+static void	export_error(char *key)
+{
+	ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n",
+		key);
+	g_shell->last_exit_status = 1;
+	free(key);
+}
+
+char	*get_export_key(const char *arg)
 {
 	char	*equal_sign;
 	char	*key;
 
-	if (ft_tabsize(args) == 1)
+	equal_sign = ft_strchr(arg, '=');
+	if (!equal_sign || equal_sign - arg == 0)
+		key = ft_strdup(arg);
+	else
+		key = ft_substr(arg, 0, equal_sign - arg);
+	return (key);
+}
+
+static void	print_env(void)
+{
+	char	**envp;
+
+	envp = g_shell->envp;
+	while (envp && *envp)
 	{
-		ft_env();
+		printf("declare -x %s\n", *envp);
+		envp++;
+	}
+}
+
+void	ft_export(t_cmd *cmd)
+{
+	char	*key;
+	int		i;
+
+	if (cmd->argc == 1)
+	{
+		print_env();
 		return ;
 	}
-	while (args && *args)
+	i = 1;
+	while (i < cmd->argc)
 	{
-		equal_sign = ft_strchr(*args, '=');
-		if (equal_sign)
+		key = get_export_key(cmd->argv[i]);
+		if (is_valid_name(key))
 		{
-			key = ft_substr(*args, 0, equal_sign - *args);
-			set_env(key, equal_sign + 1);
+			set_env(key, ft_strchr(cmd->argv[i], '=') + 1);
 			free(key);
 			key = NULL;
 		}
-		args++;
+		else
+			export_error(key);
+		i++;
 	}
 }

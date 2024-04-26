@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/16 03:49:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:25:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 void	sigint_handler(int signum)
 {
-	printf("\n\r%s", g_shell->prompt);
+	g_shell->last_exit_status = signum + 128;
+	ft_putendl_fd("$", 1);
+	write(1, g_shell->prompt, ft_strlen(g_shell->prompt) - 2);
 	rl_replace_line("", 0);
 	if (!g_shell->input)
 	{
 		rl_on_new_line();
-		g_shell->last_exit_status = signum + 128;
-	}
-	if (!g_shell->inside_unclosed_pipe)
 		rl_redisplay();
-	else
-		ft_fprintf(STDOUT_FILENO, ">");
+	}
 }
 
 void	sigquit_handler(int signum)
@@ -36,8 +34,7 @@ void	sigquit_handler(int signum)
 
 void	signal_init(void)
 {
-	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-		panic("signal");
-	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
+	if (signal(SIGINT, sigint_handler) == SIG_ERR
+		|| signal(SIGQUIT, sigquit_handler) == SIG_ERR)
 		panic("signal");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:32:44 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/19 17:17:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_cmd	*create_cmd(char *path, char **argv)
 	ft_bzero(cmd, sizeof(t_cmd));
 	cmd->path = path;
 	cmd->argv = argv;
+	cmd->argc = ft_tabsize(argv);
 	return (cmd);
 }
 
@@ -72,27 +73,26 @@ char	**ft_lsttab(t_list *list)
 	return (ret);
 }
 
-int	ft_append_redir(t_redir **root, t_token prev_token)
+void	ft_append_redir(t_redir **root)
 {
 	t_token	token;
 	t_redir	*tail;
 	t_redir	*ret;
 
+	token = get_next_token();
 	if (peek() != T_WORD)
 	{
-		syntax_error(prev_token);
-		return (-1);
+		syntax_error(NULL);
+		return ;
 	}
-	token = get_next_token();
-	ret = create_redir(get_redir_type(prev_token), token.value);
+	ret = create_redir(get_redir_type(token), get_next_token().value);
 	if (*root == NULL)
 	{
 		*root = ret;
-		return (0);
+		return ;
 	}
 	tail = *root;
 	while (tail->next)
 		tail = tail->next;
 	tail->next = ret;
-	return (0);
 }

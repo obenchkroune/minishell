@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tab.c                                         :+:      :+:    :+:   */
+/*   display_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 05:01:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 09:50:12 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/16 07:13:09 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/19 10:32:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tab(char **tab)
+void	display_prompt(void)
 {
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
+	g_shell->prompt = get_display_line();
+	g_shell->input = readline(g_shell->prompt);
+	if (!g_shell->input)
+	{
+		cleanup_rotation();
+		cleanup_shell();
+		printf("exit\n");
+		exit(0);
+	}
 }

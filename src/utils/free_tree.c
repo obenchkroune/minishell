@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/11 18:36:55 by oussama          ###   ########.fr       */
+/*   Updated: 2024/04/19 11:17:23 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	free_redir(t_redir *redir)
 {
 	if (!redir)
 		return ;
-	free(redir->file);
 	free_redir(redir->next);
+	free(redir->file);
 	free(redir);
 }
 
