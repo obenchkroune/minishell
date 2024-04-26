@@ -12,14 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-bool	is_redirection_node(t_node *tree)
-{
-	return (tree->redir && (tree->redir->type == REDIR_IN
-			|| tree->redir->type == REDIR_OUT
-			|| tree->redir->type == REDIR_APPEND
-			|| tree->redir->type == REDIR_HEREDOC));
-}
-
 static int	ft_exec_cmd(t_node *tree)
 {
 	int		status;
@@ -32,8 +24,7 @@ static int	ft_exec_cmd(t_node *tree)
 		panic("fork");
 	if (pid == 0)
 	{
-		if (is_redirection_node(tree))
-			ft_redirect(tree->redir, false);
+		ft_redirect(tree->redir, false);
 		if (!cmd)
 			exit(0);
 		if (!cmd->path)

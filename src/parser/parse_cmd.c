@@ -41,7 +41,7 @@ char	*get_executable(char *cmd)
 	result = NULL;
 	cmd = ft_expand(cmd);
 	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
+		return (cmd);
 	if (get_env("PATH") == NULL)
 		return (NULL);
 	path = ft_split(get_env("PATH"), ':');
