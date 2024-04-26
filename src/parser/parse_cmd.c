@@ -43,7 +43,7 @@ static bool	is_regular_file(const char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fstat(fd, &file_info) < 0)
-		panic("fstat");
+		return (close(fd), true);
 	return (close(fd), !S_ISDIR(file_info.st_mode));
 }
 
