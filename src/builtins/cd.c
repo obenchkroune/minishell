@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/23 22:37:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:02:49 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ static void	cd_error(char *path)
 {
 	ft_fprintf(2, "minishell: cd: %s: %s\n", path, strerror(errno));
 	g_shell->last_exit_status = 1;
+}
+static void	cd_back(void)
+{
+	char	*temp;
+
+	if (chdir("..") == -1)
+	{
+		cd_error(get_env("PWD"));
+		return ;
+	}
+	temp = getcwd(NULL, 0);
+	set_env("OLDPWD", get_env("PWD"));
+	set_env("PWD", temp);
+	free(temp);
 }
 
 static void	cd_relative(char *path)
@@ -91,6 +105,8 @@ void	ft_cd(t_cmd *cmd)
 		cd_oldpwd();
 	else if (path[0] == '/')
 		cd_absolute(path);
+	else if (ft_strncmp(path, "..", 3) == 0)
+		cd_back();
 	else
 		cd_relative(path);
 	cwd = getcwd(NULL, 0);
