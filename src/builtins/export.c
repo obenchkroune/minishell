@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/23 22:50:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:05:12 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static bool	is_valid_name(char *name)
 
 static void	export_error(char *key)
 {
-	ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n",
-		key);
+	ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n", key);
 	g_shell->last_exit_status = 1;
 	free(key);
 }
@@ -61,6 +60,7 @@ void	ft_export(t_cmd *cmd)
 {
 	char	*key;
 	int		i;
+	char	*temp;
 
 	if (cmd->argc == 1)
 	{
@@ -71,9 +71,10 @@ void	ft_export(t_cmd *cmd)
 	while (i < cmd->argc)
 	{
 		key = get_export_key(cmd->argv[i]);
-		if (is_valid_name(key))
+		temp = ft_strchr(cmd->argv[i], '=');
+		if (is_valid_name(key) && temp)
 		{
-			set_env(key, ft_strchr(cmd->argv[i], '=') + 1);
+			set_env(key, temp + 1);
 			free(key);
 			key = NULL;
 		}
