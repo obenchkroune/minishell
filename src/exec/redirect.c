@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/23 21:48:13 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:02:42 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static void	redirect_heredoc(t_redir *io)
 
 	if (pipe(pipe_fd) == -1)
 		panic("pipe");
-	while (1)
+	while (g_shell->has_heredoc)
 	{
-		line = readline("heredoc> ");
+		line = readline("> ");
 		if (!line || ft_strcmp(line, io->file) == 0)
 		{
 			free(line);

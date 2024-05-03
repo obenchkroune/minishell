@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 06:44:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:27:15 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	set_env(char *key, char *value)
 			continue ;
 		}
 		len = equal_sign - *envp;
-		if (ft_strncmp(key, *envp, len) == 0)
+		if (ft_strncmp(key, *envp, len) == 0 && key[len] == '\0')
 		{
 			free(*envp);
 			*envp = join_env(key, value);
