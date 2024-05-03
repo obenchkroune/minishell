@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:26:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 21:44:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/02 22:19:16 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_display_line(void)
 	else
 		cwd = ft_strdup(g_shell->cwd);
 	header = ft_strjoin(CYAN COLOR_BOLD "minishell: " COLOR_OFF RESET, cwd);
-	display_line = ft_strjoin(header, "\n$ ");
+	display_line = ft_strjoin(header, "$ ");
 	(free(cwd), free(header));
 	return (display_line);
 }
