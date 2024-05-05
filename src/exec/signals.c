@@ -25,16 +25,14 @@ void	sigint_handler(int signum)
 	}
 }
 
-void	sigquit_handler(int signum)
-{
-	(void)signum;
-	rl_on_new_line();
-	rl_redisplay();
-}
-
 void	signal_init(void)
 {
-	if (signal(SIGINT, sigint_handler) == SIG_ERR || signal(SIGQUIT,
-			sigquit_handler) == SIG_ERR)
+	struct sigaction	quit_action;
+
+	ft_bzero(&quit_action, sizeof(sigaction));
+	quit_action.sa_handler = SIG_IGN;
+	if (sigaction(SIGQUIT, &quit_action, NULL) != 0)
+		panic("sigaction");
+	if (signal(SIGINT, &sigint_handler) != 0)
 		panic("signal");
 }
