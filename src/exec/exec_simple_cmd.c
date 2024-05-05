@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/03 17:55:52 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:39:19 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static int	ft_exec_cmd(t_node *tree)
 		}
 		if (execve(cmd->path, cmd->argv, g_shell->envp) == -1)
 		{
-			(ft_putstr_fd(RED "minishell: " RESET, 2),
-				perror(cmd->argv[0]), exit(1));
+			(ft_putstr_fd(RED "minishell: " RESET, 2), perror(cmd->argv[0]),
+				exit(1));
 		}
 	}
 	waitpid(pid, &status, 0);
@@ -54,9 +54,8 @@ int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 		expand_argv(cmd->argv);
 	if (cmd && ft_is_builtin(cmd))
 	{
-		ft_redirect(tree->redir, true);
-		ft_exec_builtin(cmd);
-		return (0);
+		g_shell->last_exit_status = ft_exec_builtin(cmd, tree->redir);
+		return (g_shell->last_exit_status);
 	}
 	status = ft_exec_cmd(tree);
 	if (is_pipe)

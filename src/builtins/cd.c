@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/01 20:02:49 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:17:21 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	cd_back(void)
 	if (chdir("..") == -1)
 	{
 		cd_error(get_env("PWD"));
-		return ;
+		exit(1);
 	}
 	temp = getcwd(NULL, 0);
 	set_env("OLDPWD", get_env("PWD"));
@@ -56,7 +56,7 @@ static void	cd_absolute(char *path)
 	if (chdir(path) == -1)
 	{
 		cd_error(path);
-		return ;
+		exit(1);
 	}
 	set_env("OLDPWD", get_env("PWD"));
 	set_env("PWD", path);
@@ -70,7 +70,7 @@ static void	cd_oldpwd(void)
 	if (!oldpwd)
 	{
 		panic_minishell("cd: OLDPWD not set!", 1);
-		return ;
+		exit(1);
 	}
 	cd_absolute(oldpwd);
 }
@@ -83,7 +83,7 @@ static void	cd_home(void)
 	if (!home)
 	{
 		panic_minishell("cd: HOME not set!", 1);
-		return ;
+		exit(1);
 	}
 	cd_absolute(home);
 }
@@ -96,7 +96,7 @@ void	ft_cd(t_cmd *cmd)
 	if (cmd->argc > 2)
 	{
 		panic_minishell("cd: too many arguments", 1);
-		return ;
+		exit(1);
 	}
 	path = cmd->argv[1];
 	if (cmd->argc == 1)

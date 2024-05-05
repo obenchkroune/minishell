@@ -6,13 +6,13 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/03 19:02:42 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:35:18 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	redirect_in(t_redir *io, bool is_builtin)
+static int	redirect_in(t_redir *io, bool is_builtin)
 {
 	int		fd;
 	char	*tmp;
@@ -25,14 +25,14 @@ static void	redirect_in(t_redir *io, bool is_builtin)
 		tmp = ft_strjoin(io->file, ": No such file or directory");
 		panic_minishell(tmp, 1);
 		free(tmp);
-		g_shell->last_exit_status = 1;
-		return ;
+		return (1);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	return (0);
 }
 
-static void	redirect_out(t_redir *io, bool is_builtin)
+static int	redirect_out(t_redir *io, bool is_builtin)
 {
 	int		fd;
 	char	*tmp;
@@ -42,17 +42,17 @@ static void	redirect_out(t_redir *io, bool is_builtin)
 		panic(io->file);
 	else if (fd == -1 && is_builtin)
 	{
-		tmp = ft_strjoin(io->file, ": Cannot create file");
+		tmp = ft_strjoin(io->file, ": cannot create file");
 		panic_minishell(tmp, 1);
 		free(tmp);
-		g_shell->last_exit_status = 1;
-		return ;
+		return (1);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (0);
 }
 
-static void	redirect_append(t_redir *io, bool is_builtin)
+static int	redirect_append(t_redir *io, bool is_builtin)
 {
 	int		fd;
 	char	*tmp;
@@ -62,14 +62,14 @@ static void	redirect_append(t_redir *io, bool is_builtin)
 		panic(io->file);
 	else if (fd == -1 && is_builtin)
 	{
-		tmp = ft_strjoin(io->file, ": Cannot create file");
+		tmp = ft_strjoin(io->file, ": cannot create file");
 		panic_minishell(tmp, 1);
 		free(tmp);
-		g_shell->last_exit_status = 1;
-		return ;
+		return (1);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (0);
 }
 
 static void	redirect_heredoc(t_redir *io)
@@ -103,11 +103,11 @@ int	ft_redirect(t_redir *redir, bool is_builtin)
 	while (redir)
 	{
 		if (redir->type == REDIR_IN)
-			redirect_in(redir, is_builtin);
+			return (redirect_in(redir, is_builtin));
 		else if (redir->type == REDIR_OUT)
-			redirect_out(redir, is_builtin);
+			return (redirect_out(redir, is_builtin));
 		else if (redir->type == REDIR_APPEND)
-			redirect_append(redir, is_builtin);
+			return (redirect_append(redir, is_builtin));
 		else if (redir->type == REDIR_HEREDOC)
 			redirect_heredoc(redir);
 		redir = redir->next;

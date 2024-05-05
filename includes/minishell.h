@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/03 18:45:36 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:44:10 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,5 @@ void				free_tab(char **tab);
 void				cleanup_rotation(void);
 char				*ft_strreplace(char *str, char *find, char *replace);
 int					set_terminal_attributes(void);
-bool				is_invalid_pipe(char *input);
-int					handle_unclosed_pipe(void);
 char				*get_display_line(void);
 #endif

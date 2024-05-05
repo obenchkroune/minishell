@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/23 22:46:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:47:11 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,8 @@
 
 bool	ft_is_builtin(t_cmd *cmd)
 {
-	const char	*builtins[] = {
-		"echo",
-		"cd",
-		"pwd",
-		"export",
-		"unset",
-		"env",
-		"exit",
-		"history",
-		NULL
-	};
+	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
+			"exit", "history", NULL};
 	size_t		i;
 
 	i = 0;
@@ -37,7 +28,7 @@ bool	ft_is_builtin(t_cmd *cmd)
 	return (false);
 }
 
-void	ft_exec_builtin(t_cmd *cmd)
+void	ft_exec_builtins(t_cmd *cmd, bool should_exit)
 {
 	if (!ft_strcmp(cmd->argv[0], "echo"))
 		ft_echo(cmd);
@@ -58,4 +49,33 @@ void	ft_exec_builtin(t_cmd *cmd)
 	else if (cmd->argc == 2 && !ft_strcmp(cmd->argv[0], "history")
 		&& !ft_strcmp(cmd->argv[1], "-c"))
 		ft_clear_history();
+	if (should_exit)
+		exit(0);
+}
+
+int	ft_exec_builtin(t_cmd *cmd, t_redir *io)
+{
+	int		pid;
+	int		status;
+	bool	is_exit;
+
+	is_exit = ft_strcmp(cmd->argv[0], "exit") == 0;
+	if (is_exit || !io)
+	{
+		ft_exec_builtins(cmd, false);
+		return (0);
+	}
+	pid = fork();
+	if (pid == -1)
+		panic("fork");
+	if (pid == 0)
+	{
+		if (ft_redirect(io, true))
+			exit(1);
+		ft_exec_builtins(cmd, true);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (WEXITSTATUS(status));
 }
