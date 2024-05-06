@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/05 21:35:18 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:17:29 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,20 @@ int	ft_redirect(t_redir *redir, bool is_builtin)
 	while (redir)
 	{
 		if (redir->type == REDIR_IN)
-			return (redirect_in(redir, is_builtin));
+		{
+			if (redirect_in(redir, is_builtin))
+				return (1);
+		}
 		else if (redir->type == REDIR_OUT)
-			return (redirect_out(redir, is_builtin));
+		{
+			if (redirect_out(redir, is_builtin))
+				return (1);
+		}
 		else if (redir->type == REDIR_APPEND)
-			return (redirect_append(redir, is_builtin));
+		{
+			if (redirect_append(redir, is_builtin))
+				return (1);
+		}
 		else if (redir->type == REDIR_HEREDOC)
 			redirect_heredoc(redir);
 		redir = redir->next;
