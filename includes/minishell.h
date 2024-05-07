@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/07 21:16:37 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/07 21:20:55 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 # define MINISHELL_H
 
-# define COLOR_BOLD  "\e[1m"
-# define COLOR_OFF   "\e[m"
+# define COLOR_BOLD "\e[1m"
+# define COLOR_OFF "\e[m"
 
 # define RED "\001\x1b[31m\002"
 # define GREEN "\001\x1b[32m\002"
@@ -41,9 +41,13 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <unistd.h>
+
+# define MAX_LINE_LENGTH 1024
 
 typedef struct s_shell
 {

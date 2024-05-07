@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/06 15:17:29 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/07 21:53:51 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,23 @@ static int	redirect_append(t_redir *io, bool is_builtin)
 static void	redirect_heredoc(t_redir *io)
 {
 	int		pipe_fd[2];
-	char	*line;
+	char	line[MAX_LINE_LENGTH];
+	int		len;
 
 	if (pipe(pipe_fd) == -1)
 		panic("pipe");
-	while (g_shell->has_heredoc)
+	while (1)
 	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, io->file) == 0)
-		{
-			free(line);
+		write(STDOUT_FILENO, "> ", 2);
+		len = read(STDIN_FILENO, line, MAX_LINE_LENGTH - 1);
+		if (len <= 0)
 			break ;
-		}
-		write(pipe_fd[1], line, ft_strlen(line));
+		if (line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		if (!strncmp(line, io->file, len))
+			break ;
+		write(pipe_fd[1], line, strlen(line));
 		write(pipe_fd[1], "\n", 1);
-		free(line);
 	}
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 		panic("dup2");
