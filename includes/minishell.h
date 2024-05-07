@@ -6,7 +6,7 @@
 /*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/05 21:44:10 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/07 21:16:37 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ typedef struct s_shell
 	char			**envp;
 	int				last_exit_status;
 	char			*prompt;
-	bool			inside_unclosed_pipe;
-	bool			has_unclosed_pipe;
 	bool			has_syntax_error;
 	bool			has_heredoc;
 	char			term_buffer[2048];
