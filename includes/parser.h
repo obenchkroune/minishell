@@ -45,9 +45,9 @@ typedef struct s_cmd
 typedef struct s_redir
 {
 	t_redir_type	type;
+	char			heredoc_file[15];
 	char			*file;
 	int				fd;
-	struct s_redir	*prev;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -97,6 +97,6 @@ char			**expand_argv(char **argv);
 t_node			*parse_cmd(void);
 t_node			*parse_pipe(void);
 void			expand_redir(t_redir *redir);
-int				get_redir_fd(char *name, t_redir_type type);
+int				get_redir_fd(t_redir *redir);
 
 #endif

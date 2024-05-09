@@ -28,6 +28,8 @@ void	free_redir(t_redir *redir)
 	free_redir(redir->next);
 	free(redir->file);
 	close(redir->fd);
+	if (redir->type == REDIR_HEREDOC)
+		unlink(redir->heredoc_file);
 	free(redir);
 }
 

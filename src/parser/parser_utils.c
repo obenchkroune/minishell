@@ -33,10 +33,10 @@ t_redir	*create_redir(t_redir_type type, char *file)
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
 		panic("malloc");
-	ft_bzero(redir, sizeof(t_redir));
 	redir->type = type;
 	redir->file = file;
-	redir->fd = get_redir_fd(file, type);
+	redir->fd = get_redir_fd(redir);
+	redir->next = NULL;
 	return (redir);
 }
 

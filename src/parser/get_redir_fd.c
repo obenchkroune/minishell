@@ -18,7 +18,7 @@ void	sigint_heredoc(int signum)
 	exit(1);
 }
 
-void	heredoc_fork(int pipe_fd[2], char *delimer)
+void	heredoc_fork(int fd, char *delimer)
 {
 	char	*line;
 
@@ -31,40 +31,56 @@ void	heredoc_fork(int pipe_fd[2], char *delimer)
 			free(line);
 			break ;
 		}
-		write(pipe_fd[1], line, ft_strlen(line));
-		write(pipe_fd[1], "\n", 1);
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 	}
 	exit(0);
 }
 
-static int	get_heredoc_fd(char *delimer)
+void	get_heredoc_filename(char name_ptr[15])
 {
-	int		pipe_fd[2];
+	int	fd;
+
+	fd = open("/dev/urandom", O_RDONLY);
+	if (fd < 0)
+		panic("open");
+	name_ptr[0] = '\0';
+	ft_strlcat(name_ptr, "/tmp/", 15);
+	read(fd, name_ptr + 5, 8);
+	name_ptr[14] = '\0';
+	close(fd);
+}
+
+static int	get_heredoc_fd(t_redir *redir)
+{
 	pid_t	pid;
 	int		status;
+	int		fd;
 
-	if (pipe(pipe_fd) == -1)
-		panic("pipe");
+	get_heredoc_filename(redir->heredoc_file);
+	fd = open(redir->heredoc_file, O_CREAT | O_WRONLY, 0644);
+	if (fd < 0)
+		panic("open");
 	pid = fork();
 	if (pid == 0)
-		heredoc_fork(pipe_fd, delimer);
+		heredoc_fork(fd, redir->file);
 	waitpid(pid, &status, 0);
 	if (WEXITSTATUS(status) == 1)
 		g_shell->has_syntax_error = true;
-	close(pipe_fd[1]);
-	return (pipe_fd[0]);
+	close(fd);
+	return (open(redir->heredoc_file, O_RDONLY));
 }
 
-int	get_redir_fd(char *name, t_redir_type type)
+int	get_redir_fd(t_redir *redir)
 {
-	if (type == REDIR_APPEND)
-		return (open(name, O_CREAT | O_APPEND | O_WRONLY, 0644));
-	else if (type == REDIR_IN)
-		return (open(name, O_RDONLY));
-	else if (type == REDIR_OUT)
-		return (open(name, O_CREAT | O_TRUNC | O_WRONLY));
-	else if (type == REDIR_HEREDOC)
-		return (get_heredoc_fd(name));
+	if (redir->type == REDIR_APPEND)
+		return (open(redir->file, O_CREAT | O_APPEND | O_WRONLY, 0644));
+	else if (redir->type == REDIR_IN)
+		return (open(redir->file, O_RDONLY));
+	else if (redir->type == REDIR_OUT)
+		return (open(redir->file, O_CREAT | O_TRUNC | O_WRONLY));
+	else if (redir->type == REDIR_HEREDOC)
+		return (get_heredoc_fd(redir));
 	return (-1);
 }
