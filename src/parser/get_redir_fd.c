@@ -45,10 +45,9 @@ void	get_heredoc_filename(char name_ptr[15])
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd < 0)
 		panic("open");
-	name_ptr[0] = '\0';
+	ft_bzero(name_ptr, 15);
 	ft_strlcat(name_ptr, "/tmp/", 15);
 	read(fd, name_ptr + 5, 8);
-	name_ptr[14] = '\0';
 	close(fd);
 }
 
