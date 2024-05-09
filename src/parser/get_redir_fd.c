@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 01:23:34 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 02:53:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,19 @@ void	sigint_heredoc(int signum)
 
 void	heredoc_fork(int pipe_fd[2], char *delimer)
 {
-	char	line[MAX_LINE_LENGTH];
-	int		len;
+	char	*line;
+	
 
 	signal(SIGINT, sigint_heredoc);
 	while (1)
 	{
-		write(STDOUT_FILENO, "> ", 2);
-		len = read(STDIN_FILENO, line, MAX_LINE_LENGTH - 1);
-		if (len <= 0)
+		line = readline("> ");
+		if (!line || ft_strcmp(line, delimer) == 0)
+		{
+			free(line);
 			break ;
-		if (line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		if (!strncmp(line, delimer, len))
-			break ;
-		write(pipe_fd[1], line, strlen(line));
+		}
+		write(pipe_fd[1], line, ft_strlen(line));
 		write(pipe_fd[1], "\n", 1);
 	}
 	exit(0);
