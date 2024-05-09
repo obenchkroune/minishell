@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 01:29:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 02:57:03 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@
 # include <unistd.h>
 # include <unistd.h>
 
-# define MAX_LINE_LENGTH 1024
-
 typedef struct s_shell
 {
 	t_node			*tree;
@@ -65,7 +63,7 @@ typedef struct s_shell
 	struct termios	term;
 }					t_shell;
 
-extern t_shell		*g_shell;
+t_shell		*g_shell;
 
 char				*ft_strreplace(char *str, char *find, char *replace);
 void				display_prompt(void);

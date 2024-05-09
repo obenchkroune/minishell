@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 02:53:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 02:55:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	sigint_heredoc(int signum)
 void	heredoc_fork(int pipe_fd[2], char *delimer)
 {
 	char	*line;
-	
 
 	signal(SIGINT, sigint_heredoc);
 	while (1)
