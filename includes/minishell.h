@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/07 21:20:55 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/09 01:29:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,8 @@ void				cleanup_rotation(void);
 char				*ft_strreplace(char *str, char *find, char *replace);
 int					set_terminal_attributes(void);
 char				*get_display_line(void);
+void				cd_error(char *path);
+void				cd_relative(char *path);
+void				cd_absolute(char *path);
+
 #endif

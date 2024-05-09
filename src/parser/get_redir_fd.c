@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 01:14:31 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 01:23:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,39 @@ void	sigint_heredoc(int signum)
 	exit(1);
 }
 
+void	heredoc_fork(int pipe_fd[2], char *delimer)
+{
+	char	line[MAX_LINE_LENGTH];
+	int		len;
+
+	signal(SIGINT, sigint_heredoc);
+	while (1)
+	{
+		write(STDOUT_FILENO, "> ", 2);
+		len = read(STDIN_FILENO, line, MAX_LINE_LENGTH - 1);
+		if (len <= 0)
+			break ;
+		if (line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		if (!strncmp(line, delimer, len))
+			break ;
+		write(pipe_fd[1], line, strlen(line));
+		write(pipe_fd[1], "\n", 1);
+	}
+	exit(0);
+}
+
 static int	get_heredoc_fd(char *delimer)
 {
 	int		pipe_fd[2];
-	char	line[MAX_LINE_LENGTH];
-	int		len;
 	pid_t	pid;
 	int		status;
-	
+
 	if (pipe(pipe_fd) == -1)
 		panic("pipe");
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, sigint_heredoc);
-		while (1)
-		{
-			write(STDOUT_FILENO, "> ", 2);
-			len = read(STDIN_FILENO, line, MAX_LINE_LENGTH - 1);
-			if (len <= 0)
-				break ;
-			if (line[len - 1] == '\n')
-				line[len - 1] = '\0';
-			if (!strncmp(line, delimer, len))
-				break ;
-			write(pipe_fd[1], line, strlen(line));
-			write(pipe_fd[1], "\n", 1);
-		}
-		exit(0);
-	}
+		heredoc_fork(pipe_fd, delimer);
 	waitpid(pid, &status, 0);
 	if (WEXITSTATUS(status) == 1)
 		g_shell->has_syntax_error = true;

@@ -3,41 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/05 21:39:19 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/09 01:27:45 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static void	exec_fork(t_node *node)
+{
+	t_cmd	*cmd;
+	t_redir	*redir;
+
+	cmd = node->cmd;
+	redir = node->redir;
+	ft_redirect(redir, false);
+	if (!cmd)
+		exit(0);
+	if (!cmd->path)
+	{
+		(ft_fprintf(2, "minishell: %s: command not found\n", cmd->argv[0]),
+			exit(127));
+	}
+	if (execve(cmd->path, cmd->argv, g_shell->envp) == -1)
+	{
+		(ft_putstr_fd(RED "minishell: " RESET, 2), perror(cmd->argv[0]),
+			exit(1));
+	}
+}
+
 static int	ft_exec_cmd(t_node *tree)
 {
 	int		status;
 	pid_t	pid;
-	t_cmd	*cmd;
 
-	cmd = tree->cmd;
 	pid = fork();
 	if (pid == -1)
 		panic("fork");
 	if (pid == 0)
-	{
-		ft_redirect(tree->redir, false);
-		if (!cmd)
-			exit(0);
-		if (!cmd->path)
-		{
-			(ft_fprintf(2, "minishell: %s: command not found\n", cmd->argv[0]),
-				exit(127));
-		}
-		if (execve(cmd->path, cmd->argv, g_shell->envp) == -1)
-		{
-			(ft_putstr_fd(RED "minishell: " RESET, 2), perror(cmd->argv[0]),
-				exit(1));
-		}
-	}
+		exec_fork(tree);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
