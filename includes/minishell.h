@@ -63,7 +63,7 @@ typedef struct s_shell
 	struct termios	term;
 }					t_shell;
 
-t_shell		*g_shell;
+extern t_shell		*g_shell;
 
 char				*ft_strreplace(char *str, char *find, char *replace);
 void				display_prompt(void);

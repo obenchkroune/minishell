@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+t_shell	*g_shell;
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc, (void)argv;

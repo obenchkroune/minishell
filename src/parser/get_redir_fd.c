@@ -33,6 +33,7 @@ void	heredoc_fork(int pipe_fd[2], char *delimer)
 		}
 		write(pipe_fd[1], line, ft_strlen(line));
 		write(pipe_fd[1], "\n", 1);
+		free(line);
 	}
 	exit(0);
 }
