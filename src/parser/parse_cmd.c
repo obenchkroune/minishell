@@ -56,7 +56,7 @@ char	*get_executable(char *cmd)
 	cmd = ft_expand(cmd);
 	if (!get_env("PATH"))
 		return (free(cmd), NULL);
-	if (check_file(cmd))
+	if (ft_strchr(cmd, '/') != NULL && check_file(cmd))
 		return (cmd);
 	path = ft_split(get_env("PATH"), ':');
 	slash_cmd = ft_strjoin("/", cmd);
