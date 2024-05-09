@@ -19,7 +19,7 @@ void	ft_echo(t_cmd *cmd)
 
 	i = 1;
 	trim_nl = false;
-	if (cmd->argc > 2 && ft_strcmp(cmd->argv[1], "-n") == 0)
+	if (cmd->argc >= 2 && ft_strcmp(cmd->argv[1], "-n") == 0)
 	{
 		trim_nl = true;
 		i++;
