@@ -15,7 +15,7 @@
 bool	ft_is_builtin(t_cmd *cmd)
 {
 	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-			"exit", "history", NULL};
+		"exit", "history", NULL};
 	size_t		i;
 
 	i = 0;
