@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 05:51:50 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 05:53:13 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 01:16:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_token_type	peek(void)
 {
 	char	*input;
 
+	if (g_shell->has_syntax_error)
+		return (T_EOF);
 	skip_whitespace();
 	input = g_shell->input + g_shell->lexer_idx;
 	if (*input == '\0')

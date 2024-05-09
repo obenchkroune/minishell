@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 17:17:13 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 00:25:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_redir	*create_redir(t_redir_type type, char *file)
 	if (!redir)
 		panic("malloc");
 	ft_bzero(redir, sizeof(t_redir));
-	redir->fd = -1;
 	redir->type = type;
 	redir->file = file;
+	redir->fd = get_redir_fd(file, type);
 	return (redir);
 }
 

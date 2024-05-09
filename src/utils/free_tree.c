@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 11:17:23 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 00:38:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_redir(t_redir *redir)
 		return ;
 	free_redir(redir->next);
 	free(redir->file);
+	close(redir->fd);
 	free(redir);
 }
 

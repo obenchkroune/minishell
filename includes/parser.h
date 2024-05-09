@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/22 14:17:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 00:33:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ char **expand_argv(char **argv);
 t_node *parse_cmd(void);
 t_node *parse_pipe(void);
 void	expand_redir(t_redir *redir);
+int	get_redir_fd(char *name, t_redir_type type);
 
 #endif
