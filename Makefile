@@ -1,5 +1,5 @@
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror $(HEAD) -fsanitize=address -g3
+CFLAGS	=	-Wall -Wextra -Werror $(HEAD) -fsanitize=address -ggdb
 SRCS	=	./src/parser/join_args.c ./src/parser/parser_utils.c ./src/parser/parse_cmd.c \
 			./src/parser/replace_vars.c ./src/parser/args.c ./src/parser/parse_input.c \
 			./src/parser/get_redir_fd.c ./src/parser/parse_pipe.c ./src/expantion/expand_argv.c \

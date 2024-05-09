@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 22:53:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 11:51:29 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 #define QUOTE_ERROR "syntax error: unexpected EOF while looking for matching"
 
-static bool	handle_unclosed_quote(void)
+static bool	handle_unclosed_quote(size_t *i)
 {
 	char	quote;
 	char	*input;
 	char	*value;
 
-	quote = g_shell->input[g_shell->lexer_idx];
+	quote = g_shell->input[*i];
 	if (quote != 0 && !ft_strchr("'\"", quote))
 		return (false);
-	while (g_shell->input[g_shell->lexer_idx]
-		&& !ft_strchr(g_shell->input + g_shell->lexer_idx + 1, quote))
+	while (g_shell->input[*i]
+		&& !ft_strchr(g_shell->input + *i + 1, quote))
 	{
 		input = readline("> ");
 		if (!input)
@@ -50,7 +50,7 @@ static bool	handle_quoted_word(size_t *i)
 	pair_quote = ft_strchr(g_shell->input + *i + 1, g_shell->input[*i]);
 	if (!pair_quote)
 	{
-		if (!handle_unclosed_quote())
+		if (!handle_unclosed_quote(i))
 			return (false);
 	}
 	pair_quote = ft_strchr(g_shell->input + *i + 1, g_shell->input[*i]);
@@ -72,7 +72,6 @@ static t_token	get_word_token(void)
 		{
 			if (!handle_quoted_word(&i))
 			{
-				g_shell->lexer_idx = i + 1;
 				return ((t_token){.type = T_ERROR, .value = NULL});
 			}
 			continue ;
