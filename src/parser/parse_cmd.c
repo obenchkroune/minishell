@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 11:57:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:53:42 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ char	*get_executable(char *cmd)
 
 t_node	*parse_cmd(void)
 {
-	t_node		*node;
-	t_list		*args;
-	t_redir		*redir;
+	t_node	*node;
+	t_list	*args;
+	t_redir	*redir;
 
 	if (peek() == T_PIPE || peek() == T_ERROR)
 	{

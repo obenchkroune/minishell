@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 11:51:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:52:33 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static bool	handle_unclosed_quote(size_t *i)
 	quote = g_shell->input[*i];
 	if (quote != 0 && !ft_strchr("'\"", quote))
 		return (false);
-	while (g_shell->input[*i]
-		&& !ft_strchr(g_shell->input + *i + 1, quote))
+	while (g_shell->input[*i] && !ft_strchr(g_shell->input + *i + 1, quote))
 	{
 		input = readline("> ");
 		if (!input)
@@ -87,23 +86,23 @@ t_token	get_next_token(void)
 {
 	skip_whitespace();
 	if (peek() == T_EOF)
-		return (g_shell->lexer_idx = 0,
-			(t_token){.type = T_EOF, .value = "newline"});
+		return (g_shell->lexer_idx = 0, (t_token){.type = T_EOF,
+			.value = "newline"});
 	else if (peek() == T_APPEND)
-		return (g_shell->lexer_idx += 2,
-			(t_token){.type = T_APPEND, .value = ">>"});
+		return (g_shell->lexer_idx += 2, (t_token){.type = T_APPEND,
+			.value = ">>"});
 	else if (peek() == T_HEREDOC)
-		return (g_shell->lexer_idx += 2,
-			(t_token){.type = T_HEREDOC, .value = "<<"});
+		return (g_shell->lexer_idx += 2, (t_token){.type = T_HEREDOC,
+			.value = "<<"});
 	else if (peek() == T_REDIR_OUT)
-		return (g_shell->lexer_idx += 1,
-			(t_token){.type = T_REDIR_OUT, .value = ">"});
+		return (g_shell->lexer_idx += 1, (t_token){.type = T_REDIR_OUT,
+			.value = ">"});
 	else if (peek() == T_REDIR_IN)
-		return (g_shell->lexer_idx += 1,
-			(t_token){.type = T_REDIR_IN, .value = "<"});
+		return (g_shell->lexer_idx += 1, (t_token){.type = T_REDIR_IN,
+			.value = "<"});
 	else if (peek() == T_PIPE)
-		return (g_shell->lexer_idx += 1,
-			(t_token){.type = T_PIPE, .value = "|"});
+		return (g_shell->lexer_idx += 1, (t_token){.type = T_PIPE,
+			.value = "|"});
 	else
 		return (get_word_token());
 }

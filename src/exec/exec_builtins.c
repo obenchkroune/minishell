@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:47:20 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/09 01:24:37 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:57:22 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	ft_is_builtin(t_cmd *cmd)
 {
 	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-		"exit", "history", NULL};
+			"exit", "history", NULL};
 	size_t		i;
 
 	i = 0;

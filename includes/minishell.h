@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 02:57:03 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:55:51 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
-# include <string.h>
 # include <sys/wait.h>
 # include <termios.h>
-# include <unistd.h>
 # include <unistd.h>
 
 typedef struct s_shell

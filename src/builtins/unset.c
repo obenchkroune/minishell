@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 08:56:07 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 09:50:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:50:50 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	remove_env(int idx)
 
 void	ft_unset(t_cmd *cmd)
 {
-	int		idx;
-	int		i;
+	int	idx;
+	int	i;
 
 	i = 1;
 	while (i < cmd->argc)

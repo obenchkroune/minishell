@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:14 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 05:52:45 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:55:38 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_token
 	char			*value;
 }					t_token;
 
-t_token			get_next_token(void);
-t_token_type	peek(void);
-void			skip_whitespace(void);
+t_token				get_next_token(void);
+t_token_type		peek(void);
+void				skip_whitespace(void);
 
 #endif

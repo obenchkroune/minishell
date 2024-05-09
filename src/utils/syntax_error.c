@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/19 12:18:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:54:54 by yaharkat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	syntax_error(char *msg)
 	{
 		token = get_next_token();
 		ft_fprintf(STDERR_FILENO,
-			RED "minishell: " RESET
-			"syntax error near unexpected token `%s'\n", token.value);
+			RED "minishell: " RESET "syntax error near unexpected token `%s'\n",
+			token.value);
 		if (token.type == T_WORD)
 			free(token.value);
 	}
