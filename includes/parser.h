@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 15:48:05 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:11:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ typedef struct s_arg
 	struct s_arg	*next;
 }					t_arg;
 
-bool 				check_wildcard(char *pattern, char *string);
+char				*get_wildcard_pattern(char *arg);
+char				*add_file_to_string(char *dst, char *file);
+char				*get_pattern_files(char *pattern);
+void				expand_wildcard(char **result, char **arg);
+bool				check_wildcard(char *pattern, char *string);
 char				*append_input(char *s1, char *s2);
 char				*join_args(t_arg *args);
 char				*replace_env_vars(char *arg, t_arg_type type);
