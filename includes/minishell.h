@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 14:26:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:03:31 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <dirent.h>
 
 typedef struct s_last_exit
 {

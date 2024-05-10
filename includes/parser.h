@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:55:56 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:48:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_arg
 	struct s_arg	*next;
 }					t_arg;
 
+bool 				check_wildcard(char *pattern, char *string);
 char				*append_input(char *s1, char *s2);
 char				*join_args(t_arg *args);
 char				*replace_env_vars(char *arg, t_arg_type type);

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 10:06:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:02:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,86 @@ static void	expand_env_var(char **result, char **arg)
 		*arg += 1;
 		return ;
 	}
+	*arg += ft_strlen(name);
 	value = get_env(name + 1);
 	if (!value)
 		value = "";
 	replaced_str = ft_strreplace(*result, name, value);
 	(free(name), free(*result));
 	*result = replaced_str;
-	*arg += ft_strlen(name);
+}
+
+char	*get_wildcard_pattern(char *arg)
+{
+	size_t	i;
+
+	i = 0;
+	while (!ft_strchr("<>| ", arg[i]))
+	{
+		i++;
+	}
+	return (ft_substr(arg, 0, i));
+}
+
+char	*add_file_to_string(char *dst, char *file)
+{
+	char	*result;
+	char	*temp;
+	
+	if (dst == NULL)
+		return (ft_strdup(file));
+	result = ft_strjoin(dst, " ");
+	temp = result;
+	result = ft_strjoin(result, file);
+	free(temp);
+	return (result);
+}
+
+char	*get_pattern_files(char *pattern)
+{
+	DIR				*dir;
+	struct dirent	*entity;
+	char			*result;
+	char			*temp;
+
+	result = NULL;
+	dir = opendir(".");
+	if (!dir)
+		panic("opendir");
+	while (1)
+	{
+		entity = readdir(dir);
+		if (!entity)
+			break ;
+		if (!ft_strcmp(entity->d_name, ".") || !ft_strcmp(entity->d_name, "..")
+			|| !check_wildcard(pattern, entity->d_name)
+			|| (entity->d_name[0] == '.' && !ft_strchr(pattern, '.')))
+			continue ;
+		temp = result;
+		result = add_file_to_string(result, entity->d_name);
+		free(temp);
+	}
+	closedir(dir);
+	return (result);
+}
+
+static void	expand_wildcard(char **result, char **arg)
+{
+	char	*pattern;
+	char	*value;
+	char	*replaced_str;
+
+	pattern = get_wildcard_pattern(*arg);
+	*arg += ft_strlen(pattern);
+	value = get_pattern_files(pattern);
+	if (!value)
+	{
+		free(pattern);
+		return ;
+	}
+	replaced_str = ft_strreplace(*result, pattern, value);
+	(free(pattern), free(*result), free(value));
+	*result = replaced_str;
 }
 
 char	*replace_env_vars(char *arg, t_arg_type type)
@@ -68,19 +141,16 @@ char	*replace_env_vars(char *arg, t_arg_type type)
 	while (*arg)
 	{
 		if (type == ARG_PLAIN && *arg == '~' && ft_strchr("/ ", *(arg + 1)))
-		{
-			expand_home(&result);
-			arg++;
-		}
+			(expand_home(&result), arg++);
 		else if (*arg == '$')
 		{
 			expand_env_var(&result, &arg);
 			continue ;
 		}
+		else if (type == ARG_PLAIN && ft_strchr(arg, '*'))
+			expand_wildcard(&result, &arg);
 		else
-		{
 			arg++;
-		}
 	}
 	return (result);
 }
