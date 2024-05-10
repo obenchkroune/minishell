@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:10:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:49:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static void	expand_env_var(char **result, char **arg)
 		return ;
 	}
 	*arg += ft_strlen(name);
-	value = get_env(name + 1);
+	value = trim_whitespace(get_env(name + 1));
 	if (!value)
 		value = "";
 	replaced_str = ft_strreplace(*result, name, value);
-	(free(name), free(*result));
+	(free(name), free(*result), free(value));
 	*result = replaced_str;
 }
 

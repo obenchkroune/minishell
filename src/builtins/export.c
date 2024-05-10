@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/10 10:00:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:53:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_export(t_cmd *cmd)
 {
 	char	*key;
 	int		i;
-	char	*temp;
+	char	*eq_sign;
 
 	if (cmd->argc == 1)
 	{
@@ -71,15 +71,11 @@ void	ft_export(t_cmd *cmd)
 	while (i < cmd->argc)
 	{
 		key = get_export_key(cmd->argv[i]);
-		temp = ft_strchr(cmd->argv[i], '=');
-		if (is_valid_name(key) && temp)
-		{
-			set_env(key, temp + 1);
-			free(key);
-			key = NULL;
-		}
+		eq_sign = ft_strchr(cmd->argv[i], '=');
+		if (is_valid_name(key) && eq_sign)
+			(set_env(key, eq_sign + 1), free(key));
 		else
-			export_error(key);
+			export_error(cmd->argv[i]);
 		i++;
 	}
 }

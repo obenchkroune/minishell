@@ -6,11 +6,23 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 02:42:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/04/19 16:48:01 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 21:00:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_history	*get_histroy_tail(void)
+{
+	t_history	*tail;
+	
+	tail = g_shell->history;
+	while (tail && tail->next)
+	{
+		tail = tail->next;
+	}
+	return (tail);
+}
 
 void	ft_clear_history(void)
 {

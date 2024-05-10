@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 18:07:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:44:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,29 @@ void	child_sigint_handler(int signum)
 	exit(1);
 }
 
-void	heredoc_fork(int fd, char *delimer)
+void	read_heredoc(int fd, char *delimer)
 {
 	char	*line;
+	char	*temp;
 
-	signal(SIGINT, child_sigint_handler);
+	g_shell->secondary_input = dup(0);
 	while (1)
 	{
-		line = readline("> ");
+		write(1, "> ", 2);
+		line = get_next_line(g_shell->secondary_input);
 		if (!line || ft_strcmp(line, delimer) == 0)
 		{
 			free(line);
 			break ;
 		}
+		line[ft_strlen(line) - 1] = '\0';
+		temp = line;
+		line = ft_expand(line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
-		free(line);
+		(free(line), free(temp));
 	}
-	exit(0);
+	close(g_shell->secondary_input);
 }
 
 void	get_heredoc_filename(char name_ptr[15])
@@ -53,8 +58,6 @@ void	get_heredoc_filename(char name_ptr[15])
 
 static int	get_heredoc_fd(t_redir *redir)
 {
-	pid_t	pid;
-	int		status;
 	int		fd;
 
 	get_heredoc_filename(redir->heredoc_file);
@@ -62,12 +65,7 @@ static int	get_heredoc_fd(t_redir *redir)
 	fd = open(redir->heredoc_file, O_CREAT | O_WRONLY, 0644);
 	if (fd < 0)
 		panic("open");
-	pid = fork();
-	if (pid == 0)
-		heredoc_fork(fd, redir->file);
-	waitpid(pid, &status, 0);
-	if (WEXITSTATUS(status) == 1)
-		g_shell->has_syntax_error = true;
+	read_heredoc(fd, redir->file);
 	close(fd);
 	return (open(redir->heredoc_file, O_RDONLY));
 }

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:39:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:36:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_shell
 
 extern t_shell		*g_shell;
 
+char				*trim_whitespace(char *input);
 void				set_status(int status);
 char				*ft_strreplace(char *str, char *find, char *replace);
 void				display_prompt(void);

@@ -6,20 +6,20 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 18:02:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 21:15:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	trim_input(void)
+char	*trim_whitespace(char *input)
 {
 	char	*result;
 	size_t	buf_size;
-	char	*input;
 	size_t	j;
 
-	input = g_shell->input;
+	if (!input)
+		return (NULL);
 	buf_size = ft_strlen(input) + 1;
 	result = malloc(sizeof(char) * buf_size);
 	if (!result)
@@ -37,22 +37,36 @@ void	trim_input(void)
 		input++;
 	}
 	result[j] = '\0';
-	free(g_shell->input);
-	g_shell->input = result;
+	return (result);
+}
+
+bool	is_duplicate_input(char *input)
+{
+	t_history	*last_history;
+
+	last_history = get_histroy_tail();
+	if (!last_history)
+		return (false);
+	return (ft_strcmp(last_history->value, input) == 0);
 }
 
 void	parse_input(void)
 {
+	char		*trimed_input;
+
 	if (is_empty(g_shell->input))
 	{
 		g_shell->tree = NULL;
 		return ;
 	}
 	g_shell->tree = parse_pipe();
-	if (!g_shell->has_heredoc)
+	trimed_input = trim_whitespace(g_shell->input);
+	if (!g_shell->has_heredoc && !is_duplicate_input(trimed_input))
 	{
-		trim_input();
+		free(g_shell->input);
+		g_shell->input = ft_strdup(trimed_input);
 		add_history(g_shell->input);
 		set_history(g_shell->input);
 	}
+	free(trimed_input);
 }

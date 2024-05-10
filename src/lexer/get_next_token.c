@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 18:01:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:43:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@ static bool	handle_unclosed_quote(size_t *i)
 	char	quote;
 
 	quote = g_shell->input[*i];
-	g_shell->secondary_input = dup(0);
 	if (quote != 0 && !ft_strchr("'\"", quote))
 		return (false);
+	g_shell->secondary_input = dup(0);
 	while (g_shell->input[*i] && !ft_strchr(g_shell->input + *i + 1, quote))
 	{
 		if (!read_quote_completion(quote))
 		{
-			return (false);
+			return (close(g_shell->secondary_input), false);
 		}
 	}
+	close(g_shell->secondary_input);
 	return (true);
 }
 
