@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 11:30:54 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:24:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	free_env(void)
 	while (env)
 	{
 		next = env->next;
+		free(env->key);
+		free(env->value);
 		free(env);
 		env = next;
 	}

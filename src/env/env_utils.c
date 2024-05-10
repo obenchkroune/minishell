@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 11:40:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 11:42:16 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:40:15 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	add_env(t_env **root, char *key, char *value)
 	tail->next = env;
 }
 
-t_env	*env_constructor(char *key, char *value)
+t_env	*env_constructor(const char *key, const char *value)
 {
 	t_env	*result;
 

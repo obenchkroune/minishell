@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 10:14:16 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:28:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ char				*get_display_line(void);
 void				cd_error(char *path);
 void				cd_relative(char *path);
 void				cd_absolute(char *path);
+void			    set_pwd(char *path);
 
 #endif

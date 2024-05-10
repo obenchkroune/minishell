@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 12:21:32 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:45:37 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	delete_env(char *key)
 	}
 }
 
-void	set_env(char *key, char *value)
+void	set_env(const char *key, const char *value)
 {
 	t_env	*env;
 	t_env	*tail;
-	char	*temp;
+	char	*new_value;
 
 	env = g_shell->env;
 	tail = g_shell->env;
@@ -48,9 +48,9 @@ void	set_env(char *key, char *value)
 	{
 		if (ft_strcmp(env->key, key) == 0)
 		{
-			temp = env->value;
-			env->value = ft_strdup(value);
-			free(temp);
+			new_value = ft_strdup(value);
+			free(env->value);
+			env->value = new_value;
 			update_envp();
 			return ;
 		}

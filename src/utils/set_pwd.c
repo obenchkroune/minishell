@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   set_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 18:37:38 by oussama           #+#    #+#             */
-/*   Updated: 2024/05/10 12:39:43 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/05/10 13:13:30 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/05/10 14:18:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_env(const char *key)
+void    set_pwd(char *path)
 {
-	t_env	*env;
-
-	env = g_shell->env;
-	if (*key == '?')
-		return (g_shell->last_exit.str);
-	while (env)
-	{
-		if (ft_strcmp(env->key, key) == 0)
-			return (env->value);
-		env = env->next;
-	}
-	return (NULL);
+    char    *cwd;
+    
+    cwd = getcwd(NULL, 0);
+    if (!cwd)
+    {
+        perror("getcwd: cannot access parent directories");
+        if (!path)
+        {
+            free(cwd);
+            return ;
+        }
+        cwd = ft_strdup(path);
+        if (!cwd)
+            panic("malloc");
+    }
+    set_env("OLDPWD", g_shell->cwd);
+    free(g_shell->cwd);
+    g_shell->cwd = cwd;
+    set_env("PWD", g_shell->cwd);
 }
