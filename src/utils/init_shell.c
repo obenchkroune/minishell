@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 12:42:36 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:39:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	init_shell(char **envp)
 	set_env("OLDPWD", g_shell->cwd);
 	g_shell->has_syntax_error = false;
 	g_shell->has_heredoc = false;
+	g_shell->secondary_input = -1;
 	set_status(0);
 }

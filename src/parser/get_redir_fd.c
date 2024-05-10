@@ -6,13 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:26:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:28:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	sigint_heredoc(int signum)
+void	child_sigint_handler(int signum)
 {
 	(void)signum;
 	exit(1);
@@ -22,7 +22,7 @@ void	heredoc_fork(int fd, char *delimer)
 {
 	char	*line;
 
-	signal(SIGINT, sigint_heredoc);
+	signal(SIGINT, child_sigint_handler);
 	while (1)
 	{
 		line = readline("> ");

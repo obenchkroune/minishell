@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 22:54:08 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:43:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	unclosed_pipe(void)
 	char	*input;
 	char	*temp;
 
-	input = readline("> ");
+	g_shell->secondary_input = dup(0);
+	write(1, "> ", 2);
+	input = get_next_line(g_shell->secondary_input);
+	input[ft_strlen(input) - 1] = '\0';
 	if (!input)
-	{
 		syntax_error("syntax error: unexpedted end of file");
-		ft_exit(&(t_cmd){.argc = 1});
-	}
 	temp = append_input(g_shell->input, input);
 	(free(g_shell->input), free(input));
 	g_shell->input = temp;

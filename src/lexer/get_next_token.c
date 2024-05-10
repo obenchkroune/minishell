@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:52:33 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:01:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,43 @@
 
 #define QUOTE_ERROR "syntax error: unexpected EOF while looking for matching"
 
-static bool	handle_unclosed_quote(size_t *i)
+bool	read_quote_completion(char quote)
 {
-	char	quote;
 	char	*input;
 	char	*value;
 
+	write(1, "> ", 2);
+	input = get_next_line(g_shell->secondary_input);
+	if (!input)
+	{
+		if (quote == '\'')
+			syntax_error(QUOTE_ERROR " `''");
+		else
+			syntax_error(QUOTE_ERROR " `\"'");
+		syntax_error("syntax error: unexpected end of file");
+		return (false);
+	}
+	input[ft_strlen(input) - 1] = '\0';
+	value = append_input(g_shell->input, input);
+	(free(g_shell->input), free(input));
+	g_shell->input = value;
+	return (true);
+}
+
+static bool	handle_unclosed_quote(size_t *i)
+{
+	char	quote;
+
 	quote = g_shell->input[*i];
+	g_shell->secondary_input = dup(0);
 	if (quote != 0 && !ft_strchr("'\"", quote))
 		return (false);
 	while (g_shell->input[*i] && !ft_strchr(g_shell->input + *i + 1, quote))
 	{
-		input = readline("> ");
-		if (!input)
+		if (!read_quote_completion(quote))
 		{
-			if (quote == '\'')
-				syntax_error(QUOTE_ERROR " `''");
-			else
-				syntax_error(QUOTE_ERROR " `\"'");
-			syntax_error("syntax error: unexpected end of file");
 			return (false);
 		}
-		value = append_input(g_shell->input, input);
-		(free(g_shell->input), free(input));
-		g_shell->input = value;
 	}
 	return (true);
 }
