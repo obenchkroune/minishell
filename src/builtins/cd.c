@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/09 01:29:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:12:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	cd_back(void)
 	if (chdir("..") == -1)
 	{
 		cd_error(get_env("PWD"));
-		exit(1);
 	}
 	temp = getcwd(NULL, 0);
 	set_env("OLDPWD", get_env("PWD"));
@@ -35,7 +34,7 @@ static void	cd_oldpwd(void)
 	if (!oldpwd)
 	{
 		panic_minishell("cd: OLDPWD not set!", 1);
-		exit(1);
+		return ;
 	}
 	cd_absolute(oldpwd);
 }
@@ -48,7 +47,7 @@ static void	cd_home(void)
 	if (!home)
 	{
 		panic_minishell("cd: HOME not set!", 1);
-		exit(1);
+		return ;
 	}
 	cd_absolute(home);
 }
@@ -61,7 +60,7 @@ void	ft_cd(t_cmd *cmd)
 	if (cmd->argc > 2)
 	{
 		panic_minishell("cd: too many arguments", 1);
-		exit(1);
+		return ;
 	}
 	path = cmd->argv[1];
 	if (cmd->argc == 1)

@@ -6,33 +6,24 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:37:38 by oussama           #+#    #+#             */
-/*   Updated: 2024/04/23 21:46:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:21:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_env(char *name)
+char	*get_env(char *key)
 {
-	char	**envp;
-	size_t	len;
-	char	*equal_sign;
+	t_env	*env;
 
-	if (*name == '?')
-		return (ft_itoa(g_shell->last_exit_status));
-	envp = g_shell->envp;
-	while (*envp)
+	env = g_shell->env;
+	if (*key == '?')
+		return (g_shell->last_exit.str);
+	while (env)
 	{
-		equal_sign = ft_strchr(*envp, '=');
-		if (!equal_sign)
-		{
-			envp++;
-			continue ;
-		}
-		len = equal_sign - *envp;
-		if (ft_strncmp(name, *envp, len) == 0)
-			return (equal_sign + 1);
-		envp++;
+		if (ft_strcmp(env->key, key) == 0)
+			return (env->value);
+		env = env->next;
 	}
 	return (NULL);
 }

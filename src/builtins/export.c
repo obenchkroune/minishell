@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/05 21:18:18 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:00:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	is_valid_name(char *name)
 static void	export_error(char *key)
 {
 	ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n", key);
-	g_shell->last_exit_status = 1;
+	set_status(1);
 	free(key);
 }
 

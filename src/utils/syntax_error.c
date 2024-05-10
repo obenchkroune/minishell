@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:54:54 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:04:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	syntax_error(char *msg)
 			free(token.value);
 	}
 	g_shell->has_syntax_error = true;
-	g_shell->last_exit_status = 1;
+	set_status(1);
 	g_shell->lexer_idx = ft_strlen(g_shell->input);
 }

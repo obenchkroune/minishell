@@ -6,27 +6,33 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:27:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 04:03:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 11:42:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**parse_env(char **envp)
+t_env	*parse_env(char **envp)
 {
-	char	**result;
-	size_t	len;
-	size_t	i;
+	t_env	*result;
+	char	*name;
+	char	*eq_sign;
 
-	len = ft_tabsize(envp);
-	result = ft_calloc(sizeof(char *), len + 1);
-	if (!result)
-		panic("malloc");
-	i = 0;
-	while (i < len)
+	result = NULL;
+	while (*envp)
 	{
-		result[i] = ft_strdup(envp[i]);
-		i++;
+		eq_sign = ft_strchr(*envp, '=');
+		if (!eq_sign)
+			add_env(&result, *envp, "");
+		else
+		{
+			name = ft_substr(*envp, 0, eq_sign - *envp);
+			if (!name)
+				panic("malloc");
+			add_env(&result, name, eq_sign + 1);
+			free(name);
+		}
+		envp++;
 	}
 	return (result);
 }

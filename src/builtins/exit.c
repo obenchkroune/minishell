@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:30:04 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/09 13:49:57 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:04:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_exit(t_cmd *cmd)
 {
 	int	status;
 
-	status = g_shell->last_exit_status;
+	status = g_shell->last_exit.status;
 	if (cmd->argc > 2)
 	{
 		panic_minishell("exit: too many arguments", 1);

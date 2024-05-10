@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:13:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 01:21:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:04:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	display_prompt(void)
 	g_shell->input = readline(g_shell->prompt);
 	if (!g_shell->input)
 	{
-		exit_status = g_shell->last_exit_status;
+		exit_status = g_shell->last_exit.status;
 		cleanup_rotation();
 		cleanup_shell();
 		printf("exit\n");

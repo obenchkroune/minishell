@@ -3,75 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/03 19:27:15 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:21:32 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	add_env(char *key, char *value)
+void	delete_env(char *key)
 {
-	size_t	len;
-	size_t	i;
-	char	**envp;
-	char	*temp;
+	t_env	*env;
+	t_env	*prev;
 
-	len = ft_tabsize(g_shell->envp);
-	envp = ft_calloc(sizeof(char *), len + 2);
-	if (!envp)
-		panic("malloc");
-	i = 0;
-	while (i < len)
+	env = g_shell->env;
+	prev = NULL;
+	while (env)
 	{
-		envp[i] = ft_strdup(g_shell->envp[i]);
-		i++;
+		if (ft_strcmp(key, env->key) == 0)
+		{
+			if (!prev)
+				g_shell->env = env->next;
+			else
+				prev->next = env->next;
+			(free(env->key), free(env->value), free(env));
+			update_envp();
+			return ;
+		}
+		prev = env;
+		env = env->next;
 	}
-	temp = ft_strjoin(key, "=");
-	envp[i] = ft_strjoin(temp, value);
-	free(temp);
-	free_tab(g_shell->envp);
-	g_shell->envp = envp;
-}
-
-static char	*join_env(char *key, char *value)
-{
-	char	*temp;
-	char	*result;
-
-	temp = ft_strjoin(key, "=");
-	result = ft_strjoin(temp, value);
-	free(temp);
-	return (result);
 }
 
 void	set_env(char *key, char *value)
 {
-	size_t	len;
-	char	*equal_sign;
-	char	**envp;
+	t_env	*env;
+	t_env	*tail;
+	char	*temp;
 
-	if (!value)
-		value = "";
-	envp = g_shell->envp;
-	while (*envp)
+	env = g_shell->env;
+	tail = g_shell->env;
+	while (env)
 	{
-		equal_sign = ft_strchr(*envp, '=');
-		if (!equal_sign)
+		if (ft_strcmp(env->key, key) == 0)
 		{
-			envp++;
-			continue ;
-		}
-		len = equal_sign - *envp;
-		if (ft_strncmp(key, *envp, len) == 0 && key[len] == '\0')
-		{
-			free(*envp);
-			*envp = join_env(key, value);
+			temp = env->value;
+			env->value = ft_strdup(value);
+			free(temp);
+			update_envp();
 			return ;
 		}
-		envp++;
+		tail = env;
+		env = env->next;
 	}
-	add_env(key, value);
+	tail->next = env_constructor(key, value);
+	update_envp();
 }

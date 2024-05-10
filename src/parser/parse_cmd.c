@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:53:42 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 11:46:15 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*get_executable(char *cmd)
 	char	*slash_cmd;
 	size_t	i;
 
-	if (!cmd || !get_env("PATH"))
+	if (!cmd)
 		return (NULL);
 	i = 0;
 	result = NULL;

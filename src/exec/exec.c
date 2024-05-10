@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/09 00:43:37 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:04:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_exec_pipeline(t_node *tree)
 		{
 			(close(pipe_fd[0]), close(pipe_fd[1]), waitpid(pid_l, &status, 0),
 				waitpid(pid_r, &status, 0));
-			g_shell->last_exit_status = ft_get_exit_status(status);
+			set_status(ft_get_exit_status(status));
 			return (ft_get_exit_status(status));
 		}
 	}

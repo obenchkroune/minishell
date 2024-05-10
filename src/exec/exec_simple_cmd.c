@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:52:43 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/09 01:27:45 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:01:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 		expand_argv(cmd->argv);
 	if (cmd && ft_is_builtin(cmd))
 	{
-		g_shell->last_exit_status = ft_exec_builtin(cmd, tree->redir);
-		return (g_shell->last_exit_status);
+		set_status(ft_exec_builtin(cmd, tree->redir));
+		return (g_shell->last_exit.status);
 	}
 	status = ft_exec_cmd(tree);
 	if (is_pipe)
 		exit(status);
-	g_shell->last_exit_status = status;
+	set_status(status);
 	return (status);
 }

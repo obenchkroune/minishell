@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:55:51 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:14:16 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@
 # include <termios.h>
 # include <unistd.h>
 
+typedef struct s_last_exit
+{
+	int		status;
+	char	*str;
+}	t_last_exit;
+
 typedef struct s_shell
 {
 	t_node			*tree;
@@ -52,8 +58,9 @@ typedef struct s_shell
 	size_t			lexer_idx;
 	t_history		*history;
 	char			*cwd;
+	t_env			*env;
 	char			**envp;
-	int				last_exit_status;
+	t_last_exit		last_exit;
 	char			*prompt;
 	bool			has_syntax_error;
 	bool			has_heredoc;
@@ -63,6 +70,7 @@ typedef struct s_shell
 
 extern t_shell		*g_shell;
 
+void    			set_status(int status);
 char				*ft_strreplace(char *str, char *find, char *replace);
 void				display_prompt(void);
 void				panic(char *msg);

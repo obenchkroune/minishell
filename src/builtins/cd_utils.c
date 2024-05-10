@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 01:28:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 01:30:21 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:26:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	cd_error(char *path)
 {
 	ft_fprintf(2, "minishell: cd: %s: %s\n", path, strerror(errno));
-	g_shell->last_exit_status = 1;
+	set_status(1);
 }
 
 void	cd_relative(char *path)
@@ -42,7 +42,7 @@ void	cd_absolute(char *path)
 	if (chdir(path) == -1)
 	{
 		cd_error(path);
-		exit(1);
+		return ;
 	}
 	set_env("OLDPWD", get_env("PWD"));
 	set_env("PWD", path);
