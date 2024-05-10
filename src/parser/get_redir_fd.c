@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:28:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:07:29 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	get_redir_fd(t_redir *redir)
 	else if (redir->type == REDIR_IN)
 		return (open(redir->file, O_RDONLY));
 	else if (redir->type == REDIR_OUT)
-		return (open(redir->file, O_CREAT | O_TRUNC | O_WRONLY));
+		return (open(redir->file, O_CREAT | O_TRUNC | O_WRONLY, 0644));
 	else if (redir->type == REDIR_HEREDOC)
 		return (get_heredoc_fd(redir));
 	return (-1);
