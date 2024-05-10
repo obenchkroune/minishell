@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 02:55:42 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:26:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	get_heredoc_fd(t_redir *redir)
 	int		fd;
 
 	get_heredoc_filename(redir->heredoc_file);
+	unlink(redir->heredoc_file);
 	fd = open(redir->heredoc_file, O_CREAT | O_WRONLY, 0644);
 	if (fd < 0)
 		panic("open");
