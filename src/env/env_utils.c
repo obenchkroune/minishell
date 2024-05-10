@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 11:40:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 12:40:15 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:25:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	*join_env(char *name, char *value)
 	ft_strlcat(result, value, buf_size);
 	return (result);
 }
-
 
 void	update_envp(void)
 {

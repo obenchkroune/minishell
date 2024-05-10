@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/10 14:19:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:24:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	cd_relative(char *path)
 {
 	char	*new_path;
 	char	*temp;
-	
+
 	temp = ft_strjoin(get_env("PWD"), "/");
 	new_path = ft_strjoin(temp, path);
 	free(temp);
