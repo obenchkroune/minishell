@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 20:49:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:57:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static char	*get_var_name(char *str)
 {
-	char	*start;
+	size_t	i;
 
-	start = str;
-	if (*str == '$')
-		str++;
-	if (*str == '?')
+	i = 0;
+	if (str[i] == '$')
+		i++;
+	if (str[i] == '?')
 		return (ft_strdup("$?"));
-	if (ft_isdigit(*str))
-		return (ft_substr(start, 0, 2));
-	while (*str && (ft_isalnum(*str) || *str == '_'))
-		str++;
-	return (ft_substr(start, 0, str - start));
+	if (ft_isdigit(str[i]))
+		return (ft_substr(str, 0, 2));
+	while (str[i] && (ft_isalnum(str[i]) || *str == '_'))
+		i++;
+	return (ft_substr(str, 0, i));
 }
 
 static void	expand_home(char **result)
@@ -44,7 +44,7 @@ static void	expand_env_var(char **result, char **arg)
 	char	*replaced_str;
 
 	name = get_var_name(*arg);
-	if (ft_strcmp(name, "$") == 0)
+	if (ft_strlen(name) == 1)
 	{
 		*arg += 1;
 		return ;
@@ -52,7 +52,7 @@ static void	expand_env_var(char **result, char **arg)
 	*arg += ft_strlen(name);
 	value = trim_whitespace(get_env(name + 1));
 	if (!value)
-		value = "";
+		value = ft_strdup("");
 	replaced_str = ft_strreplace(*result, name, value);
 	(free(name), free(*result), free(value));
 	*result = replaced_str;
