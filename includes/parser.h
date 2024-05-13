@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:11:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:49:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_arg
 	struct s_arg	*next;
 }					t_arg;
 
+void			    read_unclosed_pipe(t_token_type token);
 char				*get_wildcard_pattern(char *arg);
 char				*add_file_to_string(char *dst, char *file);
 char				*get_pattern_files(char *pattern);

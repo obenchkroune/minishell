@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 06:45:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/11 18:47:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:54:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	sigint_handler(int signum)
 {
 	close(g_shell->secondary_input);
+	g_shell->secondary_input = -1;
 	set_status(signum + 128);
 	ft_putendl_fd("", 1);
 	rl_replace_line("", 0);

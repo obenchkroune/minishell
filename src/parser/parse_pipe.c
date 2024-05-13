@@ -6,28 +6,11 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 20:43:52 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:52:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	unclosed_pipe(void)
-{
-	char	*input;
-	char	*temp;
-
-	g_shell->secondary_input = dup(0);
-	write(1, "> ", 2);
-	input = get_next_line(g_shell->secondary_input);
-	input[ft_strlen(input) - 1] = '\0';
-	if (!input)
-		syntax_error("syntax error: unexpedted end of file");
-	temp = append_input(g_shell->input, input);
-	(free(g_shell->input), free(input));
-	g_shell->input = temp;
-	close(g_shell->secondary_input);
-}
 
 t_node	*parse_pipe(void)
 {
@@ -39,8 +22,7 @@ t_node	*parse_pipe(void)
 	if (peek() == T_PIPE)
 	{
 		get_next_token();
-		while (peek() == T_EOF && !g_shell->has_syntax_error)
-			unclosed_pipe();
+		read_unclosed_pipe(T_EOF);
 		node = create_node(N_PIPE, node, parse_pipe());
 	}
 	return (node);

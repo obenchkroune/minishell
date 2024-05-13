@@ -6,41 +6,34 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 20:44:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:55:31 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	child_sigint_handler(int signum)
-{
-	(void)signum;
-	exit(1);
-}
 
 void	read_heredoc(int fd, char *delimer)
 {
 	char	*line;
 	char	*temp;
 
-	g_shell->secondary_input = dup(0);
-	while (1)
+	while (g_shell->secondary_input != -1)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(g_shell->secondary_input);
+		if (line)
+			line[ft_strlen(line) - 1] = '\0';
 		if (!line || ft_strcmp(line, delimer) == 0)
 		{
 			free(line);
 			break ;
 		}
-		line[ft_strlen(line) - 1] = '\0';
 		temp = line;
 		line = ft_expand(line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		(free(line), free(temp));
 	}
-	close(g_shell->secondary_input);
 }
 
 void	get_heredoc_filename(char name_ptr[15])
@@ -72,6 +65,14 @@ static int	get_heredoc_fd(t_redir *redir)
 
 int	get_redir_fd(t_redir *redir)
 {
+	char	*temp;
+
+	if (redir->type != REDIR_HEREDOC)
+	{
+		temp = redir->file;
+		redir->file = ft_expand(redir->file);
+		free(temp);
+	}
 	if (redir->type == REDIR_APPEND)
 		return (open(redir->file, O_CREAT | O_APPEND | O_WRONLY, 0644));
 	else if (redir->type == REDIR_IN)
