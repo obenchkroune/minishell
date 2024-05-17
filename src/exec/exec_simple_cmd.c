@@ -60,7 +60,7 @@ int	ft_exec_simple_cmd(t_node *tree, bool is_pipe)
 		expand_argv(cmd->argv);
 	if (cmd && ft_is_builtin(cmd))
 	{
-		set_status(ft_exec_builtin(cmd, tree->redir));
+		ft_exec_builtin(cmd, tree->redir);
 		return (g_shell->last_exit.status);
 	}
 	status = ft_exec_cmd(tree);
