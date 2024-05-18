@@ -12,8 +12,16 @@
 
 #include "../../includes/minishell.h"
 
+bool	is_meta_token(t_token_type type)
+{
+	return (type == T_SEMICOL || type == T_PIPE || type == T_AND
+		|| type == T_OR);
+}
+
 t_node	*parse_meta(t_node *node)
 {
+	if (!is_meta_token(peek()))
+		return (syntax_error(NULL), node);
 	if (peek() == T_SEMICOL)
 	{
 		get_next_token();
@@ -49,7 +57,8 @@ t_node	*parse_pipe(void)
 	t_node	*node;
 	 
 	node = NULL;
-	if (peek() == T_OPEN_PAREN) {
+	if (peek() == T_OPEN_PAREN)
+	{
 		get_next_token();
 		if (peek() != T_WORD && !is_redir_token(peek()))
 			return (syntax_error(NULL), node);
@@ -59,10 +68,8 @@ t_node	*parse_pipe(void)
 		get_next_token();
 	}
 	else
-	{
 		node = parse_cmd();
-	}
-	if (node)
+	if (node && peek() != T_EOF)
 		node = parse_meta(node);
 	return (node);
 }

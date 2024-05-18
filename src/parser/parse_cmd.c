@@ -58,7 +58,7 @@ char	*get_executable(char *cmd)
 	cmd = ft_expand(cmd);
 	if (ft_strchr(cmd, '/') != NULL && check_file(cmd))
 		return (cmd);
-	path = ft_split(get_env("PATH"), ':');
+	path = ft_split(get_env("PATH"), ':'); // handle this
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
 	{
@@ -79,13 +79,10 @@ t_node	*parse_cmd(void)
 	t_list	*args;
 	t_redir	*redir;
 
-	if (peek() != T_WORD && !is_redir_token(peek()))
-	{
-		syntax_error(NULL);
-		return (NULL);
-	}
 	if (peek() == T_EOF)
 		return (NULL);
+	if (peek() != T_WORD && !is_redir_token(peek()))
+		return (syntax_error(NULL), NULL);
 	args = NULL;
 	redir = NULL;
 	node = create_node(N_CMD, NULL, NULL);

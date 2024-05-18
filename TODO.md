@@ -1,0 +1,1 @@
+[ ] expand wildcard before spliting argv
