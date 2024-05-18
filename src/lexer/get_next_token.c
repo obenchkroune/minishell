@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/18 13:07:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:11:17 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,28 +94,31 @@ static t_token	get_word_token(void)
 
 t_token	get_next_token(void)
 {
-	skip_whitespace();
-	if (peek() == T_EOF)
-		return (g_shell->lexer_idx = 0, (t_token){.type = T_EOF,
-			.value = "newline"});
-	else if (peek() == T_APPEND)
-		return (g_shell->lexer_idx += 2, (t_token){.type = T_APPEND,
-			.value = ">>"});
-	else if (peek() == T_HEREDOC)
-		return (g_shell->lexer_idx += 2, (t_token){.type = T_HEREDOC,
-			.value = "<<"});
-	else if (peek() == T_REDIR_OUT)
-		return (g_shell->lexer_idx += 1, (t_token){.type = T_REDIR_OUT,
-			.value = ">"});
-	else if (peek() == T_REDIR_IN)
-		return (g_shell->lexer_idx += 1, (t_token){.type = T_REDIR_IN,
-			.value = "<"});
-	else if (peek() == T_PIPE)
-		return (g_shell->lexer_idx += 1, (t_token){.type = T_PIPE,
-			.value = "|"});
-	else if (peek() == T_SEMICOL)
-		return (g_shell->lexer_idx += 1, (t_token){.type = T_SEMICOL,
-			.value = ";"});
+	t_token	t;
+
+	t.type = peek();
+	if (t.type == T_EOF)
+		return (g_shell->lexer_idx = 0, t.value = "newline", t);
+	else if (t.type == T_AND)
+		return (g_shell->lexer_idx += 2, t.value = "&&", t);
+	else if (t.type == T_OR)
+		return (g_shell->lexer_idx += 2, t.value = "||", t);
+	else if (t.type == T_APPEND)
+		return (g_shell->lexer_idx += 2, t.value = ">>", t);
+	else if (t.type == T_HEREDOC)
+		return (g_shell->lexer_idx += 2, t.value = "<<", t);
+	else if (t.type == T_REDIR_OUT)
+		return (g_shell->lexer_idx += 1, t.value = ">", t);
+	else if (t.type == T_REDIR_IN)
+		return (g_shell->lexer_idx += 1,t.value = "<", t);
+	else if (t.type == T_PIPE)
+		return (g_shell->lexer_idx += 1, t.value = "|", t);
+	else if (t.type == T_SEMICOL)
+		return (g_shell->lexer_idx += 1, t.value = ";", t);
+	else if (t.type == T_OPEN_PAREN)
+		return (g_shell->lexer_idx += 1, t.value = "(", t);
+	else if (t.type == T_CLOSE_PAREN)
+		return (g_shell->lexer_idx += 1, t.value = ")", t);
 	else
 		return (get_word_token());
 }

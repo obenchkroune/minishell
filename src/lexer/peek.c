@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 05:51:50 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/18 12:58:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:07:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ t_token_type	peek(void)
 		return (T_APPEND);
 	if (ft_strncmp(input, "<<", 2) == 0)
 		return (T_HEREDOC);
+	if (ft_strncmp(input, "&&", 2) == 0)
+		return (T_AND);
+	if (ft_strncmp(input, "||", 2) == 0)
+		return (T_OR);
 	if (*input == '>')
 		return (T_REDIR_OUT);
 	if (*input == '<')
@@ -43,6 +47,10 @@ t_token_type	peek(void)
 		return (T_PIPE);
 	if (*input == ';')
 		return (T_SEMICOL);
+	if (*input == '(')
+		return (T_OPEN_PAREN);
+	if (*input == ')')
+		return (T_CLOSE_PAREN);
 	else
 		return (T_WORD);
 }
