@@ -22,6 +22,7 @@ static void	exec_fork(t_node *node)
 	ft_redirect(redir, false);
 	if (!cmd)
 		exit(0);
+	cmd->path = get_executable(cmd->argv[0]);
 	if (!cmd->path)
 	{
 		(ft_fprintf(2, "minishell: %s: command not found\n", cmd->argv[0]),

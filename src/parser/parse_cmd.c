@@ -73,12 +73,6 @@ char	*get_executable(char *cmd)
 	return (result);
 }
 
-bool	is_redir_token(t_token_type type)
-{
-	return (type == T_REDIR_IN || type == T_REDIR_OUT
-		|| type == T_APPEND || type == T_HEREDOC);
-}
-
 t_node	*parse_cmd(void)
 {
 	t_node	*node;
@@ -104,6 +98,6 @@ t_node	*parse_cmd(void)
 	}
 	node->redir = redir;
 	if (args)
-		node->cmd = create_cmd(get_executable(args->content), ft_lsttab(args));
+		node->cmd = create_cmd(NULL, ft_lsttab(args));
 	return (free_list(args), node);
 }

@@ -33,7 +33,10 @@ typedef enum e_node_type
 	N_PIPE = 0,
 	N_CMD,
 	N_REDIR,
-	N_SEMICOL
+	N_SEMICOL,
+	N_SUBSHELL,
+	N_AND,
+	N_OR
 }					t_node_type;
 
 typedef struct s_cmd
@@ -75,6 +78,8 @@ typedef struct s_arg
 	struct s_arg	*next;
 }					t_arg;
 
+char				*get_executable(char *cmd);
+bool				is_redir_token(t_token_type type);
 void			    read_unclosed_pipe(t_token_type token);
 char				*get_wildcard_pattern(char *arg);
 char				*add_file_to_string(char *dst, char *file);

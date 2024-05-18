@@ -92,5 +92,6 @@ void				cd_error(char *path);
 void				cd_relative(char *path);
 void				cd_absolute(char *path);
 void				set_pwd(char *path);
+void				free_env(void);
 
 #endif

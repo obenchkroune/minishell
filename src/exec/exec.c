@@ -66,13 +66,47 @@ int	ft_exec_pipeline(t_node *tree)
 	return (0);
 }
 
+t_env	*ft_dup_env(void)
+{
+	t_env	*shell_env;
+	t_env	*result;
+
+	shell_env = g_shell->env;
+	result = NULL;
+	while (shell_env)
+	{
+		add_env(&result, shell_env->key, shell_env->value);
+		shell_env = shell_env->next;
+	}
+	return (result);
+}
+
+int	ft_exec_subshell(t_node *tree)
+{
+	t_env	*env_dup;
+	int		status;
+	
+	env_dup = ft_dup_env();
+	status = ft_exec_node(tree->left, false);
+	free_env();
+	g_shell->env = env_dup;
+	update_envp();
+	return (status);
+}
+
 int	ft_exec_node(t_node *tree, bool is_pipe)
 {
 	if (!tree || g_shell->has_syntax_error)
 		return (1);
+	if (tree->type == N_SUBSHELL)
+		return (ft_exec_subshell(tree));
 	if (tree->type == N_SEMICOL)
 		return (ft_exec_node(tree->left, false),
 			ft_exec_node(tree->right, false));
+	if (tree->type == N_AND && ft_exec_node(tree->left, false) == 0)
+		return (ft_exec_node(tree->right, false));
+	if (tree->type == N_OR && ft_exec_node(tree->left, false) != 0)
+		return (ft_exec_node(tree->right, false));
 	if (tree->type == N_PIPE)
 		return (ft_exec_pipeline(tree));
 	else if (tree->type == N_CMD)

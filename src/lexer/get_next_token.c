@@ -75,7 +75,7 @@ static t_token	get_word_token(void)
 
 	start = g_shell->lexer_idx;
 	i = g_shell->lexer_idx;
-	while (g_shell->input[i] && !ft_strchr(">|< ", g_shell->input[i]))
+	while (g_shell->input[i] && !ft_strchr(">|< ()&", g_shell->input[i]))
 	{
 		if (g_shell->input[i] && ft_strchr("'\"", g_shell->input[i]))
 		{
