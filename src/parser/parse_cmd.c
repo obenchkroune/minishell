@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 11:46:15 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/18 13:12:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,19 @@ char	*get_executable(char *cmd)
 	return (result);
 }
 
+bool	is_redir_token(t_token_type type)
+{
+	return (type == T_REDIR_IN || type == T_REDIR_OUT
+		|| type == T_APPEND || type == T_HEREDOC);
+}
+
 t_node	*parse_cmd(void)
 {
 	t_node	*node;
 	t_list	*args;
 	t_redir	*redir;
 
-	if (peek() == T_PIPE || peek() == T_ERROR)
+	if (peek() != T_WORD && !is_redir_token(peek()))
 	{
 		syntax_error(NULL);
 		return (NULL);
@@ -89,7 +95,7 @@ t_node	*parse_cmd(void)
 	args = NULL;
 	redir = NULL;
 	node = create_node(N_CMD, NULL, NULL);
-	while (peek() != T_PIPE && peek() != T_EOF)
+	while (peek() == T_WORD || is_redir_token(peek()))
 	{
 		if (peek() == T_WORD)
 			ft_lstadd_back(&args, ft_lstnew(get_next_token().value));

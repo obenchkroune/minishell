@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:14 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/09 13:55:38 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:58:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef enum e_token_type
 	T_REDIR_OUT,
 	T_HEREDOC,
 	T_WORD,
+	T_SEMICOL,
 	T_ERROR
 }					t_token_type;
 

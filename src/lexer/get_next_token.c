@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/11 20:56:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/18 13:07:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ t_token	get_next_token(void)
 	else if (peek() == T_PIPE)
 		return (g_shell->lexer_idx += 1, (t_token){.type = T_PIPE,
 			.value = "|"});
+	else if (peek() == T_SEMICOL)
+		return (g_shell->lexer_idx += 1, (t_token){.type = T_SEMICOL,
+			.value = ";"});
 	else
 		return (get_word_token());
 }

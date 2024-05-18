@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/13 15:49:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:57:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef enum e_node_type
 {
 	N_PIPE = 0,
 	N_CMD,
-	N_REDIR
+	N_REDIR,
+	N_SEMICOL
 }					t_node_type;
 
 typedef struct s_cmd

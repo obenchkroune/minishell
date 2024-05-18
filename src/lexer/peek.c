@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 05:51:50 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 01:16:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:58:35 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_token_type	peek(void)
 		return (T_REDIR_IN);
 	if (*input == '|')
 		return (T_PIPE);
+	if (*input == ';')
+		return (T_SEMICOL);
 	else
 		return (T_WORD);
 }
