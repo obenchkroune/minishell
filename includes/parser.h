@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 07:55:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 08:30:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_redir_type		get_redir_type(t_token token);
 void				free_tree(t_node *node);
 char				**expand_argv(char **argv);
 t_node				*parse_cmd(void);
-t_node				*parse_pipe(void);
+t_node				*parse_ast(void);
 void				expand_redir(t_redir *redir);
 int					get_redir_fd(t_redir *redir);
 

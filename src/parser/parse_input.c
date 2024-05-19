@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 21:15:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 08:30:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	parse_input(void)
 		g_shell->tree = NULL;
 		return ;
 	}
-	g_shell->tree = parse_pipe();
+	g_shell->tree = parse_ast();
 	trimed_input = trim_whitespace(g_shell->input);
 	if (!g_shell->has_heredoc && !is_duplicate_input(trimed_input))
 	{
