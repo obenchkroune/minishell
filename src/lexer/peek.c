@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "lexer.h"
 
 void	skip_whitespace(void)
 {
@@ -21,6 +22,22 @@ void	skip_whitespace(void)
 		g_shell->lexer_idx++;
 }
 
+static t_token_type	peek_redir_token(char *input)
+{
+	if (*input == '\0')
+		return (T_EOF);
+	if (ft_strncmp(input, ">>", 2) == 0)
+		return (T_APPEND);
+	if (ft_strncmp(input, "<<", 2) == 0)
+		return (T_HEREDOC);
+	if (*input == '>')
+		return (T_REDIR_OUT);
+	if (*input == '<')
+		return (T_REDIR_IN);
+	else
+		return (T_WORD);
+}
+
 t_token_type	peek(void)
 {
 	char	*input;
@@ -29,20 +46,10 @@ t_token_type	peek(void)
 		return (T_EOF);
 	skip_whitespace();
 	input = g_shell->input + g_shell->lexer_idx;
-	if (*input == '\0')
-		return (T_EOF);
-	if (ft_strncmp(input, ">>", 2) == 0)
-		return (T_APPEND);
-	if (ft_strncmp(input, "<<", 2) == 0)
-		return (T_HEREDOC);
 	if (ft_strncmp(input, "&&", 2) == 0)
 		return (T_AND);
 	if (ft_strncmp(input, "||", 2) == 0)
 		return (T_OR);
-	if (*input == '>')
-		return (T_REDIR_OUT);
-	if (*input == '<')
-		return (T_REDIR_IN);
 	if (*input == '|')
 		return (T_PIPE);
 	if (*input == ';')
@@ -51,6 +58,5 @@ t_token_type	peek(void)
 		return (T_OPEN_PAREN);
 	if (*input == ')')
 		return (T_CLOSE_PAREN);
-	else
-		return (T_WORD);
+	return (peek_redir_token(input));
 }

@@ -74,8 +74,6 @@ char	*replace_env_vars(char *arg, t_arg_type type)
 			expand_env_var(&result, &arg);
 			continue ;
 		}
-		else if (type == ARG_PLAIN && ft_strchr(arg, '*'))
-			expand_wildcard(&result, &arg);
 		else
 			arg++;
 	}

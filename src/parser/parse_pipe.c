@@ -55,7 +55,7 @@ bool	is_redir_token(t_token_type type)
 t_node	*parse_pipe(void)
 {
 	t_node	*node;
-	 
+
 	node = NULL;
 	if (peek() == T_OPEN_PAREN)
 	{

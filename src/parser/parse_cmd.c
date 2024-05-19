@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/18 13:12:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 07:52:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_executable(char *cmd)
 	cmd = ft_expand(cmd);
 	if (ft_strchr(cmd, '/') != NULL && check_file(cmd))
 		return (cmd);
-	path = ft_split(get_env("PATH"), ':'); // handle this
+	path = ft_split(get_env("PATH"), ':');
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
 	{
@@ -71,6 +71,31 @@ char	*get_executable(char *cmd)
 	}
 	(free(slash_cmd), free_tab(path), free(cmd));
 	return (result);
+}
+
+void	expand_wildcard_args(t_list *args)
+{
+	t_list	*node;
+	char	*value;
+	char	*temp;
+
+	node = args;
+	while (node)
+	{
+		if (ft_strchr(node->content, '*')
+			&& !ft_strchr(node->content, '"')
+			&& !ft_strchr(node->content, '\''))
+		{
+			value = get_pattern_files(node->content);
+			if (value)
+			{
+				temp = node->content;
+				node->content = value;
+				free(temp);
+			}
+		}
+		node = node->next;
+	}
 }
 
 t_node	*parse_cmd(void)
@@ -95,6 +120,9 @@ t_node	*parse_cmd(void)
 	}
 	node->redir = redir;
 	if (args)
+	{
+		expand_wildcard_args(args);
 		node->cmd = create_cmd(NULL, ft_lsttab(args));
+	}
 	return (free_list(args), node);
 }

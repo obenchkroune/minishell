@@ -15,7 +15,7 @@
 t_history	*get_histroy_tail(void)
 {
 	t_history	*tail;
-	
+
 	tail = g_shell->history;
 	while (tail && tail->next)
 	{

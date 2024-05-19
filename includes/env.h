@@ -23,6 +23,7 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+t_env	*ft_dup_env(void);
 t_env	*env_constructor(const char *key, const char *value);
 void	update_envp(void);
 t_env	*parse_env(char **envp);

@@ -66,26 +66,11 @@ int	ft_exec_pipeline(t_node *tree)
 	return (0);
 }
 
-t_env	*ft_dup_env(void)
-{
-	t_env	*shell_env;
-	t_env	*result;
-
-	shell_env = g_shell->env;
-	result = NULL;
-	while (shell_env)
-	{
-		add_env(&result, shell_env->key, shell_env->value);
-		shell_env = shell_env->next;
-	}
-	return (result);
-}
-
 int	ft_exec_subshell(t_node *tree)
 {
 	t_env	*env_dup;
 	int		status;
-	
+
 	env_dup = ft_dup_env();
 	status = ft_exec_node(tree->left, false);
 	free_env();

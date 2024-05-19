@@ -3,39 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/18 14:11:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 07:50:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-#define QUOTE_ERROR "syntax error: unexpected EOF while looking for matching"
-
-bool	read_quote_completion(char quote)
-{
-	char	*input;
-	char	*value;
-
-	write(1, "> ", 2);
-	input = get_next_line(g_shell->secondary_input);
-	if (!input)
-	{
-		if (quote == '\'')
-			syntax_error(QUOTE_ERROR " `''");
-		else
-			syntax_error(QUOTE_ERROR " `\"'");
-		syntax_error("syntax error: unexpected end of file");
-		return (false);
-	}
-	input[ft_strlen(input) - 1] = '\0';
-	value = append_input(g_shell->input, input);
-	(free(g_shell->input), free(input));
-	g_shell->input = value;
-	return (true);
-}
+#include "lexer.h"
 
 static bool	handle_unclosed_quote(size_t *i)
 {
@@ -92,6 +68,20 @@ static t_token	get_word_token(void)
 	return ((t_token){.type = T_WORD, .value = value});
 }
 
+t_token	get_redir_token(t_token t)
+{
+	if (t.type == T_APPEND)
+		return (g_shell->lexer_idx += 2, t.value = ">>", t);
+	else if (t.type == T_HEREDOC)
+		return (g_shell->lexer_idx += 2, t.value = "<<", t);
+	else if (t.type == T_REDIR_OUT)
+		return (g_shell->lexer_idx += 1, t.value = ">", t);
+	else if (t.type == T_REDIR_IN)
+		return (g_shell->lexer_idx += 1, t.value = "<", t);
+	else
+		return (get_word_token());
+}
+
 t_token	get_next_token(void)
 {
 	t_token	t;
@@ -103,14 +93,6 @@ t_token	get_next_token(void)
 		return (g_shell->lexer_idx += 2, t.value = "&&", t);
 	else if (t.type == T_OR)
 		return (g_shell->lexer_idx += 2, t.value = "||", t);
-	else if (t.type == T_APPEND)
-		return (g_shell->lexer_idx += 2, t.value = ">>", t);
-	else if (t.type == T_HEREDOC)
-		return (g_shell->lexer_idx += 2, t.value = "<<", t);
-	else if (t.type == T_REDIR_OUT)
-		return (g_shell->lexer_idx += 1, t.value = ">", t);
-	else if (t.type == T_REDIR_IN)
-		return (g_shell->lexer_idx += 1,t.value = "<", t);
 	else if (t.type == T_PIPE)
 		return (g_shell->lexer_idx += 1, t.value = "|", t);
 	else if (t.type == T_SEMICOL)
@@ -119,6 +101,5 @@ t_token	get_next_token(void)
 		return (g_shell->lexer_idx += 1, t.value = "(", t);
 	else if (t.type == T_CLOSE_PAREN)
 		return (g_shell->lexer_idx += 1, t.value = ")", t);
-	else
-		return (get_word_token());
+	return (get_redir_token(t));
 }

@@ -28,3 +28,18 @@ void	ft_env(t_cmd *cmd)
 		envp++;
 	}
 }
+
+t_env	*ft_dup_env(void)
+{
+	t_env	*shell_env;
+	t_env	*result;
+
+	shell_env = g_shell->env;
+	result = NULL;
+	while (shell_env)
+	{
+		add_env(&result, shell_env->key, shell_env->value);
+		shell_env = shell_env->next;
+	}
+	return (result);
+}

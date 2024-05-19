@@ -1,1 +1,1 @@
-[ ] expand wildcard before spliting argv
+[ ] handle : at the end of the PATH env var (maybe XD)
