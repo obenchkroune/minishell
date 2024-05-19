@@ -6,11 +6,13 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 08:30:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:12:06 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "lexer.h"
+#include <time.h>
 
 bool	is_meta_token(t_token_type type)
 {
@@ -52,7 +54,7 @@ bool	is_redir_token(t_token_type type)
 
 t_node	*parse_ast(void)
 {
-	t_node	*node;
+	t_node			*node;
 
 	node = NULL;
 	if (peek() == T_OPEN_PAREN)
@@ -64,7 +66,7 @@ t_node	*parse_ast(void)
 		if (peek() != T_CLOSE_PAREN)
 			return (syntax_error(NULL), node);
 		get_next_token();
-		if (!is_meta_token(peek()))
+		if (!is_meta_token(peek()) && peek() != T_EOF)
 			return (syntax_error(NULL), node);
 	}
 	else
