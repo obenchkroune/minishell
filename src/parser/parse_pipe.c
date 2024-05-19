@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/18 13:02:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 08:05:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ bool	is_meta_token(t_token_type type)
 
 t_node	*parse_meta(t_node *node)
 {
-	if (!is_meta_token(peek()))
-		return (syntax_error(NULL), node);
 	if (peek() == T_SEMICOL)
 	{
 		get_next_token();
@@ -66,6 +64,8 @@ t_node	*parse_pipe(void)
 		if (peek() != T_CLOSE_PAREN)
 			return (syntax_error(NULL), node);
 		get_next_token();
+		if (!is_meta_token(peek()))
+			return (syntax_error(NULL), node);
 	}
 	else
 		node = parse_cmd();
