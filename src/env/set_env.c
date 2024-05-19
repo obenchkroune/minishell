@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 03:05:08 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 12:45:37 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:44:54 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	set_env(const char *key, const char *value)
 		tail = env;
 		env = env->next;
 	}
-	tail->next = env_constructor(key, value);
+	if (tail)
+		tail->next = env_constructor(key, value);
 	update_envp();
 }

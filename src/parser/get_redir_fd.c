@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/18 13:08:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:50:15 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_redir_fd(t_redir *redir)
 {
 	char	*temp;
 
-	if (redir->type != REDIR_HEREDOC)
+	if (redir->type != REDIR_HEREDOC && redir->file)
 	{
 		temp = redir->file;
 		redir->file = ft_expand(redir->file);

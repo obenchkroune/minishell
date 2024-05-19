@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaharkat <yaharkat@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:32:42 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/05 21:38:09 by yaharkat         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:55:15 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdbool.h>
+
+bool	is_all_n(char *s)
+{
+	while (*s)
+	{
+		if (*s != 'n')
+			return (false);
+		s++;
+	}
+	return (true);
+}
 
 void	ft_echo(t_cmd *cmd)
 {
@@ -19,7 +31,7 @@ void	ft_echo(t_cmd *cmd)
 
 	i = 1;
 	trim_nl = false;
-	if (cmd->argc >= 2 && ft_strcmp(cmd->argv[1], "-n") == 0)
+	if (cmd->argc >= 2 && !ft_strncmp(cmd->argv[1], "-n", 2) && is_all_n(cmd->argv[1] + 1))
 	{
 		trim_nl = true;
 		i++;

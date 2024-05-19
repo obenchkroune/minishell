@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/10 20:53:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:47:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	export_error(char *key)
 {
 	ft_fprintf(2, "minishell: export: `%s' not a valid identifier\n", key);
 	set_status(1);
-	free(key);
 }
 
 char	*get_export_key(const char *arg)
@@ -73,9 +72,10 @@ void	ft_export(t_cmd *cmd)
 		key = get_export_key(cmd->argv[i]);
 		eq_sign = ft_strchr(cmd->argv[i], '=');
 		if (is_valid_name(key) && eq_sign)
-			(set_env(key, eq_sign + 1), free(key));
+			(set_env(key, eq_sign + 1));
 		else
 			export_error(cmd->argv[i]);
+		free(key);
 		i++;
 	}
 }
