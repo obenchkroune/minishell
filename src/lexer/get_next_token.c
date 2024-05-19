@@ -6,48 +6,19 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 07:50:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:29:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "lexer.h"
 
-static bool	handle_unclosed_quote(size_t *i)
-{
-	char	quote;
-
-	quote = g_shell->input[*i];
-	if (quote != 0 && !ft_strchr("'\"", quote))
-		return (false);
-	while (g_shell->input[*i] && !ft_strchr(g_shell->input + *i + 1, quote))
-	{
-		if (!read_quote_completion(quote))
-			return (false);
-	}
-	return (true);
-}
-
-static bool	handle_quoted_word(size_t *i)
-{
-	char	*pair_quote;
-
-	pair_quote = ft_strchr(g_shell->input + *i + 1, g_shell->input[*i]);
-	if (!pair_quote)
-	{
-		if (!handle_unclosed_quote(i))
-			return (false);
-	}
-	pair_quote = ft_strchr(g_shell->input + *i + 1, g_shell->input[*i]);
-	*i = pair_quote - g_shell->input + 1;
-	return (true);
-}
-
 static t_token	get_word_token(void)
 {
 	size_t	start;
 	char	*value;
 	size_t	i;
+	char	*pair_quote;
 
 	start = g_shell->lexer_idx;
 	i = g_shell->lexer_idx;
@@ -55,10 +26,10 @@ static t_token	get_word_token(void)
 	{
 		if (g_shell->input[i] && ft_strchr("'\"", g_shell->input[i]))
 		{
-			if (!handle_quoted_word(&i))
-			{
-				return ((t_token){.type = T_ERROR, .value = NULL});
-			}
+			pair_quote = ft_strchr(g_shell->input + i + 1, g_shell->input[i]);
+			if (!pair_quote)
+				return (syntax_error("unclosed quote"), (t_token) {.type = T_ERROR });
+			i = pair_quote - g_shell->input + 1;
 			continue ;
 		}
 		i++;

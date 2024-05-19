@@ -6,12 +6,13 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 16:12:06 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:07:03 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "lexer.h"
+#include "parser.h"
 #include <time.h>
 
 bool	is_meta_token(t_token_type type)
@@ -22,26 +23,25 @@ bool	is_meta_token(t_token_type type)
 
 t_node	*parse_meta(t_node *node)
 {
+	t_node_type	type;
+	
+	type = INT_MAX;
+	if (peek() == T_EOF)
+		return (node);
 	if (peek() == T_SEMICOL)
-	{
-		get_next_token();
-		node = create_node(N_SEMICOL, node, parse_ast());
-	}
+		type = N_SEMICOL;
 	else if (peek() == T_PIPE)
-	{
-		get_next_token();
-		read_unclosed_pipe(T_EOF);
-		node = create_node(N_PIPE, node, parse_ast());
-	}
+		type = N_PIPE;
 	else if (peek() == T_AND)
-	{
-		get_next_token();
-		node = create_node(N_AND, node, parse_ast());
-	}
+		type = N_AND;
 	else if (peek() == T_OR)
+		type = N_OR;
+	if (type != INT_MAX)
 	{
 		get_next_token();
-		node = create_node(N_OR, node, parse_ast());
+		if (peek() != T_WORD && !is_redir_token(peek()))
+			syntax_error(NULL);
+		node = create_node(type, node, parse_ast());
 	}
 	return (node);
 }
@@ -71,7 +71,6 @@ t_node	*parse_ast(void)
 	}
 	else
 		node = parse_cmd();
-	if (node && peek() != T_EOF)
-		node = parse_meta(node);
+	node = parse_meta(node);
 	return (node);
 }

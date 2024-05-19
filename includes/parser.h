@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 08:30:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:30:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_arg
 
 char				*get_executable(char *cmd);
 bool				is_redir_token(t_token_type type);
-void				read_unclosed_pipe(t_token_type token);
 char				*get_wildcard_pattern(char *arg);
 char				*add_file_to_string(char *dst, char *file);
 t_list				*get_pattern_files(char *pattern);
