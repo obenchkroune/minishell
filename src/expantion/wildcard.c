@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:46:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 07:56:08 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 09:01:41 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,11 @@ bool	check_wildcard(char *pattern, char *string)
 	if (*pattern == '\0' && *string == '\0')
 		return (true);
 	if (*string == '\0')
+	{
+		if (ft_strcmp(pattern, "*") == 0)
+			return (true);
 		return (false);
+	}
 	if (*pattern == '*')
 		return (check_wildcard(pattern, ++string)
 			|| check_wildcard(++pattern, string));
