@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 17:07:03 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:38:19 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	is_meta_token(t_token_type type)
 t_node	*parse_meta(t_node *node)
 {
 	t_node_type	type;
-	
+
 	type = INT_MAX;
 	if (peek() == T_EOF)
 		return (node);

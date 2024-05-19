@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 17:29:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:39:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static t_token	get_word_token(void)
 		{
 			pair_quote = ft_strchr(g_shell->input + i + 1, g_shell->input[i]);
 			if (!pair_quote)
-				return (syntax_error("unclosed quote"), (t_token) {.type = T_ERROR });
+				return (syntax_error("unclosed quote"),
+					(t_token){.type = T_ERROR});
 			i = pair_quote - g_shell->input + 1;
 			continue ;
 		}
