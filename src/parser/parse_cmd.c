@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 07:59:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 08:32:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	expand_wildcard_args(t_list *args)
 				temp = node->content;
 				node->content = files_list->content;
 				node->next = files_list->next;
-				free(temp), free(files_list);
+				(free(temp), free(files_list));
 			}
 		}
 		node = node->next;
