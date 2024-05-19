@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:46:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:12:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 07:56:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "libft.h"
 
 char	*get_wildcard_pattern(char *arg)
 {
@@ -38,12 +39,11 @@ char	*add_file_to_string(char *dst, char *file)
 	return (result);
 }
 
-char	*get_pattern_files(char *pattern)
+t_list	*get_pattern_files(char *pattern)
 {
 	DIR				*dir;
 	struct dirent	*entity;
-	char			*result;
-	char			*temp;
+	t_list			*result;
 
 	result = NULL;
 	dir = opendir(".");
@@ -58,31 +58,10 @@ char	*get_pattern_files(char *pattern)
 			|| !check_wildcard(pattern, entity->d_name)
 			|| (entity->d_name[0] == '.' && !ft_strchr(pattern, '.')))
 			continue ;
-		temp = result;
-		result = add_file_to_string(result, entity->d_name);
-		free(temp);
+		ft_lstadd_back(&result, ft_lstnew(ft_strdup(entity->d_name)));
 	}
 	closedir(dir);
 	return (result);
-}
-
-void	expand_wildcard(char **result, char **arg)
-{
-	char	*pattern;
-	char	*value;
-	char	*replaced_str;
-
-	pattern = get_wildcard_pattern(*arg);
-	*arg += ft_strlen(pattern);
-	value = get_pattern_files(pattern);
-	if (!value)
-	{
-		free(pattern);
-		return ;
-	}
-	replaced_str = ft_strreplace(*result, pattern, value);
-	(free(pattern), free(*result), free(value));
-	*result = replaced_str;
 }
 
 bool	check_wildcard(char *pattern, char *string)

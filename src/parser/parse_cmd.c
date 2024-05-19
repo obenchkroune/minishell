@@ -6,11 +6,12 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 07:52:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 07:59:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "libft.h"
 
 t_redir_type	get_redir_type(t_token token)
 {
@@ -76,7 +77,7 @@ char	*get_executable(char *cmd)
 void	expand_wildcard_args(t_list *args)
 {
 	t_list	*node;
-	char	*value;
+	t_list	*files_list;
 	char	*temp;
 
 	node = args;
@@ -86,12 +87,14 @@ void	expand_wildcard_args(t_list *args)
 			&& !ft_strchr(node->content, '"')
 			&& !ft_strchr(node->content, '\''))
 		{
-			value = get_pattern_files(node->content);
-			if (value)
+			files_list = get_pattern_files(node->content);
+			if (files_list)
 			{
+				ft_lstadd_back(&files_list, node->next);
 				temp = node->content;
-				node->content = value;
-				free(temp);
+				node->content = files_list->content;
+				node->next = files_list->next;
+				free(temp), free(files_list);
 			}
 		}
 		node = node->next;

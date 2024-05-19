@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 07:51:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/19 07:55:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ bool				is_redir_token(t_token_type type);
 void				read_unclosed_pipe(t_token_type token);
 char				*get_wildcard_pattern(char *arg);
 char				*add_file_to_string(char *dst, char *file);
-char				*get_pattern_files(char *pattern);
+t_list				*get_pattern_files(char *pattern);
 void				expand_wildcard(char **result, char **arg);
 bool				check_wildcard(char *pattern, char *string);
 char				*append_input(char *s1, char *s2);
