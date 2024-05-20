@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/19 20:47:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:29:52 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static bool	is_valid_name(char *name)
-{
-	if (!ft_isalpha(*name))
-		return (false);
-	while (*++name)
-	{
-		if (!ft_isalnum(*name))
-			return (false);
-	}
-	return (true);
-}
 
 static void	export_error(char *key)
 {
@@ -32,34 +20,61 @@ static void	export_error(char *key)
 
 char	*get_export_key(const char *arg)
 {
-	char	*equal_sign;
-	char	*key;
+	size_t	i;
 
-	equal_sign = ft_strchr(arg, '=');
-	if (!equal_sign || equal_sign - arg == 0)
-		key = ft_strdup(arg);
-	else
-		key = ft_substr(arg, 0, equal_sign - arg);
-	return (key);
+	i = 0;
+	if (ft_isdigit(arg[0]))
+		return (ft_itoa(arg[0] - '0'));
+	while (arg && arg[i] && (ft_isalpha(arg[i]) || arg[i] == '_'))
+	{
+		i++;
+	}
+	return (ft_substr(arg, 0, i));
 }
 
 static void	print_env(void)
 {
-	char	**envp;
+	t_env	*env;
 
-	envp = g_shell->envp;
-	while (envp && *envp)
+	env = g_shell->env;
+	while (env)
 	{
-		printf("declare -x %s\n", *envp);
-		envp++;
+		printf("declare -x %s=\"%s\"\n", env->key, env->value);
+		env = env->next;
 	}
+}
+
+void	process_argument(char *arg)
+{
+	char	*key;
+	char	*value;
+	bool	append;
+
+	append = false;
+	key = get_export_key(arg);
+	value = arg + ft_strlen(key);
+	if (*value == '+')
+	{
+		append = true;
+		value++;
+	}
+	if (*value == '=')
+		value++;
+	if (*key != '\0')
+	{
+		if (append)
+			append_env(key, value);
+		else
+			set_env(key, value);
+	}
+	else
+		export_error(arg);
+	free(key);
 }
 
 void	ft_export(t_cmd *cmd)
 {
-	char	*key;
 	int		i;
-	char	*eq_sign;
 
 	if (cmd->argc == 1)
 	{
@@ -69,13 +84,7 @@ void	ft_export(t_cmd *cmd)
 	i = 1;
 	while (i < cmd->argc)
 	{
-		key = get_export_key(cmd->argv[i]);
-		eq_sign = ft_strchr(cmd->argv[i], '=');
-		if (is_valid_name(key) && eq_sign)
-			(set_env(key, eq_sign + 1));
-		else
-			export_error(cmd->argv[i]);
-		free(key);
+		process_argument(cmd->argv[i]);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/11 19:21:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:20:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	cleanup_shell(void)
 {
 	free_env();
 	free(g_shell->cwd);
+	free(g_shell->home);
 	g_shell->cwd = NULL;
 	free_tab(g_shell->envp);
 	g_shell->envp = NULL;
@@ -58,6 +59,11 @@ void	cleanup_shell(void)
 
 void	cleanup_rotation(void)
 {
+	if (get_env("HOME"))
+	{
+		free(g_shell->home);
+		g_shell->home = ft_strdup(get_env("HOME"));
+	}
 	g_shell->secondary_input = dup(0);
 	free_tree(g_shell->tree);
 	g_shell->tree = NULL;

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/11 19:02:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:49:16 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*get_var_name(char *str)
 		return (ft_strdup("$?"));
 	if (ft_isdigit(str[i]))
 		return (ft_substr(str, 0, 2));
-	while (str[i] && (ft_isalnum(str[i]) || *str == '_'))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	return (ft_substr(str, 0, i));
 }
@@ -32,7 +32,7 @@ static void	expand_home(char **result)
 {
 	char	*replaced_str;
 
-	replaced_str = ft_strreplace(*result, "~", getenv("HOME"));
+	replaced_str = ft_strreplace(*result, "~", g_shell->home);
 	free(*result);
 	*result = replaced_str;
 }

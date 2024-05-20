@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 20:36:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:13:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_last_exit
 typedef struct s_shell
 {
 	t_node			*tree;
+	char			*home;
 	char			*input;
 	size_t			lexer_idx;
 	t_history		*history;

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/10 17:39:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:14:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ void	init_shell(char **envp)
 	g_shell->has_heredoc = false;
 	g_shell->secondary_input = -1;
 	set_status(0);
+	g_shell->home = ft_strdup(get_env("HOME"));
 }

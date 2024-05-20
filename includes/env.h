@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:11 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/10 14:27:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:24:17 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	delete_env(char *key);
 void	add_env(t_env **root, char *key, char *value);
 size_t	env_list_size(void);
 char	*join_env(char *name, char *value);
+void	append_env(char *key, char *value);
 void	update_envp(void);
 
 #endif

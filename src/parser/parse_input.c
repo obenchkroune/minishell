@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 08:30:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:35:54 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*trim_whitespace(char *input)
 {
 	char	*result;
+	char	*temp;
 	size_t	buf_size;
 	size_t	j;
 
@@ -37,7 +38,9 @@ char	*trim_whitespace(char *input)
 		input++;
 	}
 	result[j] = '\0';
-	return (result);
+	temp = result;
+	result = ft_strtrim(result, "\t\v\r\f\b\n ");
+	return (free(temp), result);
 }
 
 bool	is_duplicate_input(char *input)
