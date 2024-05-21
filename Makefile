@@ -15,7 +15,7 @@ SRC_FILES	=	lexer/get_next_token.c lexer/peek.c main.c exec/exec.c exec/redirect
 				utils/panic.c utils/cleanup_shell.c utils/free_tree.c utils/set_status.c \
 				utils/get_display_line.c parser/parser_utils.c parser/parse_ast.c parser/get_redir_fd.c \
 				parser/join_args.c parser/parse_input.c parser/args.c parser/parse_cmd.c \
-				parser/replace_vars.c expantion/expand_redir.c expantion/expand.c expantion/wildcard.c \
+				parser/replace_vars.c expantion/expand.c expantion/wildcard.c \
 				expantion/expand_argv.c env/parse_env.c env/set_env.c env/get_env.c env/env_utils.c \
 				env/append_env.c parser/get_path.c
 

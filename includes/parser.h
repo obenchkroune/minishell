@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:11:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:34:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_list				*get_pattern_files(char *pattern);
 void				expand_wildcard(char **result, char **arg);
 bool				check_wildcard(char *pattern, char *string);
 char				*append_input(char *s1, char *s2);
-char				*join_args(t_arg *args);
+char				*join_args(t_arg *args, bool expand_special);
 char				*replace_env_vars(char *arg, t_arg_type type);
 t_arg				*create_arg_node(char *value, t_arg_type type);
 void				cleanup_arg_nodes(t_arg *args);
@@ -96,7 +96,7 @@ void				free_list(t_list *list);
 void				free_cmd(t_cmd *cmd);
 void				free_redir(t_redir *io);
 void				free_matrix(char **matrix);
-char				*ft_expand(const char *str);
+char				*ft_expand(const char *str, bool expand_special);
 void				parse_input(void);
 t_node				*create_node(t_node_type type, t_node *left, t_node *right);
 t_redir				*create_redir(t_redir_type type, char *file);
@@ -108,7 +108,6 @@ void				free_tree(t_node *node);
 char				**expand_argv(char **argv);
 t_node				*parse_cmd(void);
 t_node				*parse_ast(void);
-void				expand_redir(t_redir *redir);
 int					get_redir_fd(t_redir *redir);
 
 #endif

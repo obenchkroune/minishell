@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:36:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_heredoc(int fd, char *delimer)
 			break ;
 		}
 		temp = line;
-		line = ft_expand(line);
+		line = ft_expand(line, true);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		(free(line), free(temp));
@@ -67,10 +67,13 @@ int	get_redir_fd(t_redir *redir)
 {
 	char	*temp;
 
-	if (redir->type != REDIR_HEREDOC && redir->file)
+	if (redir->file)
 	{
 		temp = redir->file;
-		redir->file = ft_expand(redir->file);
+		if (redir->type == REDIR_HEREDOC)
+			redir->file = ft_expand(redir->file, false);
+		else
+			redir->file = ft_expand(redir->file, true);
 		free(temp);
 	}
 	if (redir->type == REDIR_APPEND)

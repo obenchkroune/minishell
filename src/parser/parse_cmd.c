@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:34:37 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_executable(char *cmd)
 		return (NULL);
 	i = 0;
 	result = NULL;
-	cmd = ft_expand(cmd);
+	cmd = ft_expand(cmd, true);
 	if (ft_strchr(cmd, '/') != NULL && check_file(cmd))
 		return (cmd);
 	path = get_path();

@@ -3,3 +3,4 @@
 [x] add quotes in `export`
 [x] expand export value
 [x] trim whitespace from env expantion
+[x] expand heredoc quotes

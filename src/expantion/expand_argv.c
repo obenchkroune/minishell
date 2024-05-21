@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_argv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 00:57:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:31:19 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**expand_argv(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		arg = ft_expand(argv[i]);
+		arg = ft_expand(argv[i], true);
 		free(argv[i]);
 		argv[i] = arg;
 		i++;

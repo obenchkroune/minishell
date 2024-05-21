@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:28:40 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:29:32 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static size_t	get_len(t_arg *args)
 	return (len);
 }
 
-char	*join_args(t_arg *args)
+char	*join_args(t_arg *args, bool expand_special)
 {
 	t_arg	*node;
 	size_t	len;
@@ -33,7 +33,7 @@ char	*join_args(t_arg *args)
 	char	*content;
 
 	node = args;
-	while (node)
+	while (expand_special && node)
 	{
 		content = replace_env_vars(node->content, node->type);
 		free(node->content);

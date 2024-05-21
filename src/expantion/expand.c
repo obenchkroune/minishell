@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:20:47 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:29:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_arg_type	get_arg_type(char c)
 	return (ARG_PLAIN);
 }
 
-char	*ft_expand(const char *str)
+char	*ft_expand(const char *str, bool expand_special)
 {
 	t_arg	*args_list;
 	t_arg	*arg_node;
@@ -57,6 +57,6 @@ char	*ft_expand(const char *str)
 			i += ft_strlen(arg_node->content);
 		}
 	}
-	result = join_args(args_list);
+	result = join_args(args_list, expand_special);
 	return (cleanup_arg_nodes(args_list), result);
 }
