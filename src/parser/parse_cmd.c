@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 05:34:37 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:39:52 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static bool	check_file(const char *file)
 	close(fd);
 	return (S_ISREG(file_info.st_mode));
 }
-
 
 char	*get_executable(char *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:40:45 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/21 05:30:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:39:38 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ static int	redirect_append(t_redir *io, bool is_builtin)
 
 static void	redirect_heredoc(t_redir *io)
 {
-	char *delimer = ft_expand(io->file, false);
-	free(io->file);
-	io->file = delimer;
 	if (dup2(io->fd, STDIN_FILENO) == -1)
 		panic("dup2");
 }
