@@ -1,4 +1,4 @@
-[ ] handle : at the end of the PATH env var (maybe XD)
+[x] handle : at the end of the PATH env var (maybe XD)
 [x] handle += in export/ handle b and b=
 [x] add quotes in `export`
 [x] expand export value

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/19 17:30:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 03:11:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_arg
 	struct s_arg	*next;
 }					t_arg;
 
+char				**get_path(void);
 char				*get_executable(char *cmd);
 bool				is_redir_token(t_token_type type);
 char				*get_wildcard_pattern(char *arg);

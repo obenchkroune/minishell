@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:39:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/09 00:25:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 03:01:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	**ft_lsttab(t_list *list)
 	size_t	len;
 	size_t	i;
 
+	if (!list)
+		return (NULL);
 	len = ft_lstsize(list) + 1;
 	ret = ft_calloc(len + 1, sizeof(char *));
 	if (!ret)
