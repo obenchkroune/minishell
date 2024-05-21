@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:11:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ char	*trim_whitespace(char *input)
 {
 	char	*result;
 	char	*temp;
-	size_t	buf_size;
 	size_t	j;
 
 	if (!input)
 		return (NULL);
-	buf_size = ft_strlen(input) + 1;
-	result = malloc(sizeof(char) * buf_size);
+	result = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!result)
 		panic("malloc");
 	j = 0;

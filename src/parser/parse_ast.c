@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 05:11:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
-#include "parser.h"
-#include <time.h>
 
 bool	is_meta_token(t_token_type type)
 {
@@ -39,8 +36,8 @@ t_node	*parse_meta(t_node *node)
 	if (type != INT_MAX)
 	{
 		get_next_token();
-		if (peek() != T_WORD && !is_redir_token(peek()))
-			syntax_error(NULL);
+		if (peek() != T_WORD && type != N_SEMICOL && !is_redir_token(peek()))
+			return (syntax_error(NULL), node);
 		node = create_node(type, node, parse_ast());
 	}
 	return (node);
@@ -54,7 +51,7 @@ bool	is_redir_token(t_token_type type)
 
 t_node	*parse_ast(void)
 {
-	t_node			*node;
+	t_node	*node;
 
 	node = NULL;
 	if (peek() == T_OPEN_PAREN)
