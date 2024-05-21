@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tabsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 04:03:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/18 10:29:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 size_t	ft_tabsize(char **tab)
 {

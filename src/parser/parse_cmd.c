@@ -6,11 +6,11 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:12:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 #include "libft.h"
 
 t_redir_type	get_redir_type(t_token token)
