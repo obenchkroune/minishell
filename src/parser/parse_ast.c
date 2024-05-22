@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 19:46:15 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:43:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	is_meta_token(t_token_type type)
 		|| type == T_OR);
 }
 
-t_node	*parse_meta(t_node *node)
+t_node	*parse_meta(t_node *node, bool in_subshell)
 {
 	t_node_type	type;
 
@@ -38,7 +38,7 @@ t_node	*parse_meta(t_node *node)
 		get_next_token();
 		if (peek() == T_EOF && type != N_SEMICOL)
 			return (syntax_error(NULL), node);
-		node = create_node(type, node, parse_ast());
+		node = create_node(type, node, parse_ast(in_subshell));
 	}
 	return (node);
 }
@@ -49,25 +49,28 @@ bool	is_redir_token(t_token_type type)
 		|| type == T_HEREDOC);
 }
 
-t_node	*parse_ast(void)
+t_node	*parse_ast(bool in_subshell)
 {
 	t_node	*node;
 
 	node = NULL;
 	if (peek() == T_OPEN_PAREN)
 	{
+		in_subshell = true;
 		get_next_token();
-		if (peek() != T_WORD && !is_redir_token(peek()))
-			return (syntax_error(NULL), node);
-		node = create_node(N_SUBSHELL, parse_ast(), NULL);
+		node = create_node(N_SUBSHELL, parse_ast(in_subshell), NULL);
 		if (peek() != T_CLOSE_PAREN)
-			return (syntax_error(NULL), node);
+			return (syntax_error("Unclosed Quote"), node);
 		get_next_token();
+		in_subshell = false;
 		if (!is_meta_token(peek()) && peek() != T_EOF)
 			return (syntax_error(NULL), node);
 	}
 	else
 		node = parse_cmd();
-	node = parse_meta(node);
+	if ((!in_subshell && peek() == T_CLOSE_PAREN) || peek() == T_OPEN_PAREN)
+		return (syntax_error(NULL), node);
+	
+	node = parse_meta(node, in_subshell);
 	return (node);
 }
