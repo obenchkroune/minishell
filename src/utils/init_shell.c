@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:23:17 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_process_id(void)
+{
+	char	*result;
+	int		fd;
+	int		bytes;
+	char	buffer[20];
+
+	fd = open("/proc/self/stat", O_RDONLY);
+	if (fd == -1)
+		panic("open");
+	bytes = read(fd, buffer, 19);
+	if (bytes == -1)
+		panic("read");
+	buffer[bytes] = '\0';
+	result = ft_itoa(ft_atoi(buffer));
+	close(fd);
+	return (result);
+}
 
 void	init_shell(char **envp)
 {
@@ -29,4 +48,5 @@ void	init_shell(char **envp)
 	g_shell->secondary_input = -1;
 	set_status(0);
 	g_shell->home = ft_strdup(get_env("HOME"));
+	g_shell->process_id = get_process_id();
 }

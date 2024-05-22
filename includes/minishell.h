@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/20 19:13:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:23:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_shell
 	char			term_buffer[2048];
 	struct termios	term;
 	int				secondary_input;
+	char			*process_id;
 }					t_shell;
 
 extern t_shell		*g_shell;

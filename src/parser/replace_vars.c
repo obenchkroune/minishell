@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:09:44 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static char	*get_var_name(char *str)
 	i = 0;
 	if (str[i] == '$')
 		i++;
-	if (str[i] == '?')
-		return (ft_strdup("$?"));
-	if (ft_isdigit(str[i]))
+	if (ft_isdigit(str[i]) || str[i] == '?' || str[i] == '$')
 		return (ft_substr(str, 0, 2));
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;

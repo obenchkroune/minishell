@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:59:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@ static void	print_env(void)
 	}
 }
 
+static bool	is_valid_export_key(const char *key)
+{
+	while (key && *key)
+	{
+		if (!ft_isalnum(*key) || *key != '_')
+			return (false);
+		key++;
+	}
+	return (true);
+}
+
 void	process_argument(char *arg)
 {
 	char	*key;
@@ -60,7 +71,7 @@ void	process_argument(char *arg)
 	}
 	if (*value == '=')
 		value++;
-	if (*key != '\0')
+	if (is_valid_export_key(key))
 	{
 		if (append)
 			append_env(key, value);
