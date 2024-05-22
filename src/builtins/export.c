@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/22 19:51:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:17:19 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*get_export_key(const char *arg)
 
 static bool	is_valid_export_key(const char *key)
 {
+	if (ft_strlen(key) == 0)
+		return (false);
 	while (key && *key)
 	{
 		if (!ft_isalnum(*key) && *key != '_')

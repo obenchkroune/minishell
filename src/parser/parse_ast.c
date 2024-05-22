@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 20:43:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:24:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_node	*parse_ast(bool in_subshell)
 		node = parse_cmd();
 	if ((!in_subshell && peek() == T_CLOSE_PAREN) || peek() == T_OPEN_PAREN)
 		return (syntax_error(NULL), node);
-	
 	node = parse_meta(node, in_subshell);
 	return (node);
 }
