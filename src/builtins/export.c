@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/22 18:59:13 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:51:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,18 @@ char	*get_export_key(const char *arg)
 	return (ft_substr(arg, 0, i));
 }
 
-static void	print_env(void)
-{
-	t_env	*env;
-
-	env = g_shell->env;
-	while (env)
-	{
-		printf("declare -x %s=\"%s\"\n", env->key, env->value);
-		env = env->next;
-	}
-}
-
 static bool	is_valid_export_key(const char *key)
 {
 	while (key && *key)
 	{
-		if (!ft_isalnum(*key) || *key != '_')
+		if (!ft_isalnum(*key) && *key != '_')
 			return (false);
 		key++;
 	}
 	return (true);
 }
 
-void	process_argument(char *arg)
+static void	process_argument(char *arg)
 {
 	char	*key;
 	char	*value;
