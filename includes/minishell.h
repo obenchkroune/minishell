@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 19:23:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:33:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_shell
 	struct termios	term;
 	int				secondary_input;
 	char			*process_id;
+	char			*shell_script;
 }					t_shell;
 
 extern t_shell		*g_shell;
@@ -83,7 +84,7 @@ void				panic_minishell(char *msg, int status);
 void				syntax_error(char *s);
 int					ft_isspace(int c);
 bool				is_empty(char *str);
-void				init_shell(char **envp);
+void				init_shell(char **av, char **envp);
 void				cleanup_shell(void);
 void				free_tab(char **tab);
 void				cleanup_rotation(void);

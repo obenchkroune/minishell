@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 19:23:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:33:13 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_process_id(void)
 	return (result);
 }
 
-void	init_shell(char **envp)
+void	init_shell(char **av, char **envp)
 {
 	g_shell = malloc(sizeof(t_shell));
 	if (!g_shell)
@@ -49,4 +49,5 @@ void	init_shell(char **envp)
 	set_status(0);
 	g_shell->home = ft_strdup(get_env("HOME"));
 	g_shell->process_id = get_process_id();
+	g_shell->shell_script = av[0];
 }

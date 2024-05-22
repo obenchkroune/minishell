@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:37:38 by oussama           #+#    #+#             */
-/*   Updated: 2024/05/22 19:17:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:34:01 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_env(const char *key)
 	if (*key == '$')
 		return (g_shell->process_id);
 	if (ft_strcmp(key, "0") == 0)
-		return ("minishell");
+		return (g_shell->shell_script);
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)

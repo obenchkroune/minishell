@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:19:23 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:33:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_shell	*g_shell;
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)argc, (void)argv;
-	init_shell(envp);
+	(void)argc;
+	init_shell(argv, envp);
 	signal_init();
 	while (true)
 	{
