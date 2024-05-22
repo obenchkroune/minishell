@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 22:24:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:26:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_node	*parse_ast(bool in_subshell)
 		get_next_token();
 		node = create_node(N_SUBSHELL, parse_ast(in_subshell), NULL);
 		if (peek() != T_CLOSE_PAREN)
-			return (syntax_error("Unclosed Quote"), node);
+			return (syntax_error("Unclosed Parenthesis"), node);
 		get_next_token();
 		in_subshell = false;
 		if (!is_meta_token(peek()) && peek() != T_EOF)
