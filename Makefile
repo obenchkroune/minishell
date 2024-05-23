@@ -22,7 +22,7 @@ SRC_FILES	=	lexer/get_next_token.c lexer/peek.c main.c exec/exec.c \
 				parser/args.c parser/parse_cmd.c parser/replace_vars.c \
 				expantion/expand.c expantion/wildcard.c expantion/expand_argv.c \
 				env/parse_env.c env/set_env.c env/get_env.c env/env_utils.c \
-				env/append_env.c parser/get_path.c utils/print_env.c
+				env/append_env.c utils/print_env.c
 
 HEAD		=	-I includes -I ~/.local/include
 SRCS		=	$(addprefix ./src/, $(SRC_FILES))

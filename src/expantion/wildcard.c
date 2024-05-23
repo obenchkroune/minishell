@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:46:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 00:38:36 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_wildcard_pattern(char *arg)
 	size_t	i;
 
 	i = 0;
-	while (!ft_strchr("<>| ", arg[i]))
+	while (!ft_strchr("<>|", arg[i]) && !ft_isspace(arg[i]))
 	{
 		i++;
 	}
@@ -75,9 +75,9 @@ bool	check_wildcard(char *pattern, char *string)
 		return (false);
 	}
 	if (*pattern == '*')
-		return (check_wildcard(pattern, ++string)
-			|| check_wildcard(++pattern, string));
+		return (check_wildcard(pattern, string + 1)
+			|| check_wildcard(pattern + 1, string));
 	if (*pattern == *string)
-		return (check_wildcard(++pattern, ++string));
+		return (check_wildcard(pattern + 1, string + 1));
 	return (false);
 }

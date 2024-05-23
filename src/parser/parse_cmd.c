@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 05:39:52 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 00:35:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_executable(char *cmd)
 	cmd = ft_expand(cmd, true);
 	if (ft_strchr(cmd, '/') != NULL && check_file(cmd))
 		return (cmd);
-	path = get_path();
+	path = ft_split(get_env("PATH"), ':');
 	slash_cmd = ft_strjoin("/", cmd);
 	while (path && path[i])
 	{
