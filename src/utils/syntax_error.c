@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:59:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 20:44:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 03:43:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	syntax_error(char *msg)
 {
 	t_token	token;
 
+	if (g_shell->has_syntax_error)
+		return ;
 	if (msg)
 		ft_fprintf(2, RED "minishell: syntax error: " RESET "%s\n", msg);
 	else

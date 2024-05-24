@@ -3,64 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 05:36:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 03:40:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	read_heredoc(int fd, char *delimer)
+static int	read_heredoc(t_redir *redir)
 {
 	char	*line;
 	char	*temp;
+	int		fd[2];
 
+	if (pipe(fd) < 0)
+		panic("pipe");
 	while (g_shell->secondary_input != -1)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(g_shell->secondary_input);
-		if (line)
-			line[ft_strlen(line) - 1] = '\0';
-		if (!line || ft_strcmp(line, delimer) == 0)
-		{
-			free(line);
-			break ;
-		}
+		if (!line || ft_strncmp(line, redir->file, ft_strlen(line) - 1) == 0)
+			return (close(fd[1]),free(line), fd[0]);
 		temp = line;
 		line = ft_expand(line, true);
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		write(fd[1], line, ft_strlen(line));
 		(free(line), free(temp));
 	}
-}
-
-void	get_heredoc_filename(char name_ptr[15])
-{
-	int	fd;
-
-	fd = open("/dev/urandom", O_RDONLY);
-	if (fd < 0)
-		panic("open");
-	ft_bzero(name_ptr, 15);
-	ft_strlcat(name_ptr, "/tmp/", 15);
-	read(fd, name_ptr + 5, 8);
-	close(fd);
-}
-
-static int	get_heredoc_fd(t_redir *redir)
-{
-	int		fd;
-
-	get_heredoc_filename(redir->heredoc_file);
-	unlink(redir->heredoc_file);
-	fd = open(redir->heredoc_file, O_CREAT | O_WRONLY, 0644);
-	if (fd < 0)
-		panic("open");
-	read_heredoc(fd, redir->file);
-	close(fd);
-	return (open(redir->heredoc_file, O_RDONLY));
+	close(fd[1]);
+	return (fd[0]);
 }
 
 int	get_redir_fd(t_redir *redir)
@@ -70,10 +42,8 @@ int	get_redir_fd(t_redir *redir)
 	if (redir->file)
 	{
 		temp = redir->file;
-		if (redir->type == REDIR_HEREDOC)
-			redir->file = ft_expand(redir->file, false);
-		else
-			redir->file = ft_expand(redir->file, true);
+		redir->file = ft_expand(redir->file,
+			redir->type != REDIR_HEREDOC);
 		free(temp);
 	}
 	if (redir->type == REDIR_APPEND)
@@ -83,6 +53,6 @@ int	get_redir_fd(t_redir *redir)
 	else if (redir->type == REDIR_OUT)
 		return (open(redir->file, O_CREAT | O_TRUNC | O_WRONLY, 0644));
 	else if (redir->type == REDIR_HEREDOC)
-		return (get_heredoc_fd(redir));
+		return (read_heredoc(redir));
 	return (-1);
 }

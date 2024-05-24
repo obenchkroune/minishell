@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:03:59 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 19:33:13 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 03:23:25 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_process_id(void)
 
 	fd = open("/proc/self/stat", O_RDONLY);
 	if (fd == -1)
-		panic("open");
+		return (ft_strdup("0"));
 	bytes = read(fd, buffer, 19);
 	if (bytes == -1)
 		panic("read");

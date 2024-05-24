@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:57:01 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 19:33:13 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 03:38:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 # define MINISHELL_H
 
-# define COLOR_BOLD "\e[1m"
-# define COLOR_OFF "\e[m"
+# define COLOR_BOLD "\001\e[1m\002"
+# define COLOR_OFF "\001\e[m\002"
 
 # define RED "\001\x1b[31m\002"
 # define GREEN "\001\x1b[32m\002"

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:02:02 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/24 03:21:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	free_redir(t_redir *redir)
 	free_redir(redir->next);
 	free(redir->file);
 	close(redir->fd);
-	if (redir->type == REDIR_HEREDOC)
-		unlink(redir->heredoc_file);
 	free(redir);
 }
 
