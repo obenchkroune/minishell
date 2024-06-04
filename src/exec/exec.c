@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/06/04 18:09:07 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:17:29 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ int	ft_exec_node(t_node *tree, bool is_pipe)
 	if (tree->type == N_SUBSHELL)
 		return (ft_exec_subshell(tree->left));
 	if (tree->type == N_SEMICOL)
-		return ft_exec_node(tree->left, false);
+		return (ft_exec_node(tree->left, false));
 	if (tree->type == N_AND)
 	{
 		if (ft_exec_node(tree->left, false) == 0)
 			return (ft_exec_node(tree->right, false));
-		return (1); // TODO: change this
+		return (1);
 	}
 	if (tree->type == N_OR)
 	{

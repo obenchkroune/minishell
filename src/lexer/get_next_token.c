@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:12:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/24 00:23:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:22:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_token	get_word_token(void)
 
 	start = g_shell->lexer_idx;
 	i = g_shell->lexer_idx;
-	while (g_shell->input[i] && !ft_strchr(">|<()&;", g_shell->input[i]) \
+	while (g_shell->input[i] && !ft_strchr(">|<()&;", g_shell->input[i])
 		&& !ft_isspace(g_shell->input[i]))
 	{
 		if (g_shell->input[i] && ft_strchr("'\"", g_shell->input[i]))
