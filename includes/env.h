@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:28:11 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/20 19:24:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:11:15 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-t_env	*ft_dup_env(void);
 t_env	*env_constructor(const char *key, const char *value);
 void	update_envp(void);
 t_env	*parse_env(char **envp);

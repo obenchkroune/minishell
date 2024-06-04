@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/24 03:58:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:09:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,38 @@ int	ft_exec_pipeline(t_node *tree)
 
 int	ft_exec_subshell(t_node *tree)
 {
-	t_env	*env_dup;
+	pid_t	pid;
 	int		status;
 
-	env_dup = ft_dup_env();
-	status = ft_exec_node(tree->left, false);
-	free_env();
-	g_shell->env = env_dup;
-	update_envp();
-	return (status);
+	pid = fork();
+	if (pid == -1)
+		panic("fork");
+	if (pid == 0)
+		exit(ft_exec_node(tree, false));
+	waitpid(pid, &status, 0);
+	return (ft_get_exit_status(status));
 }
 
 int	ft_exec_node(t_node *tree, bool is_pipe)
 {
-	if (!tree || g_shell->has_syntax_error)
+	if (g_shell->has_syntax_error)
 		return (1);
 	if (tree->type == N_SUBSHELL)
-		return (ft_exec_subshell(tree));
+		return (ft_exec_subshell(tree->left));
 	if (tree->type == N_SEMICOL)
-		return (ft_exec_node(tree->left, false),
-			ft_exec_node(tree->right, false));
-	if (tree->type == N_AND && ft_exec_node(tree->left, false) == 0)
-		return (ft_exec_node(tree->right, false));
-	if (tree->type == N_OR && ft_exec_node(tree->left, false) != 0)
-		return (ft_exec_node(tree->right, false));
+		return ft_exec_node(tree->left, false);
+	if (tree->type == N_AND)
+	{
+		if (ft_exec_node(tree->left, false) == 0)
+			return (ft_exec_node(tree->right, false));
+		return (1); // TODO: change this
+	}
+	if (tree->type == N_OR)
+	{
+		if (ft_exec_node(tree->left, false) != 0)
+			return (ft_exec_node(tree->right, false));
+		return (0);
+	}
 	if (tree->type == N_PIPE)
 		return (ft_exec_pipeline(tree));
 	else if (tree->type == N_CMD)
