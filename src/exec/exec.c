@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/06/05 21:17:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:44:23 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	ft_exec_subshell(t_node *tree)
 
 int	ft_exec_node(t_node *tree, bool is_pipe)
 {
+	if (!tree)
+		return (0);
 	if (g_shell->has_syntax_error)
 		return (1);
 	if (tree->type == N_SUBSHELL)
