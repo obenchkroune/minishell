@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/06/14 11:16:05 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:38:43 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char				**expand_argv(char **argv);
 t_node				*parse_cmd(void);
 t_node				*parse_ast(void);
 int					get_redir_fd(t_redir *redir);
-t_node	*parse_meta(t_node *node);
+t_node				*parse_meta(t_node *node);
+void				expand_wildcard_args(t_list *args);
 
 #endif

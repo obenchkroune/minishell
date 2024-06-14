@@ -3,15 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:46:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/24 00:38:36 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:36:54 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+
+void	expand_wildcard_args(t_list *args)
+{
+	t_list	*node;
+	t_list	*files_list;
+	char	*temp;
+
+	node = args;
+	while (node)
+	{
+		if (node->content && ft_strchr(node->content, '*')
+			&& !ft_strchr(node->content, '"')
+			&& !ft_strchr(node->content, '\''))
+		{
+			files_list = get_pattern_files(node->content);
+			if (files_list)
+			{
+				ft_lstadd_back(&files_list, node->next);
+				temp = node->content;
+				node->content = files_list->content;
+				node->next = files_list->next;
+				(free(temp), free(files_list));
+			}
+		}
+		node = node->next;
+	}
+}
 
 char	*get_wildcard_pattern(char *arg)
 {
