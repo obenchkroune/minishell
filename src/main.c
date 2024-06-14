@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 05:10:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/06/04 18:14:03 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:48:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		cleanup_rotation();
 		display_prompt();
 		parse_input();
-		if (g_shell->tree)
+		if (g_shell->tree && g_shell->has_syntax_error == false)
 			ft_exec_node(g_shell->tree, false);
 		close(g_shell->secondary_input);
 	}
