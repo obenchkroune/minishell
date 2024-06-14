@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:18:16 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:56:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ char	*ft_strreplace(char *str, char *find, char *replace)
 	size_t	len;
 	char	*find_pos;
 
-	if (!str || !find || !replace)
+	if (!str)
 		return (NULL);
+	if (!find)
+		return (ft_strdup(str));
+	if (!replace)
+		replace = "";
 	find_pos = ft_strnstr(str, find, ft_strlen(str));
 	if (!find_pos)
 		return (ft_strdup(str));

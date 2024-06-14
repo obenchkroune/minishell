@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/06/14 11:28:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:04:01 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ t_node	*parse_meta(t_node *node)
 		type = N_AND;
 	else if (peek() == T_OR)
 		type = N_OR;
-	if (type != -1)
-	{
-		get_next_token();
-		if (peek() == T_EOF && type != N_SEMICOL)
-			return (syntax_error(NULL), node);
-		node = create_node(type, node, parse_cmd());
-	}
+	if (type == -1)
+		return (syntax_error(NULL), node);
+	get_next_token();
+	if (peek() == T_EOF && type != N_SEMICOL)
+		return (syntax_error(NULL), node);
+	node = create_node(type, node, parse_cmd());
 	return (node);
 }
 
