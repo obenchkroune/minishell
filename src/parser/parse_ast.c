@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:49:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/06/04 18:17:57 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:28:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ bool	is_meta_token(t_token_type type)
 		|| type == T_OR);
 }
 
-t_node	*parse_meta(t_node *node, bool in_subshell)
+t_node	*parse_meta(t_node *node)
 {
-	t_node_type	type;
+	int	type;
 
-	type = INT_MAX;
+	type = -1;
 	if (peek() == T_EOF)
 		return (node);
 	if (peek() == T_SEMICOL)
@@ -33,12 +33,12 @@ t_node	*parse_meta(t_node *node, bool in_subshell)
 		type = N_AND;
 	else if (peek() == T_OR)
 		type = N_OR;
-	if (type != INT_MAX)
+	if (type != -1)
 	{
 		get_next_token();
 		if (peek() == T_EOF && type != N_SEMICOL)
 			return (syntax_error(NULL), node);
-		node = create_node(type, node, parse_ast(in_subshell));
+		node = create_node(type, node, parse_cmd());
 	}
 	return (node);
 }
@@ -49,28 +49,14 @@ bool	is_redir_token(t_token_type type)
 		|| type == T_HEREDOC);
 }
 
-t_node	*parse_ast(bool in_subshell)
+t_node	*parse_ast(void)
 {
 	t_node	*node;
 
-	node = NULL;
-	if (peek() == T_OPEN_PAREN)
+	node = parse_cmd();
+	while (peek() != T_EOF)
 	{
-		in_subshell = true;
-		get_next_token();
-		node = create_node(N_SUBSHELL, parse_ast(in_subshell),
-				parse_meta(node, in_subshell));
-		if (peek() != T_CLOSE_PAREN)
-			return (syntax_error("Unclosed Parenthesis"), node);
-		get_next_token();
-		in_subshell = false;
-		if (!is_meta_token(peek()) && peek() != T_EOF)
-			return (syntax_error(NULL), node);
+		node = parse_meta(node);
 	}
-	else
-		node = parse_cmd();
-	if ((!in_subshell && peek() == T_CLOSE_PAREN) || peek() == T_OPEN_PAREN)
-		return (syntax_error(NULL), node);
-	node = parse_meta(node, in_subshell);
 	return (node);
 }

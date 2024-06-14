@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:53:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/24 03:12:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:16:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum e_node_type
 	N_SEMICOL,
 	N_SUBSHELL,
 	N_AND,
-	N_OR
+	N_OR,
 }					t_node_type;
 
 typedef struct s_cmd
@@ -106,7 +106,8 @@ t_redir_type		get_redir_type(t_token token);
 void				free_tree(t_node *node);
 char				**expand_argv(char **argv);
 t_node				*parse_cmd(void);
-t_node				*parse_ast(bool in_subshell);
+t_node				*parse_ast(void);
 int					get_redir_fd(t_redir *redir);
+t_node	*parse_meta(t_node *node);
 
 #endif

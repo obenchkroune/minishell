@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:29:11 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/06/04 17:22:51 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:23:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,17 @@ t_node	*parse_cmd(void)
 
 	if (peek() == T_EOF)
 		return (NULL);
+	if (peek() == T_OPEN_PAREN)
+	{
+		get_next_token();
+		node = parse_cmd();
+		while (peek() != T_CLOSE_PAREN && peek() != T_EOF)
+			node = parse_meta(node);
+		if (peek() != T_CLOSE_PAREN)
+			return (syntax_error(NULL), node);
+		get_next_token();
+		return (create_node(N_SUBSHELL, node, NULL));
+	}
 	if (peek() != T_WORD && !is_redir_token(peek()))
 		return (syntax_error(NULL), NULL);
 	args = NULL;

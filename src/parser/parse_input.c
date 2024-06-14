@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 04:30:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 20:41:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:10:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	parse_input(void)
 		g_shell->tree = NULL;
 		return ;
 	}
-	g_shell->tree = parse_ast(false);
+	g_shell->tree = parse_ast();
 	trimed_input = trim_whitespace(g_shell->input);
 	if (!g_shell->has_heredoc && !is_duplicate_input(trimed_input))
 	{
