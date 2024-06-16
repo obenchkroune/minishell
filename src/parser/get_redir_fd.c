@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 00:25:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/06/04 18:19:23 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/16 11:57:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static int	read_heredoc(t_redir *redir)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(g_shell->secondary_input);
-		if (!line || ft_strncmp(line, redir->file, ft_strlen(line) - 1) == 0)
+		if (line)
+			line[ft_strlen(line) - 1] = '\0';
+		if (!line || ft_strcmp(line, redir->file) == 0)
 			return (close(fd[1]), free(line), fd[0]);
 		temp = line;
 		line = ft_expand(line, true);
-		write(fd[1], line, ft_strlen(line));
+		(write(fd[1], line, ft_strlen(line)), write(fd[1], "\n", 1));
 		(free(line), free(temp));
 	}
 	close(fd[1]);
