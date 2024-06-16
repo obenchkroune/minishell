@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 02:42:05 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:29:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ void	ft_history(t_cmd *cmd)
 	if (cmd->argc > 2)
 	{
 		panic_minishell("minishell: history: too many arguments\n", 2);
+		set_status(0);
 		return ;
 	}
 	if (cmd->argc == 2 && !ft_strcmp(cmd->argv[1], "-c"))
 	{
 		ft_clear_history();
+		set_status(0);
 		return ;
 	}
 	i = 1;
@@ -89,4 +91,5 @@ void	ft_history(t_cmd *cmd)
 		tmp = tmp->next;
 		i++;
 	}
+	set_status(0);
 }

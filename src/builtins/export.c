@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 09:06:24 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/06/04 18:31:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:29:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	process_argument(char *arg)
 			append_env(key, value);
 		else
 			set_env(key, value);
+		set_status(0);
 	}
 	else
 		export_error(arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 07:39:23 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/05/21 03:20:10 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:28:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cd_absolute(char *path)
 	if (chdir(path) < 0)
 		cd_error(path);
 	else
-		set_pwd(path);
+		set_pwd(path), set_status(0);
 }
 
 void	cd_relative(char *path)
@@ -49,7 +49,7 @@ void	cd_relative(char *path)
 	if (chdir(path) < 0)
 		cd_error(path);
 	else
-		set_pwd(new_path);
+		set_pwd(new_path), set_status(0);
 	free(new_path);
 }
 
