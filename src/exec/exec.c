@@ -6,11 +6,12 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:25:32 by yaharkat          #+#    #+#             */
-/*   Updated: 2024/06/14 11:47:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/06/30 21:59:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 static void	ft_exec_pipe_child(t_node *node, int pipe[2], int direction)
 {
@@ -30,13 +31,6 @@ static void	ft_exec_pipe_child(t_node *node, int pipe[2], int direction)
 	}
 	status = ft_exec_node(node, true);
 	exit(status);
-}
-
-int	ft_get_exit_status(int status)
-{
-	if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (WEXITSTATUS(status));
 }
 
 int	ft_exec_pipeline(t_node *tree)
@@ -80,10 +74,20 @@ int	ft_exec_subshell(t_node *tree)
 	return (ft_get_exit_status(status));
 }
 
+static void	handle_redirection(t_redir *redir)
+{
+	while (redir)
+	{
+		redir->fd = get_redir_fd(redir);
+		redir = redir->next;
+	}
+}
+
 int	ft_exec_node(t_node *tree, bool is_pipe)
 {
 	if (!tree)
 		return (0);
+	handle_redirection(tree->redir);
 	if (tree->type == N_SUBSHELL)
 		return (ft_exec_subshell(tree->left));
 	if (tree->type == N_SEMICOL)
