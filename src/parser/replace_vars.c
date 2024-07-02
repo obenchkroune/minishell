@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:20:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/05/22 19:09:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/07/02 08:07:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	expand_env_var(char **result, char **arg)
 	if (ft_strlen(name) == 1)
 	{
 		*arg += 1;
+		free(name);
 		return ;
 	}
 	*arg += ft_strlen(name);
